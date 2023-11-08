@@ -96,10 +96,10 @@ The successful completion of this project will not only enhance the functionalit
 
 
 ## Authors
-- **Aibiike Omurzakova** - *Developer* - [Profile]([GitHubProfileLink](https://github.com/aibii))
-- **Kael S. Moreira G** - *Developer* - [Profile]([GitHubProfileLink](https://github.com/KaelSM))
-- **Phuong Uyen Dang** - *Developer* - [Profile]([GitHubProfileLink](https://github.com/phuonguyen0014))
-- **Seda Dadak** - *Developer* - [Profile]([GitHubProfileLink](https://github.com/se6da6))
+- **Aibiike Omurzakova** - *Developer* - [Profile](https://github.com/aibii)
+- **Kael S. Moreira G** - *Developer* - [Profile](https://github.com/KaelSM)
+- **Phuong Uyen Dang** - *Developer* - [Profile](https://github.com/phuonguyen0014)
+- **Seda Dadak** - *Developer* - [Profile](https://github.com/se6da6)
 
 ## License
 This project is licensed under the XYZ License - see the [LICENSE.md](LICENSE.md) file for details.

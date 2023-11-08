@@ -1,0 +1,54 @@
+Product Table:
+
+ProductID (PK, int, auto_increment, NOT NULL)
+Name (varchar(255), NOT NULL)
+Description (text, NOT NULL)
+Price (decimal(10,2), NOT NULL)
+StockQuantity (int, NOT NULL)
+ImageURL (varchar(255), NULL) // Images may not be mandatory
+CategoryID (int, FK, NULL) // Products might not always have a category
+
+Customer Table:
+
+CustomerID (PK, int, auto_increment, NOT NULL)
+Name (varchar(255), NOT NULL)
+Email (varchar(255), NOT NULL, unique)
+PasswordHash (varchar(255), NOT NULL)
+Address (varchar(255), NOT NULL) // Not all users may want to store their address
+PhoneNumber (varchar(20), NULL) // Phone number might not be mandatory
+CreationDate (datetime, NOT NULL)
+
+Order Table:
+
+OrderID (PK, int, auto_increment, NOT NULL)
+CustomerID (int, FK, NOT NULL)
+OrderDate (datetime, NOT NULL)
+Status (enum('Pending', 'Shipped', 'Delivered', 'Cancelled'), NOT NULL)
+TotalAmount (decimal(10,2), NOT NULL)
+ShippingAddress (varchar(255), NOT NULL)
+
+OrderDetails Table:
+
+OrderDetailsID (PK, int, auto_increment, NOT NULL)
+OrderID (int, FK, NOT NULL)
+ProductID (int, FK, NOT NULL)
+Quantity (int, NOT NULL)
+PricePerUnit (decimal(10,2), NOT NULL)
+
+Feedback Table:
+
+FeedbackID (PK, int, auto_increment, NOT NULL)
+CustomerID (int, FK, NOT NULL)
+ProductID (int, FK, NOT NULL)
+OrderID (int, FK, NULL) // Feedback might not be related to an order
+Title (varchar(255), NOT NULL)
+Content (text, NOT NULL)
+Rating (int, NOT NULL) // Assuming you always want a rating
+Date (datetime, NOT NULL)
+
+ProductCategory Table (if using categories):
+
+CategoryID (PK, int, auto_increment, NOT NULL)
+CategoryName (varchar(255), NOT NULL)
+Description (text, NULL) // Description might not be necessary
+ParentCategoryID (int, FK, NULL) // Top-level categories won't have a parent

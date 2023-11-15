@@ -38,4 +38,30 @@ public class MainController {
         return "redirect:/cart/" + cartId;
     }
 
+    @GetMapping("/cart-items")
+    public String listCartItems(Model model) {
+       cartService.findAllCarts().forEach(cart -> model.addAttribute("cart", cart));
+        return "cart-items";
+    }
+
+    @GetMapping("/cart-items/{productId}")
+    public String listCartItemsByProductId(@PathVariable Integer productId, Model model) {
+        cartService.findCartsByProductId(productId).forEach(cart -> model.addAttribute("cart", cart));
+        return "cart-items";
+    }
+
+    @GetMapping("/cart-items/{userId}")
+    public String listCartItemsByUserId(@PathVariable Integer userId, Model model) {
+        cartService.findCartsByUserId(userId).forEach(cart -> model.addAttribute("cart", cart));
+        return "cart-items";
+    }
+    
+    @GetMapping("/cart-items/brand/{brand}")
+    public String listCartItemsByBrand(@PathVariable String brand, Model model) {
+        cartService.findCartsByBrand(brand).forEach(cart -> model.addAttribute("cart", cart));
+        return "cart-items";
+    }
+
+    
+
 }

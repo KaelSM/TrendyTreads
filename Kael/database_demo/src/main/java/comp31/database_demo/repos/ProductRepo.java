@@ -17,5 +17,9 @@ public interface ProductRepo extends CrudRepository<Product, Integer> {
     // Find products by brand
     List<Product> findByBrand(String brand);
 
-    // Add more query methods as per your requirements
+    // Find products by color
+    List<Product> findByColor(String color);
+
+    List<Product> findProductsMostAddedToCart();
+    
 }

@@ -38,5 +38,46 @@ public class Cart {
     public void removeProduct(Product product) {
         this.products.remove(product);
     }
+
+    // Method to get the total price of the cart
+    public double getTotalPrice() {
+        double totalPrice = 0;
+        for (Product product : this.products) {
+            totalPrice += product.getPrice();
+        }
+        return totalPrice;
+    }
+
+    // Method to get the number of products in the cart
+    public int getNumProducts() {
+        return this.products.size();
+    }
+
+    // Method to get the number of unique products in the cart
+    public int getNumUniqueProducts() {
+        return this.products.size();
+    }
+
+    //method to get the number of times a product has been added to a cart
+    public int getNumTimesProductAddedToCart(Product product) {
+        int numTimesProductAddedToCart = 0;
+        for (Product productInCart : this.products) {
+            if (productInCart.getId() == product.getId()) {
+                numTimesProductAddedToCart++;
+            }
+        }
+        return numTimesProductAddedToCart;
+    }
+
+    //method to find how many items with the same brand there are
+    public int getNumProductsByBrand(String brand) {
+        int numProductsByBrand = 0;
+        for (Product productInCart : this.products) {
+            if (productInCart.getBrand().equals(brand)) {
+                numProductsByBrand++;
+            }
+        }
+        return numProductsByBrand;
+    }
 }
 

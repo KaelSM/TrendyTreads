@@ -5,6 +5,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import comp31.database_demo.model.Cart;
 import comp31.database_demo.model.Product;
+import comp31.database_demo.repos.CartItemRepo;
 import comp31.database_demo.repos.CartRepo;
 import comp31.database_demo.repos.ProductRepo;
 
@@ -15,10 +16,12 @@ public class CartService {
 
     private final CartRepo cartRepo;
     private final ProductRepo productRepo;
+    private final CartItemRepo cartItemRepo;
 
-    public CartService(CartRepo cartRepo, ProductRepo productRepo) {
+    public CartService(CartRepo cartRepo, ProductRepo productRepo, CartItemRepo cartItemRepo) {
         this.cartRepo = cartRepo;
         this.productRepo = productRepo;
+        this.cartItemRepo = cartItemRepo;
     }
 
     @Transactional
@@ -49,5 +52,13 @@ public class CartService {
 
     public Iterable<Cart> findCartsByProductId(Integer productId) {
         return cartRepo.findByProductsId(productId);
+    }
+
+    public Iterable<Cart> findCartsByUserId(Integer userId) {
+        return cartRepo.findByUserId(userId);
+    }
+
+    public Iterable<Cart> findCartsByBrand(String brand) {
+        return cartRepo.findByProductsBrand(brand);
     }
 }

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Feedback List</title>
+</head>
+<body>
+    <h1>Feedbacks</h1>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Message</th>
+                <th>User ID</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="feedback : ${feedbacks}">
+                <td th:text="${feedback.feedbackID}">Feedback ID</td>
+                <td th:text="${feedback.feedbackMessage}">Feedback Message</td>
+                <td th:text="${feedback.user.userID}">User ID</td> <!-- Adjust if your User entity has a different ID field -->
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>

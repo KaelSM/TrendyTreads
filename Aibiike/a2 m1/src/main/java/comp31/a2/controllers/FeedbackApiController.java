@@ -27,14 +27,18 @@ public class FeedbackApiController {
     @Autowired
     private UserRepository userRepository;
 
-    // Get feedback by user ID
     @GetMapping("/user/{userId}")
     public ResponseEntity<List<Feedback>> getFeedbackByUser(@PathVariable Long userId) {
         List<Feedback> feedbacks = feedbackService.findByUserId(userId);
         return ResponseEntity.ok(feedbacks);
     }
 
-    // Submit feedback
+    @GetMapping("/all")
+    public ResponseEntity<List<Feedback>> getAllFeedback() {
+        List<Feedback> feedbacks = feedbackService.findAll();
+        return ResponseEntity.ok(feedbacks);
+    }
+
     @PostMapping("/submit")
     public ResponseEntity<Feedback> submitFeedback(@RequestBody FeedbackDto feedbackDto) {
         User user = userRepository.findById(feedbackDto.getUserId()).orElseThrow(() -> new RuntimeException("User not found"));

@@ -30,4 +30,8 @@ public class FeedbackService {
 
     public void save(Feedback feedback) {
     }
+
+    public List<Feedback> findAll() {
+        return null;
+    }
 }

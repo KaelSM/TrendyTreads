@@ -1,5 +1,6 @@
 package comp31.a2.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,8 +21,6 @@ import comp31.a2.model.repositories.UserRepository;
 import comp31.a2.services.FeedbackService;
 import java.util.Optional;
 
-
-
     @Controller
     @RequestMapping("/feedback")
     public class FeedbackController {
@@ -36,7 +35,17 @@ import java.util.Optional;
         public String viewFeedbackByUser(@PathVariable Long userId, Model model) {
             List<Feedback> feedbacks = feedbackService.findByUserId(userId);
             model.addAttribute("feedbacks", feedbacks);
-            return "feedbackView"; // Thymeleaf template name
+            return "feedbackView"; 
+        }
+
+        @GetMapping("/view")
+        public String viewAllFeedback(Model model) {
+        List<Feedback> feedbacks = new ArrayList<>();
+        feedbacks.add(new Feedback("Hardcoded feedback", new User()));
+        feedbacks.add(new Feedback("Hardcoded feedback 2", new User()));
+        feedbacks.add(new Feedback("Hardcoded feedback 3", new User()));
+        model.addAttribute("feedbacks", feedbacks);
+        return "feedbackView";
         }
 
         @PostMapping("/submit")

@@ -16,8 +16,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import comp31.a2.model.entities.Product;
 import comp31.a2.services.ProductService;
 
-
-
 @Controller
 @RequestMapping("/products")
 public class ProductController {

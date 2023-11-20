@@ -1,14 +1,14 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Feedback List</title>
-</head>
+<html>
 <body>
-    <form action="/submitFeedback" method="post">
-        <textarea name="feedbackMessage" required></textarea>
-        <input type="hidden" name="userId" value="USER_ID_HERE">
-        <button type="submit">Submit Feedback</button>
-    </form>    
+<h1>Feedbacks!</h1>
+<div>
+    1
+    <ul>
+        <li th:each="feedback : ${feedbacks}">
+            <span th:text="${feedback.user.name}">User Name</span>: 
+            <span th:text="${feedback.feedbackMessage}">Feedback</span>
+        </li>
+    </ul>
+</div>
 </body>
 </html>

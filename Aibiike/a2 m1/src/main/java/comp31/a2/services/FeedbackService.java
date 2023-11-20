@@ -20,4 +20,14 @@ public class FeedbackService {
     public List<Feedback> getAllFeedbacks() {
         return feedbackRepository.findAll();
     }
+
+    public List<Feedback> findByUserId(Long userId) {
+        return feedbackRepository.findByUserId(userId);
+    }
+
+    public void saveFeedback(Feedback feedback) {
+    }
+
+    public void save(Feedback feedback) {
+    }
 }

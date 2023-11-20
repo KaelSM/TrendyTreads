@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Feedback List</title>
+</head>
+<body>
+    <form action="/submitFeedback" method="post">
+        <textarea name="feedbackMessage" required></textarea>
+        <input type="hidden" name="userId" value="USER_ID_HERE">
+        <button type="submit">Submit Feedback</button>
+    </form>    
+</body>
+</html>

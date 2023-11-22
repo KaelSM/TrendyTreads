@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>Checkout Page</h1>
+    <button><a href="/uc1">Use Case 1</a></button>
+
+
+    <body>
+        <h1>Checkout Page</h1>
+        <form action="/checkout" method="post">
+            <label for="address">Address:</label>
+            <input type="text" id="address" name="address" th:field="${orders.address}"/>
+            <br/>
+            <label for="city">City:</label>
+            <input type="text" id="city" name="city" th:field="${orders.city}"/>
+            <br/>
+            <label for="country">Country:</label>
+            <input type="text" id="country" name="country" th:field="${orders.country}"/>
+            <br/>
+            <label for="cardNumber">Card Number:</label>
+            <input type="text" id="cardNumber" name="cardNumber" th:field="${orders.cardNumber}"/>
+            <br/>
+            <label for="holderName">Holder Name:</label>
+            <input type="text" id="holderName" name="holderName" th:field="${orders.holderName}"/>
+            <br/>
+            <label for="expiryDate">Expiry Date:</label>
+            <input type="text" id="expiryDate" name="expiryDate" th:field="${orders.expiryDate}"/>
+            <br/>
+            
+            <button type="submit">Confirm Order</button>
+        </form>
+</body>
+
+</html>

@@ -1,6 +1,9 @@
 package comp31.database_demo.repos;
 
 import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
 import comp31.database_demo.model.Order;
@@ -20,18 +23,23 @@ import comp31.database_demo.model.Order;
  *  
  * */
 
-
 public interface OrderRepo extends CrudRepository<Order, Integer>{
-
-    
-    void addOrderById(Integer id);
-    void addOrderByIdAndUserId(Integer id, Integer userId);
-    void addOrderByIdAndUserIdAndCartItemId(Integer id, Integer userId, Integer cartItemId);
-    
+    //void addOrderById(Integer id);
+    //void addOrderByIdAndUserId(Integer id, Integer userId);
+    //void addOrderByIdAndUserIdAndCartItemId(Integer id, Integer userId, Integer cartItemId);
     List<Order> findAll();
     List<Order> findAllByUserId(Integer userId);
+    //List<Order> findAllByCartItemAndUserId (Integer cartItemId, Integer userId);
+    //List<Order> findAllByUserIdAndCartItemId(Integer userId, Integer cartItemId); 
+    List<Order> findByPaypalId(String paypalId); 
+
+    // If you need to find orders by CartItem ID, you'll need a custom query
+    @Query("SELECT o FROM Order o JOIN o.cartItems c WHERE c.id = :cartItemId")
     List<Order> findAllByCartItemId(Integer cartItemId);
-    List<Order> findAllByCartItemAndUserId (Integer cartItemId, Integer userId);
-    List<Order> findAllByUserIdAndCartItemId(Integer userId, Integer cartItemId); 
-    List<Order> findByPaypalId(String paypalId); //
+
+    @Query("SELECT o FROM Order o JOIN o.cartItems c WHERE c.id = :cartItemId AND o.user.id = :userId")
+    List<Order> findAllByCartItemIdAndUserId(Integer cartItemId, Integer userId);
+
+    @Query("SELECT o FROM Order o JOIN o.cartItems c WHERE o.user.id = :userId AND c.id = :cartItemId")
+    List<Order> findAllByUserIdAndCartItemId(Integer userId, Integer cartItemId);
 }

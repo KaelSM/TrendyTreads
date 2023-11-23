@@ -1,6 +1,7 @@
 package comp31.database_demo.services;
 
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import comp31.database_demo.model.Product;
 import comp31.database_demo.repos.ProductRepo;
@@ -19,9 +20,9 @@ import java.util.Optional;
 
 @Service
 public class ProductService {
-    private final ProductRepo productRepository;
+    @Autowired
+    private ProductRepo productRepository;
 
-    
     public ProductService(ProductRepo productRepository) {
         this.productRepository = productRepository;
     }
@@ -36,13 +37,16 @@ public class ProductService {
         return productRepository.findByBrand(brand);
     }
 
-    public Product saveProduct(Product product) {
+    public Product addProduct(String brand, String type, String description, String category) {
+        Product product = new Product();
+        product.setBrand(brand);
+        product.setType(type);
+        product.setDescription(description);
+        product.setCategory(category);
         return productRepository.save(product);
     }
 
     public void deleteProduct(Integer id) {
         productRepository.deleteById(id);
     }
-
-    
 }

@@ -1,5 +1,9 @@
 package comp31.database_demo.services;
 
+import java.util.List;
+
+import org.apache.el.stream.Optional;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import comp31.database_demo.model.CartItem;
 import comp31.database_demo.repos.CartItemRepo;
@@ -13,18 +17,36 @@ import comp31.database_demo.repos.CartItemRepo;
 
 @Service
 public class CartItemService {
-    private final CartItemRepo CartItemRepo;
+    
+    @Autowired
+    private CartItemRepo cartItemRepo;
 
-    public CartItemService(CartItemRepo CartItemRepo) {
-        this.CartItemRepo = CartItemRepo;
+    public List<CartItem> getCartItemsByStatus(String status) {
+        return cartItemRepo.findByStatus(status);
     }
 
-    public CartItem saveCartItem(CartItem cartItem) {
-        return CartItemRepo.save(cartItem);
+    public CartItem addOrUpdateCartItem(CartItem cartItem) {
+        return cartItemRepo.save(cartItem);
     }
 
-    public void deleteCartItem(Integer cartItemId) {
-        CartItemRepo.deleteById(cartItemId);
+    public void removeCartItemsByStatus(String status) {
+        // Fetch items and remove them
+        List<CartItem> items = cartItemRepo.findByStatus(status);
+        cartItemRepo.deleteAll(items);
     }
 
+
+
+    public CartItem updateCartItemStatus(Integer cartItemId, String newStatus) {
+        Optional<CartItem> cartItemOptional = cartItemRepo.findById(cartItemId);
+        if (cartItemOptional.isPresent()) {
+            CartItem cartItem = cartItemOptional.get();
+            cartItem.setStatus(newStatus);
+            return cartItemRepo.save(cartItem);
+        }
+        // Handle the case where CartItem is not found
+        // This might involve throwing an exception or returning null
+    }
+
+    // Additional methods as needed
 }

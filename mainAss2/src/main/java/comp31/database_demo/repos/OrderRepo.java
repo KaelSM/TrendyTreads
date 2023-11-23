@@ -32,6 +32,6 @@ public interface OrderRepo extends CrudRepository<Order, Integer>{
     List<Order> findAllByUserId(Integer userId);
     List<Order> findAllByCartItemId(Integer cartItemId);
     List<Order> findAllByCartItemAndUserId (Integer cartItemId, Integer userId);
-    List<Order> findAllByUserIdAndCartItemId(Integer userId, Integer cartItemId);
-    List<Order> findByPaypalId(String paypalId);
+    List<Order> findAllByUserIdAndCartItemId(Integer userId, Integer cartItemId); 
+    List<Order> findByPaypalId(String paypalId); //
 }

@@ -23,5 +23,5 @@ public interface ProductRepo extends CrudRepository<Product, Integer> {
     List<Product> findByType(String type);
     void removeByBrand(String brand);
     void removeById(int id);
-    void addProductByBrandAndTypeAndDescriptionAndCategory(String brand, String type, String description, String category);
+    void save(String brand, String type, String description, String category);
 }

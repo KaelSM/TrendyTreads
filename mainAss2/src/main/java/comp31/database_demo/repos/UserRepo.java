@@ -18,11 +18,7 @@ import comp31.database_demo.model.User;
 public interface UserRepo extends CrudRepository<User, Integer>{
     
     List<User> findAll();
-    void removeById(Integer id);
-    void addUserByName(String name);
-    void removeByUserName(String userName);
-    void addUserByNameAndUserNameAndEmail(String name, String userName, String email);
-    void addUserByNameAndUserNameAndEmailAndPhoneAndAddress(String name, String userName,
-                                             String email, String phone, String address);    
+    void deleteById(Integer id);
+    User findByUserName(String userName);    
 
 }

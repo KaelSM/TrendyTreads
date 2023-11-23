@@ -4,6 +4,7 @@ import java.util.List;
 import org.springframework.data.repository.CrudRepository;
 
 import comp31.database_demo.model.CartItem;
+import comp31.database_demo.model.Product;
 
 /***
  * CartItemRepo is an interface that extends CrudRepository
@@ -20,6 +21,7 @@ import comp31.database_demo.model.CartItem;
 public interface CartItemRepo extends CrudRepository<CartItem, Integer>{
     List<CartItem> findAll();
     List<CartItem>  findByStatusCartItems(String status);
+    List<CartItem> findByNameAndProduct (String name, Product product );
     String updateByStatus (String status);
     String updateByStatusAndProductId (String status, Integer productId);
     void removeByStatus(String status);

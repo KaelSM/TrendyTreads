@@ -29,7 +29,9 @@ public class ProductService {
     public Optional<Product> getProductById(Integer id) {
         return productRepository.findById(id);
     }
-
+    public List<Product> getAllProducts() {
+        return productRepository.findAll();
+    }
     public List<Product> getProductsByBrand(String brand) {
         return productRepository.findByBrand(brand);
     }
@@ -42,7 +44,5 @@ public class ProductService {
         productRepository.deleteById(id);
     }
 
-    public List<Product> getAllProducts() {
-        return null;
-    } 
+    
 }

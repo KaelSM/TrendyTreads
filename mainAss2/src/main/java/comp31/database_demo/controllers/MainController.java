@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import comp31.database_demo.model.*;
 import comp31.database_demo.services.*;
 
-import java.util.ArrayList;
+
 import java.util.List;
 
 @Controller
@@ -29,22 +29,10 @@ public class MainController {
     }
     
     // BEGIN: be15d9bcejpp
-    @GetMapping("/products")
+    @GetMapping("/product")
     public String getProducts(Model model) {
-        List<Product> products = new ArrayList<>();
-        
-        // Create shoe products
-        Product shoe1 = new Product("Shoe 1", "Description 1", "Shoe", "boots");
-
-        
-        // Add shoes to the list
-        products.add(shoe1);
-
-        
+       List<Product> products = productService.getAllProducts();
         model.addAttribute("products", products);
-        
         return "products";
     }
-  
-
 }

@@ -34,10 +34,10 @@ import lombok.ToString;
  *
  */
 
-@Entity
-@Data
-@NoArgsConstructor
-@Table(name = "\"ORDER\"")
+ @Entity
+ @Data
+ @NoArgsConstructor
+ @Table(name = "orders")
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -45,15 +45,21 @@ public class Order {
 
     @ManyToOne
     @JoinColumn(name = "user_id") // Foreign key column in Order table for User
-    @ToString.Exclude // to prevent circular reference in Lombok's toString()
     private User user; // Each order is associated with one user
 
+    @NotNull
     private String createdAt;
+    @NotBlank
     private Integer numItem; // This can be calculated from CartItems
+    @NotBlank
     private String address;
+    @NotBlank
     private String city;
+    @NotBlank
     private String country;
+    @NotBlank
     private String status;
+    @NotBlank
     private String paypalId;
 
     @OneToMany(mappedBy = "order")
@@ -74,7 +80,9 @@ public class Order {
         this.paypalId = paypalId;
     }
 
-    
+    public Integer getNumItem() {
+        return cartItems != null ? cartItems.size() : 0;
+    }
 
 
 }

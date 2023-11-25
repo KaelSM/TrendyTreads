@@ -1,5 +1,6 @@
 package comp31.database_demo.repos;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,26 +26,62 @@ import comp31.database_demo.model.Order;
  * */
 
 public interface OrderRepo extends CrudRepository<Order, Integer>{
-    //void addOrderById(Integer id);
-    //void addOrderByIdAndUserId(Integer id, Integer userId);
-    //void addOrderByIdAndUserIdAndCartItemId(Integer id, Integer userId, Integer cartItemId);
-    List<Order> findAll();
-    List<Order> findAllByUserId(Integer userId);
-    
-    //List<Order> findAllByCartItemAndUserId (Integer cartItemId, Integer userId);
-    //List<Order> findAllByUserIdAndCartItemId(Integer userId, Integer cartItemId); 
-    List<Order> findByPaypalId(String paypalId); 
+    List<Order> findByUserId(Integer userId);
+    List<Order> findByPaypalId(String paypalId);
 
-    // If you need to find orders by CartItem ID, you'll need a custom query
     @Query("SELECT o FROM Order o JOIN o.cartItems c WHERE c.id = :cartItemId")
-    List<Order> findAllByCartItemId(Integer cartItemId);
+    List<Order> findAllByCartItemId(@Param("cartItemId") Integer cartItemId);
 
-    @Query("SELECT o FROM Order o JOIN o.cartItems c WHERE c.id = :cartItemId AND o.user.id = :userId")
-    List<Order> findAllByCartItemIdAndUserId(Integer cartItemId, Integer userId);
+    @Query("SELECT o FROM Order o WHERE o.user.id = :userId AND :cartItemId MEMBER OF o.cartItems")
+    List<Order> findAllByUserIdAndCartItemId(@Param("userId") Integer userId, @Param("cartItemId") Integer cartItemId);
 
+     List<Order> findByStatus(String status);
 
-    @Query("SELECT o FROM Order o JOIN o.cartItems c WHERE o.user.id = :userId AND c.id = :cartItemId")
-    List<Order> findAllByUserIdAndCartItemId(Integer userId, Integer cartItemId);
+    @Modifying
+    @Query("UPDATE Order o SET o.status = :status WHERE o.id = :id")
+    void updateOrderStatus(@Param("id") Integer id, @Param("status") String status);
+
+    @Query("SELECT o FROM Order o WHERE o.createdAt BETWEEN :startDate AND :endDate")
+    List<Order> findOrdersBetweenDates(@Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
+
+    int countByUserId(Integer userId);
+
+    @Modifying
+    @Query("DELETE FROM Order o WHERE o.status = :status")
+    void deleteOrdersByStatus(@Param("status") String status);
+
+    @Query("SELECT SUM(o.totalPrice) FROM Order o WHERE o.createdAt BETWEEN :startDate AND :endDate")
+    Double calculateTotalSales(@Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
+
+    @Query("SELECT AVG(o.totalPrice) FROM Order o WHERE o.createdAt BETWEEN :startDate AND :endDate")
+    Double findAverageOrderValue(@Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
+
+    @Query("SELECT o FROM Order o JOIN o.cartItems c WHERE c.product.id = :productId")
+    List<Order> findByProductId(@Param("productId") Integer productId);
+
+    @Query("SELECT COUNT(o) FROM Order o WHERE o.user.id = :userId AND o.status = :status")
+    int countByUserIdAndStatus(@Param("userId") Integer userId, @Param("status") String status);
+
+    @Query("SELECT o FROM Order o WHERE o.user.id = :userId ORDER BY o.createdAt DESC")
+    List<Order> findRecentOrdersByUserId(@Param("userId") Integer userId, @Param("limit") int limit);
+
+    @Modifying
+    @Query("UPDATE Order o SET o.status = :status WHERE o.id IN :orderIds")
+    void bulkUpdateOrderStatus(@Param("orderIds") List<Integer> orderIds, @Param("status") String status);
+
+    @Query("SELECT COUNT(o) FROM Order o WHERE o.createdAt = :date")
+    int countByDate(@Param("date") LocalDate date);
+
+    @Query("SELECT o FROM Order o JOIN o.cartItems c WHERE c.quantity > :quantity")
+    List<Order> findOrdersWithItemQuantityGreaterThan(@Param("quantity") Integer quantity);
+
+    List<Order> findByTotalPriceBetween(Double minPrice, Double maxPrice);
+
+    @Query("SELECT o.user.id, COUNT(o) FROM Order o GROUP BY o.user.id ORDER BY COUNT(o) DESC")
+    List<Object[]> findMostFrequentBuyers();
+
+    @Query("SELECT SUM(o.totalPrice) FROM Order o WHERE o.createdAt BETWEEN :startDate AND :endDate")
+    Double calculateTotalSalesByDateRange(@Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
 
 
 }

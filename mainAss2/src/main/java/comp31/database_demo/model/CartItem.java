@@ -32,11 +32,18 @@ public class CartItem {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
+    @NotNull
     private String name;
+    @NotNull
+    @Min(1)
     private Integer quantity;
+    @NotNull
     private Integer price;
+    @NotNull
     private Double size;
+    @NotNull
     private String color;
+    @NotNull
     private String status;
 
     @ManyToOne
@@ -59,5 +66,20 @@ public class CartItem {
         this.status = status;
         this.product = product;
         this.order = order;
+    }
+
+    @Override
+    public String toString() {
+        return "CartItem{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", quantity=" + quantity +
+                ", price=" + price +
+                ", size='" + size + '\'' +
+                ", color='" + color + '\'' +
+                ", status='" + status + '\'' +
+                ", product=" + (product != null ? product.getId() : null) +
+                ", order=" + (order != null ? order.getId() : null) +
+                '}';
     }
 }

@@ -51,13 +51,13 @@ public class CartItemService {
     }
 
     public int getQuantityByItemIdAndStatus(Integer itemId, String status) {
-        return cartItemRepo.getQuantityByProductIdAndStatus(itemId, status);}
+        return cartItemRepo.getTotalQuantityByProductIdAndStatus(itemId, status);}
 
      public Double getTotalPriceByStatus(String status) {
         return cartItemRepo.getTotalPriceByStatus(status);
     }
-    public List<CartItem> findByNameAndProduct(String name, Product product) {
-        return cartItemRepo.findByNameAndProduct(name,product);
+    public List<CartItem> findByProductBrand(String brand, Product product) {
+        return cartItemRepo.findByProductBrand(brand,product);
     }
     
 }

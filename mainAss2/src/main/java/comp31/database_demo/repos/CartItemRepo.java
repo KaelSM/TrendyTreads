@@ -45,7 +45,7 @@ public interface CartItemRepo extends CrudRepository<CartItem, Integer>{
     List<CartItem> findByPriceBetween(Double minPrice, Double maxPrice);
 
      @Query("SELECT c FROM CartItem c WHERE c.product.brand = :brand")
-    List<CartItem> findByProductBrand(@Param("brand") String brand);
+    List<CartItem> findByProductBrand(@Param("brand") String brand, Product product);
 
     @Modifying
     @Query("UPDATE CartItem c SET c.quantity = :quantity WHERE c.id = :id")

@@ -27,8 +27,9 @@ import comp31.database_demo.model.Order;
  * */
 
 public interface OrderRepo extends CrudRepository<Order, Integer>{
-    List<Order> findByUserId(Integer userId);
+    List<Order> findAllByUserId(Integer userId);
     List<Order> findByPaypalId(String paypalId);
+    List<Order> findAll();
 
     @Query("SELECT o FROM Order o JOIN o.cartItems c WHERE c.id = :cartItemId")
     List<Order> findAllByCartItemId(@Param("cartItemId") Integer cartItemId);

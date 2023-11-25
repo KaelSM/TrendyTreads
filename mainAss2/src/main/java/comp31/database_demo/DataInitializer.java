@@ -1,5 +1,8 @@
 package comp31.database_demo;
 
+import java.util.List;
+import java.util.Random;
+
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 import comp31.database_demo.model.*;
@@ -57,6 +60,22 @@ import comp31.database_demo.repos.*;
         userRepo.save(adminUser);
         userRepo.save(authUser);
         userRepo.save(guestUser);
+
+        Random random = new Random();
+        List<User> users = userRepo.findAll(); // Assuming you have a method to get all users
+        List<Product> products = productRepo.findAll(); // Assuming you have a method to get all products
+
+        for (Product product : products) {
+            for (User user : users) {
+                Feedback feedback = new Feedback("Feedback for " + product.getBrand() + " by " + user.getUsername(), 
+                                                 random.nextInt(5) + 1, // Random rating from 1 to 5
+                                                 user, product);
+                feedbackRepo.save(feedback);
+                System.out.println("Created Feedback for Product: " + product.getBrand() + " by User: " + user.getUsername());
+            }
+        }
+
+        
     }
 }
     

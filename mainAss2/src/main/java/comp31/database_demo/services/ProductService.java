@@ -27,12 +27,30 @@ public class ProductService {
         this.productRepository = productRepository;
     }
 
+    public Product addProduct(Product product) {
+        return productRepository.save(product);
+    }
+
+    public Product updateProduct(Integer productId, Product productDetails) {
+        Product product = productRepository.findById(productId)
+                          .orElseThrow(() -> new RuntimeException("Product not found"));
+                          
+        product.setBrand(productDetails.getBrand());
+        product.setType(productDetails.getType());
+        product.setDescription(productDetails.getDescription());
+        product.setCategory(productDetails.getCategory());
+
+        return productRepository.save(product);
+    }
+
     public Optional<Product> getProductById(Integer id) {
         return productRepository.findById(id);
     }
+
     public List<Product> getAllProducts() {
         return productRepository.findAll();
     }
+
     public List<Product> getProductsByBrand(String brand) {
         return productRepository.findByBrand(brand);
     }
@@ -49,4 +67,6 @@ public class ProductService {
     public void deleteProduct(Integer id) {
         productRepository.deleteById(id);
     }
+
+    
 }

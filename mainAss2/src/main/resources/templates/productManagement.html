@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Product Management</title>
+    <!-- Add required CSS files -->
+</head>
+<body>
+    <h1>Product Management</h1>
+
+    <!-- Form for adding a new product -->
+    <form action="#" th:action="@{/admin/addProduct}" method="post">
+        <input type="text" name="brand" placeholder="Brand" required>
+        <input type="text" name="type" placeholder="Type" required>
+        <input type="text" name="description" placeholder="Description" required>
+        <input type="text" name="category" placeholder="Category" required>
+        <button type="submit">Add Product</button>
+    </form>
+
+    <!-- List of existing products -->
+    <table>
+        <thead>
+            <tr>
+                <th>Brand</th>
+                <th>Type</th>
+                <th>Description</th>
+                <th>Category</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="product : ${products}">
+                <td th:text="${product.brand}">Brand</td>
+                <td th:text="${product.type}">Type</td>
+                <td th:text="${product.description}">Description</td>
+                <td th:text="${product.category}">Category</td>
+                <td>
+                    <!-- Update and Delete buttons -->
+                    <a th:href="@{/admin/updateProduct/{id}(id=${product.id})}">Update</a>
+                    <a th:href="@{/admin/deleteProduct/{id}(id=${product.id})}">Delete</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+</body>
+</html>

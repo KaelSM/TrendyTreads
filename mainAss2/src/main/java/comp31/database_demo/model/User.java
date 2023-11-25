@@ -38,7 +38,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
     private String name;
-    private String userName;
+    private String username;
     private String email;
     private String password;
     private String address;
@@ -56,14 +56,21 @@ public class User {
     @ToString.Exclude // to prevent circular reference in Lombok's toString()
     List<Feedback> feedbacks;
     
-    public User(String name, String userName, String email, String password, String address, String phone, String role, String status) {
+    public User(String name, String username, String email, String password, String address, String phone, String role, String status) {
         this.name = name;
-        this.userName = userName;
+        this.username = username;
         this.email = email;
         this.password = password;
         this.address = address;
         this.phone = phone;
         this.role = role;
         this.status = status;
+    }
+
+    public String getUsername() {
+        if (username != null) {
+            return username;
+        }
+        return null;
     }
 }

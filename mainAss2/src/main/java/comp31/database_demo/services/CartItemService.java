@@ -1,8 +1,14 @@
 package comp31.database_demo.services;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import comp31.database_demo.model.CartItem;
 import comp31.database_demo.repos.CartItemRepo;
+import jakarta.persistence.EntityNotFoundException;
+
+import java.util.Optional;
 
 /*
  * CartItemService is a service class that handles the business logic for the CartItem model
@@ -13,18 +19,42 @@ import comp31.database_demo.repos.CartItemRepo;
 
 @Service
 public class CartItemService {
-    private final CartItemRepo CartItemRepo;
+    
+    @Autowired
+    private CartItemRepo cartItemRepo;
 
-    public CartItemService(CartItemRepo CartItemRepo) {
-        this.CartItemRepo = CartItemRepo;
+    public List<CartItem> getCartItemsByStatus(String status) {
+        return cartItemRepo.findByStatus(status);
     }
 
-    public CartItem saveCartItem(CartItem cartItem) {
-        return CartItemRepo.save(cartItem);
+    public CartItem addOrUpdateCartItem(CartItem cartItem) {
+        return cartItemRepo.save(cartItem);
     }
 
-    public void deleteCartItem(Integer cartItemId) {
-        CartItemRepo.deleteById(cartItemId);
+    public void removeCartItemsByStatus(String status) {
+        // Fetch items and remove them
+        List<CartItem> items = cartItemRepo.findByStatus(status);
+        cartItemRepo.deleteAll(items);
     }
 
+    public CartItem updateCartItemStatus(Integer cartItemId, String newStatus) {
+        Optional<CartItem> cartItemOptional = cartItemRepo.findById(cartItemId);
+        if (cartItemOptional.isPresent()) {
+            // If cart item is found, update its status
+            CartItem cartItem = cartItemOptional.get();
+            cartItem.setStatus(newStatus);
+            return cartItemRepo.save(cartItem); // Save the updated cart item
+        } else {
+            throw new EntityNotFoundException("CartItem not found with ID: " + cartItemId);
+        }
+    }
+
+    public int getQuantityByItemIdAndStatus(Integer itemId, String status) {
+        return cartItemRepo.getQuantityByProductIdAndStatus(itemId, status);}
+
+     public Double getTotalPriceByStatus(String status) {
+        return cartItemRepo.getTotalPriceByStatus(status);
+    }
+
+    
 }

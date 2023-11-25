@@ -1,6 +1,7 @@
 package comp31.database_demo.services;
 
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import comp31.database_demo.model.Product;
 import comp31.database_demo.repos.ProductRepo;
@@ -19,24 +20,47 @@ import java.util.Optional;
 
 @Service
 public class ProductService {
-    private final ProductRepo productRepository;
+    @Autowired
+    private ProductRepo productRepository;
 
-    
     public ProductService(ProductRepo productRepository) {
         this.productRepository = productRepository;
+    }
+
+    public Product addProduct(Product product) {
+        return productRepository.save(product);
+    }
+
+    public Product updateProduct(Integer productId, Product productDetails) {
+        Product product = productRepository.findById(productId)
+                          .orElseThrow(() -> new RuntimeException("Product not found"));
+                          
+        product.setBrand(productDetails.getBrand());
+        product.setType(productDetails.getType());
+        product.setDescription(productDetails.getDescription());
+        product.setCategory(productDetails.getCategory());
+
+        return productRepository.save(product);
     }
 
     public Optional<Product> getProductById(Integer id) {
         return productRepository.findById(id);
     }
+
     public List<Product> getAllProducts() {
         return productRepository.findAll();
     }
+
     public List<Product> getProductsByBrand(String brand) {
         return productRepository.findByBrand(brand);
     }
 
-    public Product saveProduct(Product product) {
+    public Product addProduct(String brand, String type, String description, String category) {
+        Product product = new Product();
+        product.setBrand(brand);
+        product.setType(type);
+        product.setDescription(description);
+        product.setCategory(category);
         return productRepository.save(product);
     }
 

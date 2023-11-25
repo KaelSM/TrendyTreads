@@ -3,6 +3,8 @@ package comp31.database_demo.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import comp31.database_demo.model.Feedback;
 import comp31.database_demo.model.Product;
 import comp31.database_demo.repos.ProductRepo;
 
@@ -67,6 +69,9 @@ public class ProductService {
     public void deleteProduct(Integer id) {
         productRepository.deleteById(id);
     }
+
+    
+
 
     
 }

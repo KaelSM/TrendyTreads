@@ -1,5 +1,8 @@
 package comp31.database_demo.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.antlr.v4.runtime.misc.NotNull;
 
 import jakarta.persistence.Entity;
@@ -51,4 +54,10 @@ public class Feedback {
         this.rating = rating;
         this.product = product;
     }
+    public List<User> getUser(User userId) {
+        List<User> user = new ArrayList<User>();
+        return user;
+        
+    }
+
 }

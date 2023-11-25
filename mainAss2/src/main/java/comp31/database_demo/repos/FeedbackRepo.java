@@ -8,6 +8,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
 import comp31.database_demo.model.Feedback;
+import comp31.database_demo.model.User;
 
 /***
  * FeedbackRepo is an interface that extends CrudRepository
@@ -22,7 +23,7 @@ import comp31.database_demo.model.Feedback;
  * */
 
 public interface FeedbackRepo extends CrudRepository<Feedback, Integer>{
-    List<Feedback> findByUserId(Integer userId);
+    List<Feedback> findByUserId(User userId);
     List<Feedback> findByProductId(Integer productId);
     List<Feedback> findByUserIdAndProductId(Integer userId, Integer productId);
     List<Feedback> findByRating(Integer rating);

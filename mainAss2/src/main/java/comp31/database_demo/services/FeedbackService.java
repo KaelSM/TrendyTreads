@@ -4,6 +4,7 @@ package comp31.database_demo.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import comp31.database_demo.model.Feedback;
+import comp31.database_demo.model.User;
 import comp31.database_demo.repos.FeedbackRepo;
 
 import java.util.List;
@@ -32,7 +33,7 @@ public class FeedbackService {
         return feedbackRepo.findById(id);
     }
 
-    public List<Feedback> getFeedbackByUserId(Integer userId) {
+    public List<Feedback> getFeedbackByUserId(User userId) {
         return feedbackRepo.findByUserId(userId);
     }
 
@@ -50,5 +51,9 @@ public class FeedbackService {
 
     public void updateFeedback(Feedback feedback) {
         feedbackRepo.save(feedback);
+    }
+
+    public List<Feedback> getFeedbackByBrand(String brand) {
+        return null;
     }
 }

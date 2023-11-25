@@ -35,22 +35,41 @@ public class MainController {
     }
     
     // BEGIN: be15d9bcejpp
-    @GetMapping("/product")
+    @GetMapping("/products")
     public String getProducts(@RequestParam(value = "productName", required = false) String productName, Model model) {
-    List<Product> products;
+        List<Product> products;
 
-    if (productName != null && !productName.isEmpty()) {
-        // Assuming you have a method in productService to get products by name
-        products = productService.getProductsByBrand(productName);
-    } else {
-        products = productService.getAllProducts();
+        if (productName != null && !productName.isEmpty()) {
+            products = productService.getProductsByName(productName);
+        } else {
+            products = productService.getAllProducts();
+        }
+
+        model.addAttribute("products", products);
+        return "productPage"; // Change to the name of your desired Thymeleaf template
     }
 
-    model.addAttribute("products", products);
-    return "product"; // Change to the name of your desired Thymeleaf template
+    @GetMapping("/product/{productId}")
+    public String productPage(@PathVariable Integer productId, Model model) {
+   
+        Optional<Product> product = productService.getProductById(productId);
+
+        if (product.isPresent()) {
+        
+            List<Feedback> feedbacks = feedbackService.getFeedbackByProductId(productId);
+
+            model.addAttribute("product", product.get());
+            model.addAttribute("feedbacks", feedbacks);
+
+            return "product"; // name of your product page HTML file
+        } else {
+            // Handle the case where the product is not found
+            return "productNotFound"; // Create an HTML template for this case
+        }
     }
     
-    @GetMapping("/signin")
+
+   @GetMapping("/signin")
     public String showSignInForm(Model model) {
         model.addAttribute("user", new User());
         return "signin";
@@ -58,7 +77,6 @@ public class MainController {
 
     @PostMapping("/signin")
     public String processSignIn(@ModelAttribute("user") User user) {
-    
         if (user.getUsername().equals("admin") && user.getPassword().equals("admin")) {
             // If the user is admin, redirect to the admin page
             return "redirect:/admin";
@@ -75,81 +93,63 @@ public class MainController {
     }
 
     @PostMapping("/signup")
-    public String processSignUp(@ModelAttribute("user") User user) {
+    public String processSignUp(@ModelAttribute("user") User user, Model model) {
         // Save the user to the database
+        userService.saveUser(user);
+        
+        // Add a success message to the model
+        model.addAttribute("message", "User signed up successfully");
+        
         return "redirect:/home";
     }
 
-    @GetMapping("/product/{brand}")
-public String productPage(@PathVariable String brand, Model model) {
-    // Load product data (assuming you have a method for this)
-    List<Product> products = productService.getProductsByBrand(brand);
-
-    // Load feedbacks for the product
-    List<Feedback> feedbacks = feedbackService.getFeedbackByBrand(brand);
-
-    // Add product and feedbacks to the model
-    model.addAttribute("products", products);
-    model.addAttribute("feedbacks", feedbacks);
-
-    return "productPage"; // name of your product page HTML file
-}
-
-    @PostMapping("/product/{brand}")
-    public String postProductPage(@PathVariable Integer productId, Model model) {
-        // Load product data (assuming you have a method for this)
-        Optional<Product> products = productService.getProductById(productId);
-
-        // Load feedbacks for the product
-        List<Feedback> feedbacks = feedbackService.getFeedbackByProductId(productId);
-
-        // Add product and feedbacks to the model
-        model.addAttribute("products", products);
-        model.addAttribute("feedbacks", feedbacks);
-
-        return "redirect:productPage"; // name of your product page HTML file
+    @GetMapping("/admin")
+    public String adminPage(Model model) {
+        List<User> users = userService.getAllUsers();
+        model.addAttribute("users", users);
+        return "admin";
     }
 
 
     @PostMapping("/addProduct")
-    public String addProduct(@ModelAttribute Product product, Model model) {
-        productService.addProduct(product);
-        model.addAttribute("message", "Product added successfully");
-        return "productManagement"; // Return to the management page
-    }
+public String addProduct(@ModelAttribute Product product, Model model) {
+    productService.addProduct(product);
+    model.addAttribute("message", "Product added successfully");
+    return "redirect:/products"; // Redirect to the products page
+}
+
 
     @PostMapping("/updateProduct/{productId}")
     public String updateProduct(@PathVariable Integer productId, @ModelAttribute Product product, Model model) {
         productService.updateProduct(productId, product);
         model.addAttribute("message", "Product updated successfully");
-        return "productManagement";
+        return "redirect:/productManagement";
     }
 
     @GetMapping("/deleteProduct/{productId}")
     public String deleteProduct(@PathVariable Integer productId, Model model) {
         productService.deleteProduct(productId);
         model.addAttribute("message", "Product deleted successfully");
-        return "productManagement";
+        return "redirect:/productManagement";
     }
 
-    @GetMapping("/cart/{orderId}")
-    public String viewCart(@PathVariable Integer orderId, Model model )
-    {
+   @GetMapping("/cart/{orderId}")
+    public String viewCart(@PathVariable Integer orderId, Model model) {
         List<CartItem> cartItems = cartItemService.getCartItemsByStatus("available");
         model.addAttribute("cartItems", cartItems);
         return "cart";
     }
 
-      @PostMapping("/cart/add/{orderId}/{itemId}")
-    public String addOrUpdateCartItems(@PathVariable int orderId, @PathVariable int numItem) {
+    @PostMapping("/cart/add/{orderId}")
+    public String addOrUpdateCartItems(@PathVariable int orderId, @RequestParam("numItem") int numItem) {
         orderService.addOrUpdateCartItems(orderId, numItem);
         return "redirect:/cart/" + orderId;
     }
 
-    @PostMapping("/cart/remove/{orderId}/{itemId}")
-    public String removeCartItems(@PathVariable int orderId, @PathVariable int numItem) {
-        orderService.removeCartItems(orderId, numItem);
-        return "redirect:/cart/" + orderId;
+    @PostMapping("/cart/remove/{orderId}")
+    public String removeCartItems(@PathVariable int orderId, @RequestParam("numItem") int numItem) {
+    orderService.removeCartItems(orderId, numItem);
+    return "redirect:/cart/" + orderId;
     }
 
     @PostMapping("/cart/checkout/{orderId}")

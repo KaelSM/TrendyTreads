@@ -23,5 +23,4 @@ public interface FeedbackRepo extends CrudRepository<Feedback, Integer>{
     List<Feedback> findByProductId(Integer productId);
     List<Feedback> findByUserIdAndProductId(Integer userId, Integer productId);
     List<Feedback> findByRating(Integer rating);
-    Feedback updateFeedback( Feedback feedback);
 }

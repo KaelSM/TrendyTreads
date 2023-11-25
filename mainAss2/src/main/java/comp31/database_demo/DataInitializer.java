@@ -6,15 +6,16 @@ import comp31.database_demo.model.*;
 import comp31.database_demo.repos.*;
 
 
+    @Component
+    public class DataInitializer implements CommandLineRunner {
+    // Repositories
+    private final ProductRepo productRepo;
+    private final UserRepo userRepo;
+    private final OrderRepo orderRepo;
+    private final FeedbackRepo feedbackRepo;
+    private final CartItemRepo cartItemRepo;
 
-@Component
-public class DataInitializer implements CommandLineRunner {
-    ProductRepo productRepo;
-    UserRepo userRepo;
-    OrderRepo orderRepo;
-    FeedbackRepo feedbackRepo;
-    CartItemRepo cartItemRepo;
-
+    // Constructor
     public DataInitializer(ProductRepo productRepo, UserRepo userRepo,
                            OrderRepo orderRepo, FeedbackRepo feedbackRepo,
                            CartItemRepo cartItemRepo) {
@@ -24,29 +25,30 @@ public class DataInitializer implements CommandLineRunner {
         this.feedbackRepo = feedbackRepo;
         this.cartItemRepo = cartItemRepo;
     }
-    
- //product 
+
     @Override
     public void run(String... args) throws Exception {
-        Integer nItems = Integer.parseInt(args[0]);
+        // Check if arguments are provided
+        if (args.length == 0) {
+            System.out.println("No arguments provided. Defaulting to 10 items.");
+        }
+
+        // Set default number of items to 10 if no argument is provided
+        Integer nItems = args.length > 0 ? Integer.parseInt(args[0]) : 10;
+
         for (int i = 0; i < nItems; i++) {
-            Product product = new Product("Brand"+i,"type"+i,"description"+i,"category"+i); 
+            // Create products and save them
+            Product product = new Product("Brand" + i, "type" + i, "description" + i, "category" + i);
             productRepo.save(product);
             System.out.println("Created Entity: " + product.getBrand());
-      
-        // Create CartItem
-        String name = "CartItem" + i;
-        Integer quantity = 1;  
-        Integer price = 10 * i;  
-        Double size = 1.0 + i;  
-        String color = "Color" + i;  
-        String status = "Status" + i;  
-        Order order = null;  
 
-        CartItem cartItem = new CartItem(name, quantity, price, size, color, status, product, order);
-        cartItemRepo.save(cartItem);
-        System.out.println("Created CartItem Entity for Product: " + product.getBrand());
-        
+            // Create CartItems
+            CartItem cartItem = new CartItem("CartItem" + i, 1, 10 * i, 1.0 + i, 
+                                             "Color" + i, "Status" + i, product, null);
+            cartItemRepo.save(cartItem);
+            System.out.println("Created CartItem Entity for Product: " + product.getBrand());
+        }
+
         // Create and save Users
         User adminUser = new User("Admin User", "admin", "admin@example.com", "adminPass", "Admin Address", "1234567890", "ADMIN", "ACTIVE");
         User authUser = new User("Auth User", "auth", "auth@example.com", "authPass", "Auth Address", "0987654321", "AUTH", "ACTIVE");
@@ -56,12 +58,6 @@ public class DataInitializer implements CommandLineRunner {
         userRepo.save(authUser);
         userRepo.save(guestUser);
     }
-    }
-
-  
-        
-        
-
-    }
+}
     
 

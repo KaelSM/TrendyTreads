@@ -19,11 +19,17 @@ import comp31.database_demo.model.Product;
  * */
 
 public interface CartItemRepo extends CrudRepository<CartItem, Integer>{
-    List<CartItem> findAll();
+    /*List<CartItem> findAll();
     List<CartItem>  findByStatusCartItems(String status);
     List<CartItem> findByNameAndProduct (String name, Product product );
     String updateByStatus (String status);
     String updateByStatusAndProductId (String status, Integer productId);
     void removeByStatus(String status);
     void addCartItemByProductIdAndStatus(Integer productId, String status);
+    */
+    List<CartItem> findByStatus(String status);
+    List<CartItem> findByNameAndProduct(String name, Product product);
+
+    // If you need to find by Product ID, ensure a corresponding property exists in CartItem
+    List<CartItem> findByProductId(Integer productId);
 }

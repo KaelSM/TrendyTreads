@@ -1,6 +1,8 @@
 package comp31.database_demo.repos;
 
 import java.util.List;
+import java.util.Optional;
+
 import org.springframework.data.repository.CrudRepository;
 
 import comp31.database_demo.model.User;
@@ -19,6 +21,5 @@ public interface UserRepo extends CrudRepository<User, Integer>{
     
     List<User> findAll();
     void deleteById(Integer id);
-    User findByUserName(String userName);    
-
+    Optional<User> findByUsername(String username);
 }

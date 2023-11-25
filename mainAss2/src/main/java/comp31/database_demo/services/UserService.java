@@ -13,26 +13,43 @@ import java.util.Optional;
  * @param deleteUser(Integer id) deletes the user with the given id
  * 
  */
-
 @Service
 public class UserService {
-    private final UserRepo UserRepo;
+    UserRepo userRepo;
 
-    public UserService(UserRepo UserRepo) {
-        this.UserRepo = UserRepo;
+    public UserService(UserRepo userRepo) {
+        this.userRepo = userRepo;
     }
 
     public Optional<User> getUserById(Integer id) {
-        return UserRepo.findById(id);
+        return userRepo.findById(id);
     }    
 
     public User saveUser(User user) {
-        return UserRepo.save(user);
+        return userRepo.save(user);
     }
 
     public void deleteUser(Integer id) {
-        UserRepo.deleteById(id);
+        userRepo.deleteById(id);
     }
 
+    public User registerNewUser(User user) {
+        return saveUser(user);
+    }
+
+    public Optional<User> findByUsername(String username) {
+        return userRepo.findByUsername(username);
+    }
+
+    public User validateUser(String username, String password) {
+        Optional<User> userOptional = userRepo.findByUsername(username);
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+            if (user.getPassword().equals(password)) {
+                return user;
+            }
+        }
+        return null;
+    }
 
 }

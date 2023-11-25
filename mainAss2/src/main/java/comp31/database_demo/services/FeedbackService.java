@@ -36,4 +36,8 @@ public class FeedbackService {
     public List<Feedback> getFeedbackByUserId(Integer userId) {
         return feedbackRepo.findByUserId(userId);
     }
+
+    public List<Feedback> getFeedbackByProductId(Integer productId) {
+        return feedbackRepo.findByProductId(productId);
+    }
 }

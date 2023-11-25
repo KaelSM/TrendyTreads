@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
 
 import comp31.database_demo.model.Order;
 
@@ -29,6 +30,7 @@ public interface OrderRepo extends CrudRepository<Order, Integer>{
     //void addOrderByIdAndUserIdAndCartItemId(Integer id, Integer userId, Integer cartItemId);
     List<Order> findAll();
     List<Order> findAllByUserId(Integer userId);
+    
     //List<Order> findAllByCartItemAndUserId (Integer cartItemId, Integer userId);
     //List<Order> findAllByUserIdAndCartItemId(Integer userId, Integer cartItemId); 
     List<Order> findByPaypalId(String paypalId); 
@@ -40,6 +42,9 @@ public interface OrderRepo extends CrudRepository<Order, Integer>{
     @Query("SELECT o FROM Order o JOIN o.cartItems c WHERE c.id = :cartItemId AND o.user.id = :userId")
     List<Order> findAllByCartItemIdAndUserId(Integer cartItemId, Integer userId);
 
+
     @Query("SELECT o FROM Order o JOIN o.cartItems c WHERE o.user.id = :userId AND c.id = :cartItemId")
     List<Order> findAllByUserIdAndCartItemId(Integer userId, Integer cartItemId);
+
+
 }

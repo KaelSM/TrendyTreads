@@ -48,4 +48,13 @@ public class CartItemService {
             throw new EntityNotFoundException("CartItem not found with ID: " + cartItemId);
         }
     }
+
+    public int getQuantityByItemIdAndStatus(Integer itemId, String status) {
+        return cartItemRepo.getQuantityByProductIdAndStatus(itemId, status);}
+
+     public Double getTotalPriceByStatus(String status) {
+        return cartItemRepo.getTotalPriceByStatus(status);
+    }
+
+    
 }

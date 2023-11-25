@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import comp31.database_demo.model.CartItem;
+import comp31.database_demo.model.Product;
 import comp31.database_demo.repos.CartItemRepo;
 import jakarta.persistence.EntityNotFoundException;
 
@@ -55,6 +56,8 @@ public class CartItemService {
      public Double getTotalPriceByStatus(String status) {
         return cartItemRepo.getTotalPriceByStatus(status);
     }
-
+    public List<CartItem> findByNameAndProduct(String name, Product product) {
+        return cartItemRepo.findByNameAndProduct(name,product);
+    }
     
 }

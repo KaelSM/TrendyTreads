@@ -40,4 +40,8 @@ public class FeedbackService {
     public List<Feedback> getFeedbackByProductId(Integer productId) {
         return feedbackRepo.findByProductId(productId);
     }
+
+    public List<Feedback> getFeedbackByBrand(String brand) {
+        return null;
+    }
 }

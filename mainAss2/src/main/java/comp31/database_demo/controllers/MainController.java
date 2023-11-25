@@ -47,7 +47,7 @@ public class MainController {
     }
 
     model.addAttribute("products", products);
-    return "productPage"; // Change to the name of your desired Thymeleaf template
+    return "product"; // Change to the name of your desired Thymeleaf template
     }
     
     @GetMapping("/signin")
@@ -80,8 +80,23 @@ public class MainController {
         return "redirect:/home";
     }
 
-    @GetMapping("/product/{productId}")
-    public String productPage(@PathVariable Integer productId, Model model) {
+    @GetMapping("/product/{brand}")
+public String productPage(@PathVariable String brand, Model model) {
+    // Load product data (assuming you have a method for this)
+    List<Product> products = productService.getProductsByBrand(brand);
+
+    // Load feedbacks for the product
+    List<Feedback> feedbacks = feedbackService.getFeedbackByBrand(brand);
+
+    // Add product and feedbacks to the model
+    model.addAttribute("products", products);
+    model.addAttribute("feedbacks", feedbacks);
+
+    return "productPage"; // name of your product page HTML file
+}
+
+    @PostMapping("/product/{brand}")
+    public String postProductPage(@PathVariable Integer productId, Model model) {
         // Load product data (assuming you have a method for this)
         Optional<Product> products = productService.getProductById(productId);
 
@@ -92,8 +107,9 @@ public class MainController {
         model.addAttribute("products", products);
         model.addAttribute("feedbacks", feedbacks);
 
-        return "product"; // name of your product page HTML file
+        return "redirect:productPage"; // name of your product page HTML file
     }
+
 
     @PostMapping("/addProduct")
     public String addProduct(@ModelAttribute Product product, Model model) {

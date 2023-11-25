@@ -4,15 +4,19 @@
     <title>Product Page</title>
 </head>
 <body>
-    <h1>Browsing Product</h1>
-    
+    <h1>Product Page</h1>
     <!-- Display product details -->
-    <div th:if="${product != null}">
-        <!-- Display product details here -->
-        <p th:text="${product.name}"></p>
+    <div th:if="${product.isPresent()}">
+        <h2 th:text="${product.get().name}"></h2>
         <!-- Add more product fields as needed -->
     </div>
 
+    <!-- Display feedbacks -->
+    <h2>Customer Feedbacks</h2>
+    <div th:each="prod : ${product}">
+        <p th:text="${prod.name}"></p>
+        <!-- Add more product fields as needed -->
+    </div>
     <!-- Display message if product not found -->
     <p th:if="${message != null}" th:text="${message}"></p>
 </body>

@@ -3,6 +3,7 @@ package comp31.database_demo;
 import java.util.List;
 import java.util.Random;
 
+
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 import comp31.database_demo.model.*;
@@ -33,7 +34,7 @@ import comp31.database_demo.repos.*;
     public void run(String... args) throws Exception {
         // Check if arguments are provided
         if (args.length == 0) {
-            logger.warn("No arguments provided. Defaulting to 10 items.");
+            //logger.warn("No arguments provided. Defaulting to 10 items.");
         }
 
         // Set default number of items to 10 if no argument is provided
@@ -44,13 +45,13 @@ import comp31.database_demo.repos.*;
                 // Create products and save them
                 Product product = new Product("Brand" + i, "type" + i, "description" + i, "category" + i);
                 productRepo.save(product);
-                logger.info("Created Entity: {}", product.getBrand());
+                //logger.info("Created Entity: {}", product.getBrand());
 
                 // Create CartItems
                 CartItem cartItem = new CartItem("CartItem" + i, 1, 10 * i, 1.0 + i, 
                                                 "Color" + i, "Status" + i, product, null);
                 cartItemRepo.save(cartItem);
-                logger.info("Created CartItem Entity for Product: {}", product.getBrand());
+                //logger.info("Created CartItem Entity for Product: {}", product.getBrand());
             }
 
             // Create and save Users
@@ -72,14 +73,14 @@ import comp31.database_demo.repos.*;
                                                     random.nextInt(5) + 1, // Random rating from 1 to 5
                                                     user, product);
                     feedbackRepo.save(feedback);
-                    logger.info("Created Feedback for Product: {} by User: {}", product.getBrand(), user.getUsername());
+                    //logger.info("Created Feedback for Product: {} by User: {}", product.getBrand(), user.getUsername());
                 }
             }
         
         } catch (Exception e) {
-            logger.error("Error during data initialization: {}", e.getMessage());
-        } 
-    }
-}
+            System.err.println("Error during data initialization: " + e.getMessage());
+                   
+                }
+    }}
     
 

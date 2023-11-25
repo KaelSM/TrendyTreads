@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import comp31.database_demo.model.User;
 import comp31.database_demo.repos.UserRepo;
 
+import java.util.List;
 import java.util.Optional;
 
 /*
@@ -50,6 +51,10 @@ public class UserService {
             }
         }
         return null;
+    }
+
+    public List<User> getAllUsers() {
+        return userRepo.findAll();
     }
 
 }

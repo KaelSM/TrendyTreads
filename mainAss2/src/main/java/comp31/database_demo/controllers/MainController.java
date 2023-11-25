@@ -36,11 +36,11 @@ public class MainController {
     
     // BEGIN: be15d9bcejpp
     @GetMapping("/products")
-    public String getProducts(@RequestParam(value = "productName", required = false) String productName, Model model) {
+    public String getProducts(@RequestParam(value = "brand", required = false) String brand, Model model) {
         List<Product> products;
 
-        if (productName != null && !productName.isEmpty()) {
-            products = productService.getProductsByName(productName);
+        if (brand != null && !brand.isEmpty()) {
+            products = productService.getProductsByBrand(brand);
         } else {
             products = productService.getAllProducts();
         }

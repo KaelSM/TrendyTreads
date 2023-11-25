@@ -1,5 +1,6 @@
 package comp31.database_demo.repos;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.Query;
@@ -8,6 +9,7 @@ import org.springframework.data.repository.query.Param;
 
 import comp31.database_demo.model.CartItem;
 import comp31.database_demo.model.Product;
+import comp31.database_demo.model.User;
 
 /***
  * CartItemRepo is an interface that extends CrudRepository
@@ -22,25 +24,48 @@ import comp31.database_demo.model.Product;
  * */
 
 public interface CartItemRepo extends CrudRepository<CartItem, Integer>{
-    /*List<CartItem> findAll();
-    List<CartItem>  findByStatusCartItems(String status);
-    List<CartItem> findByNameAndProduct (String name, Product product );
-    String updateByStatus (String status);
-    String updateByStatusAndProductId (String status, Integer productId);
-    void removeByStatus(String status);
-    void addCartItemByProductIdAndStatus(Integer productId, String status);
-    */
-    List<CartItem> findByStatus(String status);
-    List<CartItem> findByNameAndProduct(String name, Product product);
+    List<CartItem> findByProduct_IdAndStatus(Integer productId, String status);
 
-    // If you need to find by Product ID, ensure a corresponding property exists in CartItem
-    List<CartItem> findByProductId(Integer productId);
-    // To get the total price for a given status
-    @Query("SELECT SUM(c.price) FROM CartItem c WHERE c.status = :status")
+    @Query("SELECT SUM(c.price * c.quantity) FROM CartItem c WHERE c.status = :status")
     Double getTotalPriceByStatus(@Param("status") String status);
 
-    // To get the total quantity for a given status
- 
     @Query("SELECT SUM(c.quantity) FROM CartItem c WHERE c.product.id = :productId AND c.status = :status")
-    int getQuantityByProductIdAndStatus(@Param("productId") int productId, @Param("status") String status);
+    Integer getTotalQuantityByProductIdAndStatus(@Param("productId") Integer productId, @Param("status") String status);
+    
+     List<CartItem> findByUser(User user);
+
+    @Query("SELECT c FROM CartItem c WHERE c.product.category = :category")
+    List<CartItem> findByProductCategory(@Param("category") String category);
+
+    void deleteByUser(User user);
+
+    int countByStatus(String status);
+
+    List<CartItem> findByPriceBetween(Double minPrice, Double maxPrice);
+
+     @Query("SELECT c FROM CartItem c WHERE c.product.brand = :brand")
+    List<CartItem> findByProductBrand(@Param("brand") String brand);
+
+    @Modifying
+    @Query("UPDATE CartItem c SET c.quantity = :quantity WHERE c.id = :id")
+    void updateQuantity(@Param("id") Integer id, @Param("quantity") Integer quantity);
+
+    List<CartItem> findByQuantityGreaterThan(Integer quantity);
+
+    @Modifying
+    @Query("DELETE FROM CartItem c WHERE c.expiryDate < :currentDate")
+    void deleteAllExpiredCartItems(@Param("currentDate") LocalDate currentDate);
+
+    List<CartItem> findByStatus(String status);
+
+    @Query("SELECT DISTINCT c.size FROM CartItem c WHERE c.product.id = :productId AND c.status = 'Available'")
+    List<String> findAvailableSizesByProductId(@Param("productId") Integer productId);
+
+    @Query("SELECT c FROM CartItem c WHERE c.product.id = :productId AND c.size = :size")
+    List<CartItem> findByProductIdAndSize(@Param("productId") Integer productId, @Param("size") String size);
+
+    @Modifying
+    @Query("UPDATE CartItem c SET c.status = :newStatus WHERE c.size = :size AND c.product.id = :productId")
+    void updateStatusBySizeAndProductId(@Param("size") String size, @Param("productId") Integer productId, @Param("newStatus") String newStatus);
+
 }

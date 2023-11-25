@@ -1,5 +1,6 @@
 package comp31.database_demo.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.Entity;
@@ -32,29 +33,45 @@ import lombok.ToString;
 @Entity
 @Data
 @NoArgsConstructor
-@Table(name = "\"USER\"")
+@Table(name = "users") 
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
+
+    @NotBlank
     private String name;
+
+    @NotBlank
     private String username;
+
+    @NotBlank
+    @Email
     private String email;
+
+    @NotBlank
     private String password;
+
+    @NotBlank
     private String address;
+
+    @NotBlank
     private String phone;
+
+    @NotBlank
     private String role;
+
+    @NotBlank
     private String status;
 
     @OneToMany(mappedBy = "user")
-    //private Set<Order> orders; // One user can have multiple orders
-    @ToString.Exclude // to prevent circular reference in Lombok's toString()
-    List<Order> orders;
+    @ToString.Exclude
+    private List<Order> orders = new ArrayList<>(); // Initialize the list
 
     @OneToMany(mappedBy = "user")
-    //private Set<Feedback> feedbacks; // One user can provide multiple feedback entries
-    @ToString.Exclude // to prevent circular reference in Lombok's toString()
-    List<Feedback> feedbacks;
+    @ToString.Exclude
+    private List<Feedback> feedbacks = new ArrayList<>(); // Initialize the list
+
     
     public User(String name, String username, String email, String password, String address, String phone, String role, String status) {
         this.name = name;

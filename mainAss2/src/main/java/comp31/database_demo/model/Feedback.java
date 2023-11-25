@@ -29,6 +29,9 @@ public class Feedback {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer feedbackId;
+    @NotNull
+    @Min(1)
+    @Max(5)
     private Integer rating;
     private String feedbackMessage;
 
@@ -39,7 +42,6 @@ public class Feedback {
 
     @ManyToOne
     @JoinColumn(name = "fkey_product") // foreign key column in Feedback table
-    @ToString.Exclude // to prevent circular reference in Lombok's toString()
     private Product product; // Each feedback is associated with one product
    
     public Feedback(String feedbackMessage, Integer rating, User user, Product product) {

@@ -33,19 +33,21 @@ public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
+    @NotBlank
     private String brand;
+    @NotBlank
     private String type;
+    @NotBlank
     private String description;
+    @NotBlank
     private String category;
 
     @OneToMany(mappedBy = "product")
     @ToString.Exclude // to prevent circular reference in Lombok's toString()
-   // private Set<Feedback> feedbacks; // One product can have many feedbacks
     List<Feedback> feedbacks;
 
     @OneToMany(mappedBy = "product")
     @ToString.Exclude // to prevent circular reference in Lombok's toString()
- //   private Set<CartItem> cartItems; // One product can be in many cart items
     List<CartItem> cartItems;
 
     public Product(String brand, String type, String description, String category) {

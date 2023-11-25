@@ -155,5 +155,12 @@ public class OrderService {
         }
 	}
 
+    public Order createOrUpdateOrder(Order order) {
+        
+        return orderRepo.save(order);
+    }
+
+     
+
     
 }

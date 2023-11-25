@@ -56,5 +56,66 @@ public class CartItemService {
         return cartItemRepo.getTotalPriceByStatus(status);
     }
 
+    public void bulkUpdateCartItemStatus(List<Integer> cartItemIds, String newStatus) {
+        // Update the status of multiple cart items
+        cartItemIds.forEach(id -> updateCartItemStatus(id, newStatus));
+    }
+
+    public void updateCartItemQuantity(Integer cartItemId, Integer quantity) {
+        cartItemRepo.updateQuantity(cartItemId, quantity);
+    }
+    
+    public void deleteCartItem(Integer cartItemId) {
+        cartItemRepo.deleteById(cartItemId);
+    }
+
+    public boolean checkCartItemAvailability(Integer cartItemId, Integer requiredQuantity) {
+    
+        Optional<CartItem> cartItemOptional = cartItemRepo.findById(cartItemId);
+        if (cartItemOptional.isPresent()) {
+            // If cart item is found, check if the required quantity is available
+            CartItem cartItem = cartItemOptional.get();
+            return cartItem.getQuantity() >= requiredQuantity;
+        } else {
+            throw new EntityNotFoundException("CartItem not found with ID: " + cartItemId);
+        }
+    }
+
+    public double calculateTotalPrice(Integer cartItemId) {
+        Optional<CartItem> cartItemOptional = cartItemRepo.findById(cartItemId);
+        if (cartItemOptional.isPresent()) {
+            // If cart item is found, calculate the total price
+            CartItem cartItem = cartItemOptional.get();
+            return cartItem.getQuantity() * cartItem.getPrice();
+        } else {
+            throw new EntityNotFoundException("CartItem not found with ID: " + cartItemId);
+        }
+    }
+
+    public CartItem addItemToCart(CartItem cartItem) {
+      
+        return cartItemRepo.save(cartItem);
+    }
+
+    public void removeItemFromCart(Integer cartItemId) {
+        
+        cartItemRepo.deleteById(cartItemId);
+    }
+
+    public List<CartItem> getCartItemsByUserId(Integer userId) {
+        return cartItemRepo.findByUser_Id(userId);
+    }
+
+    public Optional<CartItem> getCartItemDetails(Integer cartItemId) {
+       
+        return cartItemRepo.findById(cartItemId);
+    }
+
+    public void reserveCartItem(Integer cartItemId) {
+        updateCartItemStatus(cartItemId, "Reserved");
+    }
+
+
+
     
 }

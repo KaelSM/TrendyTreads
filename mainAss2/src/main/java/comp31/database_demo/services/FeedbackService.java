@@ -25,8 +25,7 @@ public class FeedbackService {
     }
 
     public Feedback saveFeedback(Feedback feedback) {
-        // Additional logic before saving can be added here
-        return feedbackRepo.save(feedback);
+        return feedbackRepo.save(feedback);        
     }
 
     public Optional<Feedback> getFeedbackById(Integer id) {
@@ -39,5 +38,17 @@ public class FeedbackService {
 
     public List<Feedback> getFeedbackByProductId(Integer productId) {
         return feedbackRepo.findByProductId(productId);
+    }
+
+    public void deleteFeedback(Integer feedbackId) {
+        feedbackRepo.deleteById(feedbackId);
+    }
+
+    public Double getAverageRatingForProduct(Integer productId) {
+        return feedbackRepo.findAverageRatingByProductId(productId);
+    }
+
+    public void updateFeedback(Feedback feedback) {
+        feedbackRepo.save(feedback);
     }
 }

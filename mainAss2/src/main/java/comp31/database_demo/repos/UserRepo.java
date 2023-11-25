@@ -4,7 +4,10 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
 
 import comp31.database_demo.model.User;
 
@@ -21,7 +24,7 @@ import comp31.database_demo.model.User;
 public interface UserRepo extends CrudRepository<User, Integer>{
     
     List<User> findByRole(String role);
-
+    List<User> findAll();
     Optional<User> findByUsername(String username);
 
     Optional<User> findByEmail(String email);

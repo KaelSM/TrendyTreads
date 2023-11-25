@@ -3,6 +3,8 @@ package comp31.database_demo.model;
 //import java.util.Set;
 import java.util.List;
 
+import org.antlr.v4.runtime.misc.NotNull;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -49,17 +51,17 @@ public class Order {
 
     @NotNull
     private String createdAt;
-    @NotBlank
+    @NotNull
     private Integer numItem; // This can be calculated from CartItems
-    @NotBlank
+    @NotNull
     private String address;
-    @NotBlank
+    @NotNull
     private String city;
-    @NotBlank
+    @NotNull
     private String country;
-    @NotBlank
+    @NotNull
     private String status;
-    @NotBlank
+    @NotNull
     private String paypalId;
 
     @OneToMany(mappedBy = "order")

@@ -1,5 +1,7 @@
 package comp31.database_demo.model;
 
+import org.antlr.v4.runtime.misc.NotNull;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -30,8 +32,7 @@ public class Feedback {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer feedbackId;
     @NotNull
-    @Min(1)
-    @Max(5)
+    
     private Integer rating;
     private String feedbackMessage;
 

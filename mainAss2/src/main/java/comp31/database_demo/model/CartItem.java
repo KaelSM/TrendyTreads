@@ -1,5 +1,7 @@
 package comp31.database_demo.model;
 
+import org.antlr.v4.runtime.misc.NotNull;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -35,7 +37,7 @@ public class CartItem {
     @NotNull
     private String name;
     @NotNull
-    @Min(1)
+   
     private Integer quantity;
     @NotNull
     private Integer price;
@@ -79,7 +81,7 @@ public class CartItem {
                 ", color='" + color + '\'' +
                 ", status='" + status + '\'' +
                 ", product=" + (product != null ? product.getId() : null) +
-                ", order=" + (order != null ? order.getId() : null) +
+                ", order=" + (order != null ? order.getOrderId() : null) +
                 '}';
     }
 }

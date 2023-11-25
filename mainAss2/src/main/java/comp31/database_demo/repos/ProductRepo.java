@@ -2,7 +2,11 @@ package comp31.database_demo.repos;
 
 import java.time.LocalDate;
 import java.util.List;
+
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
 
 import comp31.database_demo.model.Product;
 
@@ -21,7 +25,7 @@ public interface ProductRepo extends CrudRepository<Product, Integer> {
     
     List<Product> findByBrand(String brand);
     List<Product> findByType(String type);
-
+    List<Product> findAll();
     @Query("SELECT p FROM Product p WHERE p.category = :category")
     List<Product> findByCategory(@Param("category") String category);
 

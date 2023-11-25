@@ -1,6 +1,9 @@
 package comp31.database_demo.model;
 
 import java.util.List;
+
+import org.antlr.v4.runtime.misc.NotNull;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -33,13 +36,13 @@ public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
-    @NotBlank
+    @NotNull
     private String brand;
-    @NotBlank
+    @NotNull
     private String type;
-    @NotBlank
+    @NotNull
     private String description;
-    @NotBlank
+    @NotNull
     private String category;
 
     @OneToMany(mappedBy = "product")

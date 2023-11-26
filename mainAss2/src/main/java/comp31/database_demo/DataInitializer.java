@@ -30,28 +30,42 @@ import comp31.database_demo.repos.*;
         this.cartItemRepo = cartItemRepo;
     }
 
+    private static final String[] COLORS = new String[] {"Red", "Blue", "Green", "Yellow", "Black", "White"};
+    private static final Double[] SIZES = new Double[] {36.0, 38.0, 40.0, 42.0, 44.0}; // Example sizes
+
     @Override
     public void run(String... args) throws Exception {
+        Random random = new Random();
+
+        String[] brands = {"Nike", "Adidas", "Reebok", "Puma", "Converse"};
+        String[] types = {"Running Shoes", "Sneakers", "Trail Shoes", "Basketball Shoes", "Casual Shoes"};
+        String[] descriptions = {"Comfortable and durable", "Lightweight and stylish", "Rugged and supportive", "High performance", "Classic design"};
+        String[] categories = {"Sports", "Casual", "Outdoor", "Athletic", "Fashion"};
+        Double[] sizes = {7.0, 8.0, 9.0, 10.0, 11.0};
+        String[] colors = {"Black", "White", "Blue", "Red", "Green"};
+
         // Check if arguments are provided
         if (args.length == 0) {
             //logger.warn("No arguments provided. Defaulting to 10 items.");
         }
-
         // Set default number of items to 10 if no argument is provided
         Integer nItems = args.length > 0 ? Integer.parseInt(args[0]) : 10;
 
         try {
             for (int i = 0; i < nItems; i++) {
                 // Create products and save them
-                Product product = new Product("Brand" + i, "type" + i, "description" + i, "category" + i);
+                Product product = new Product(brands[i], types[i], descriptions[i], categories[i], i % 2 == 0);
                 productRepo.save(product);
                 //logger.info("Created Entity: {}", product.getBrand());
 
-                // Create CartItems
-                CartItem cartItem = new CartItem("CartItem" + i, 1, 10 * i, 1.0 + i, 
-                                                "Color" + i, "Status" + i, product, null);
-                cartItemRepo.save(cartItem);
-                //logger.info("Created CartItem Entity for Product: {}", product.getBrand());
+                for (int j = 0; j < 5; j++) { // Create multiple cart items for each product
+                    String color = COLORS[random.nextInt(COLORS.length)];
+                    Double size = SIZES[random.nextInt(SIZES.length)];
+                    int price = 10 + random.nextInt(90); // Random price between 10 and 100
+        
+                    CartItem cartItem = new CartItem("CartItem" + i + "-" + j, 1, price, size, color, "Available", product, null);
+                    cartItemRepo.save(cartItem);
+                }
             }
 
             // Create and save Users
@@ -63,7 +77,6 @@ import comp31.database_demo.repos.*;
             userRepo.save(authUser);
             userRepo.save(guestUser);
 
-            Random random = new Random();
             List<User> users = userRepo.findAll(); // Assuming you have a method to get all users
             List<Product> products = productRepo.findAll(); // Assuming you have a method to get all products
 

@@ -24,8 +24,18 @@ import comp31.database_demo.model.User;
  *  
  * */
 
+ 
+
 public interface CartItemRepo extends CrudRepository<CartItem, Integer>{
+    List<CartItem> findByProductId(Integer productId);
+
     List<CartItem> findByProduct_IdAndStatus(Integer productId, String status);
+
+    List<CartItem> findByProductIdAndColor(Integer productId, String color);
+    List<CartItem> findByProductIdAndSize(Integer productId, Double size);
+
+    @Query("SELECT ci FROM CartItem ci WHERE ci.order.user.id = :userId")
+    List<CartItem> findByOrderUserId(@Param("userId") Integer userId);
 
     @Query("SELECT SUM(c.price * c.quantity) FROM CartItem c WHERE c.status = :status")
     Double getTotalPriceByStatus(@Param("status") String status);
@@ -33,19 +43,18 @@ public interface CartItemRepo extends CrudRepository<CartItem, Integer>{
     @Query("SELECT SUM(c.quantity) FROM CartItem c WHERE c.product.id = :productId AND c.status = :status")
     Integer getTotalQuantityByProductIdAndStatus(@Param("productId") Integer productId, @Param("status") String status);
     
-     List<CartItem> findByUser(User user);
 
     @Query("SELECT c FROM CartItem c WHERE c.product.category = :category")
     List<CartItem> findByProductCategory(@Param("category") String category);
 
-    void deleteByUser(User user);
+    //void deleteByUser(User user);
 
     int countByStatus(String status);
 
     List<CartItem> findByPriceBetween(Double minPrice, Double maxPrice);
 
      @Query("SELECT c FROM CartItem c WHERE c.product.brand = :brand")
-    List<CartItem> findByProductBrand(@Param("brand") String brand, Product product);
+     List<CartItem> findByProductBrand(@Param("brand") String brand);
 
     @Modifying
     @Query("UPDATE CartItem c SET c.quantity = :quantity WHERE c.id = :id")
@@ -53,9 +62,9 @@ public interface CartItemRepo extends CrudRepository<CartItem, Integer>{
 
     List<CartItem> findByQuantityGreaterThan(Integer quantity);
 
-    @Modifying
-    @Query("DELETE FROM CartItem c WHERE c.expiryDate < :currentDate")
-    void deleteAllExpiredCartItems(@Param("currentDate") LocalDate currentDate);
+    //@Modifying
+    //@Query("DELETE FROM CartItem c WHERE c.expiryDate < :currentDate")
+    //void deleteAllExpiredCartItems(@Param("currentDate") LocalDate currentDate);
 
     List<CartItem> findByStatus(String status);
 

@@ -104,10 +104,6 @@ public class CartItemService {
         cartItemRepo.deleteById(cartItemId);
     }
 
-    public List<CartItem> getCartItemsByUserId(User user) {
-        return cartItemRepo.findByUser(user);
-    }
-
     public Optional<CartItem> getCartItemDetails(Integer cartItemId) {
        
         return cartItemRepo.findById(cartItemId);
@@ -116,8 +112,4 @@ public class CartItemService {
     public void reserveCartItem(Integer cartItemId) {
         updateCartItemStatus(cartItemId, "Reserved");
     }
-
-
-
-    
 }

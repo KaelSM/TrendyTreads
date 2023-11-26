@@ -29,7 +29,7 @@ public interface ProductRepo extends CrudRepository<Product, Integer> {
     @Query("SELECT p FROM Product p WHERE p.category = :category")
     List<Product> findByCategory(@Param("category") String category);
 
-    List<Product> findByPriceBetween(Double minPrice, Double maxPrice);
+    //List<Product> findByPriceBetween(Double minPrice, Double maxPrice);
 
     @Query("SELECT p FROM Product p WHERE p.description LIKE %:keyword%")
     List<Product> findByDescriptionContaining(@Param("keyword") String keyword);
@@ -45,31 +45,31 @@ public interface ProductRepo extends CrudRepository<Product, Integer> {
     @Query("SELECT p FROM Product p JOIN p.feedbacks f GROUP BY p.id ORDER BY COUNT(f) DESC")
     List<Product> findProductsWithMostFeedback();
 
-    List<Product> findAllByOrderByPriceAsc();
-    List<Product> findAllByOrderByPriceDesc();
+    //List<Product> findAllByOrderByPriceAsc();
+    //List<Product> findAllByOrderByPriceDesc();
 
-    @Query("SELECT p FROM Product p WHERE p.averageRating > :rating")
-    List<Product> findByAverageRatingGreaterThan(@Param("rating") Double rating);
+    //@Query("SELECT p FROM Product p WHERE p.averageRating > :rating")
+    //List<Product> findByAverageRatingGreaterThan(@Param("rating") Double rating);
 
     @Modifying
     @Query("UPDATE Product p SET p.category = :category WHERE p.id = :id")
     void updateProductCategory(@Param("id") Integer id, @Param("category") String category);
 
-     @Query("SELECT p FROM Product p WHERE LOWER(p.name) LIKE LOWER(CONCAT('%', :name, '%'))")
-    List<Product> findByNameContainingIgnoreCase(@Param("name") String name);
+    // @Query("SELECT p FROM Product p WHERE LOWER(p.name) LIKE LOWER(CONCAT('%', :name, '%'))")
+    //List<Product> findByNameContainingIgnoreCase(@Param("name") String name);
 
-    List<Product> findByCreationDate(LocalDate date);
+    //List<Product> findByCreationDate(LocalDate date);
 
     @Query("SELECT COUNT(p), p.category FROM Product p GROUP BY p.category")
     List<Object[]> countProductsByCategory();
 
-    List<Product> findByIsDiscontinued(Boolean isDiscontinued);
+    //List<Product> findByIsDiscontinued(Boolean isDiscontinued);
 
-    @Modifying
-    @Query("UPDATE Product p SET p.isActive = false WHERE p.sales < :salesThreshold")
-    void bulkDeactivateProducts(@Param("salesThreshold") Integer salesThreshold);
+   // @Modifying
+   // @Query("UPDATE Product p SET p.isActive = false WHERE p.sales < :salesThreshold")
+    //void bulkDeactivateProducts(@Param("salesThreshold") Integer salesThreshold);
 
-    List<Product> findByAverageRatingBetween(Double minRating, Double maxRating);
+    //List<Product> findByAverageRatingBetween(Double minRating, Double maxRating);
 
     
 }

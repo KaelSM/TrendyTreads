@@ -44,6 +44,8 @@ public class Product {
     private String description;
     @NotNull
     private String category;
+    @NotNull
+    private Boolean availability;
 
     @OneToMany(mappedBy = "product")
     @ToString.Exclude // to prevent circular reference in Lombok's toString()
@@ -53,11 +55,12 @@ public class Product {
     @ToString.Exclude // to prevent circular reference in Lombok's toString()
     List<CartItem> cartItems;
 
-    public Product(String brand, String type, String description, String category) {
+    public Product(String brand, String type, String description, String category, Boolean availability) {
         this.brand = brand;
         this.type = type;
         this.description = description;
         this.category = category;
+        this.availability = availability;
     }
 
     

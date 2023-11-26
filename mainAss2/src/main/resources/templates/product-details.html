@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Product Details</title>
+    <!-- Add your CSS links here -->
+</head>
+<body>
+
+<div th:if="${product != null}">
+    <h1 th:text="${product.brand} + ' ' + ${product.type}">Product Brand and Type</h1>
+    <p><strong>Description:</strong> <span th:text="${product.description}">Product Description</span></p>
+    <p><strong>Category:</strong> <span th:text="${product.category}">Product Category</span></p>
+    <p><strong>Availability:</strong> <span th:text="${product.availability ? 'Available' : 'Unavailable'}">Availability</span></p>
+
+    <div th:if="${not #lists.isEmpty(feedbacks)}">
+        <h2>Feedback</h2>
+        <ul>
+            <li th:each="feedback : ${feedbacks}">
+                <p th:text="${feedback.feedbackMessage}">Feedback message</p>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<div th:unless="${product != null}">
+    <p>Product not found.</p>
+</div>
+<h2>Select Options</h2>
+<form th:action="@{/cart/add}" method="post">
+    <input type="hidden" name="productId" th:value="${product.id}" />
+
+    <label for="color">Color:</label>
+    <select name="color" id="color">
+        <option th:each="color : ${availableColors}" th:value="${color}" th:text="${color}">Color</option>
+    </select>
+
+    <label for="size">Size:</label>
+    <select name="size" id="size">
+        <option th:each="size : ${availableSizes}" th:value="${size}" th:text="${size}">Size</option>
+    </select>
+
+    <p><strong>Price Range:</strong> <span th:text="${priceRange[0] == priceRange[1] ? '$' + priceRange[0] : '$' + priceRange[0] + ' - $' + priceRange[1]}">Price Range</span></p>
+
+    <button type="submit">Add to Cart</button>
+</form>
+</body>
+</html>

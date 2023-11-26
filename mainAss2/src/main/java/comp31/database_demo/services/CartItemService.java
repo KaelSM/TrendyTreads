@@ -116,8 +116,4 @@ public class CartItemService {
     public void reserveCartItem(Integer cartItemId) {
         updateCartItemStatus(cartItemId, "Reserved");
     }
-
-
-
-    
 }

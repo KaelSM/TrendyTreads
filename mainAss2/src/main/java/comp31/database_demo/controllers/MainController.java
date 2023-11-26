@@ -14,6 +14,7 @@ import comp31.database_demo.services.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Controller
 public class MainController {
@@ -33,38 +34,36 @@ public class MainController {
         this.feedbackService = feedbackService;
         this.cartItemService = cartItemService;
     }
+
+    @GetMapping("/")
+    public String home() {
+        return "homepage";
+    }
     
-    // BEGIN: be15d9bcejpp
     @GetMapping("/products")
-    public String getProducts(@RequestParam(value = "brand", required = false) String brand, Model model) {
-        List<Product> products;
-
-        if (brand != null && !brand.isEmpty()) {
-            products = productService.getProductsByBrand(brand);
-        } else {
-            products = productService.getAllProducts();
-        }
-
-        model.addAttribute("products", products);
-        return "productPage"; // Change to the name of your desired Thymeleaf template
+    public String listProducts(Model model) {
+        model.addAttribute("products", productService.getAllProductsWithPrice());
+        return "products";
     }
 
-    @GetMapping("/product/{productId}")
+    @GetMapping("/product/details/{productId}")
     public String productPage(@PathVariable Integer productId, Model model) {
-   
         Optional<Product> product = productService.getProductById(productId);
 
         if (product.isPresent()) {
-        
-            List<Feedback> feedbacks = feedbackService.getFeedbackByProductId(productId);
+            Set<String> availableColors = productService.getAvailableColors(productId);
+            Set<Double> availableSizes = productService.getAvailableSizes(productId);
 
             model.addAttribute("product", product.get());
-            model.addAttribute("feedbacks", feedbacks);
+            model.addAttribute("availableColors", availableColors);
+            model.addAttribute("availableSizes", availableSizes);
 
-            return "product"; // name of your product page HTML file
+            // Assuming you have a method to get the price range
+            model.addAttribute("priceRange", productService.getPriceRange(productId));
+
+            return "product-details";
         } else {
-            // Handle the case where the product is not found
-            return "productNotFound"; // Create an HTML template for this case
+            return "productNotFound";
         }
     }
     

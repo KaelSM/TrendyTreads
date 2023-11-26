@@ -6,19 +6,13 @@
 <body>
     <h1>Product Page</h1>
     <!-- Display product details -->
+    
     <div th:each="product : ${products}">
         <h2 th:text="${product.brand}"></h2>
         <!-- Add more product fields as needed -->
     </div>
 
-    <!-- Display feedbacks -->
-    <h2>Customer Feedbacks</h2>
-    <div th:each="feedback : ${feedbacks}">
-        <
-        <p th:text="${feedback.comment}"></p>
-        <!-- Add more feedback fields as needed -->
-    </div>
-    <!-- Display message if product not found -->
-    <p th:if="${message != null}" th:text="${message}"></p>
+    
+    
 </body>
 </html>

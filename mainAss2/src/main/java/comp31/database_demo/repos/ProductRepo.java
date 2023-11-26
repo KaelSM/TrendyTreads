@@ -55,19 +55,19 @@ public interface ProductRepo extends CrudRepository<Product, Integer> {
     @Query("UPDATE Product p SET p.category = :category WHERE p.id = :id")
     void updateProductCategory(@Param("id") Integer id, @Param("category") String category);
 
-     @Query("SELECT p FROM Product p WHERE LOWER(p.name) LIKE LOWER(CONCAT('%', :name, '%'))")
-    List<Product> findByNameContainingIgnoreCase(@Param("name") String name);
+    // @Query("SELECT p FROM Product p WHERE LOWER(p.name) LIKE LOWER(CONCAT('%', :name, '%'))")
+    //List<Product> findByNameContainingIgnoreCase(@Param("name") String name);
 
-    List<Product> findByCreationDate(LocalDate date);
+    //List<Product> findByCreationDate(LocalDate date);
 
     @Query("SELECT COUNT(p), p.category FROM Product p GROUP BY p.category")
     List<Object[]> countProductsByCategory();
 
-    List<Product> findByIsDiscontinued(Boolean isDiscontinued);
+    //List<Product> findByIsDiscontinued(Boolean isDiscontinued);
 
-    @Modifying
-    @Query("UPDATE Product p SET p.isActive = false WHERE p.sales < :salesThreshold")
-    void bulkDeactivateProducts(@Param("salesThreshold") Integer salesThreshold);
+   // @Modifying
+   // @Query("UPDATE Product p SET p.isActive = false WHERE p.sales < :salesThreshold")
+    //void bulkDeactivateProducts(@Param("salesThreshold") Integer salesThreshold);
 
     //List<Product> findByAverageRatingBetween(Double minRating, Double maxRating);
 

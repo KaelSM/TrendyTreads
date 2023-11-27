@@ -13,44 +13,54 @@ import jakarta.transaction.Transactional;
 
 /***
  * ProductRepo is an interface that extends CrudRepository
- *  @param findAll() returns a list of all products
- * @param findByBrand(String brand) returns a list of all products with the given brand
- * @param findByType(String type) returns a list of all products with the given type
- * @param removeByBrand(String brand) removes all products with the given brand
- * @param removeById(int id) removes the product with the given id
- * @param addProductByBrandAndTypeAndDescriptionAndCategory(String brand, String type, String description, String category) adds a product with the given brand, type, description, and category
  *  
  * */
 
 public interface ProductRepo extends CrudRepository<Product, Integer> {
     
+    // Find products by brand
     List<Product> findByBrand(String brand);
+    
+    // Find products by type
     List<Product> findByType(String type);
+    
+    // Find all products
     List<Product> findAll();
+    
+    // Find products by category using a custom query
     @Query("SELECT p FROM Product p WHERE p.category = :category")
     List<Product> findByCategory(@Param("category") String category);
 
+    // Find products by description containing a keyword using a custom query
     @Query("SELECT p FROM Product p WHERE p.description LIKE %:keyword%")
     List<Product> findByDescriptionContaining(@Param("keyword") String keyword);
 
+    // Update product availability by brand using a custom query
     @Modifying
     @Query("UPDATE Product p SET p.availability = :availability WHERE p.brand = :brand")
     void updateProductAvailabilityByBrand(@Param("brand") String brand, @Param("availability") Boolean availability);
+    
+    // Find products by availability
     List<Product> findByAvailability(Boolean availability);
 
+    // Count products by type using a custom query
     @Query("SELECT COUNT(p), p.type FROM Product p GROUP BY p.type")
     List<Object[]> countProductsByType();
 
+    // Find products with the most feedback using a custom query
     @Query("SELECT p FROM Product p JOIN p.feedbacks f GROUP BY p.id ORDER BY COUNT(f) DESC")
     List<Product> findProductsWithMostFeedback();
 
+    // Update product category by ID using a custom query
     @Modifying
     @Query("UPDATE Product p SET p.category = :category WHERE p.id = :id")
     void updateProductCategory(@Param("id") Integer id, @Param("category") String category);
 
+    // Count products by category using a custom query
     @Query("SELECT COUNT(p), p.category FROM Product p GROUP BY p.category")
     List<Object[]> countProductsByCategory();
 
+    // Delete product by ID using a custom query
     @Transactional
     @Modifying
     @Query("DELETE FROM Product p WHERE p.id = :id")

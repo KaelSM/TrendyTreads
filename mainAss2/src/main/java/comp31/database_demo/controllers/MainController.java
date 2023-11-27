@@ -126,8 +126,8 @@ public class MainController {
 
     // Endpoint for continuing as a guest
     @GetMapping("/guest")
-    public String continueAsGuest() {
-        return "redirect:/home";
+    public String continueAsGuest() {                                                                                
+        return "homepage";
     }
 
     // Endpoint for the admin page

@@ -8,6 +8,9 @@ import org.springframework.stereotype.Component;
 import comp31.database_demo.model.*;
 import comp31.database_demo.repos.*;
 
+/**
+ * Initializes the database with sample data.
+ */
 @Component
 public class DataInitializer implements CommandLineRunner {
     // Repositories
@@ -31,6 +34,12 @@ public class DataInitializer implements CommandLineRunner {
     private static final String[] COLORS = new String[] { "Red", "Blue", "Green", "Yellow", "Black", "White" };
     private static final Double[] SIZES = new Double[] { 36.0, 38.0, 40.0, 42.0, 44.0 }; 
 
+    /**
+     * Runs the data initialization process.
+     * 
+     * @param args The command line arguments.
+     * @throws Exception If an error occurs during data initialization.
+     */
     @Override
     public void run(String... args) throws Exception {
         Random random = new Random();

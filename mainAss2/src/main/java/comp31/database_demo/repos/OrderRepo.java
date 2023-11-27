@@ -13,77 +13,71 @@ import comp31.database_demo.model.Order;
 
 /***
  * OrderRepo is an interface that extends CrudRepository
- *  @param findAll() returns a list of all orders
- * @param findAllByUserId(Integer userId) returns a list of all orders with the given userId
- * @param findAllByCartItemId(Integer cartItemId) returns a list of all orders with the given cartItemId
- * @param findAllByCartItemAndUserId (Integer cartItemId, Integer userId) returns a list of all orders with the given cartItemId and userId
- * @param findAllByUserIdAndCartItemId(Integer userId, Integer cartItemId) returns a list of all orders with the given userId and cartItemId
- * @param findByPaypalId(String paypalId) returns a list of all orders with the given paypalId
- * @param addOrderById(Integer id) adds an order with the given id
- * @param addOrderByIdAndUserId(Integer id, Integer userId) adds an order with the given id and userId
- * @param addOrderByIdAndUserIdAndCartItemId(Integer id, Integer userId, Integer cartItemId) adds an order with the given id, userId, and cartItemId
  * 
  *  
  * */
 
 public interface OrderRepo extends CrudRepository<Order, Integer>{
+    // Retrieves all orders by user ID
     List<Order> findAllByUserId(Integer userId);
+    
+    // Retrieves all orders by PayPal ID
     List<Order> findByPaypalId(String paypalId);
+    
+    // Retrieves all orders
     List<Order> findAll();
 
+    // Retrieves all orders by cart item ID
     @Query("SELECT o FROM Order o JOIN o.cartItems c WHERE c.id = :cartItemId")
     List<Order> findAllByCartItemId(@Param("cartItemId") Integer cartItemId);
 
+    // Retrieves all orders by user ID and cart item ID
     @Query("SELECT o FROM Order o WHERE o.user.id = :userId AND :cartItemId MEMBER OF o.cartItems")
     List<Order> findAllByUserIdAndCartItemId(@Param("userId") Integer userId, @Param("cartItemId") Integer cartItemId);
 
-     List<Order> findByStatus(String status);
+    // Retrieves all orders by status
+    List<Order> findByStatus(String status);
 
+    // Updates the status of an order
     @Modifying
     @Query("UPDATE Order o SET o.status = :status WHERE o.id = :id")
     void updateOrderStatus(@Param("id") Integer id, @Param("status") String status);
 
+    // Retrieves all orders between two dates
     @Query("SELECT o FROM Order o WHERE o.createdAt BETWEEN :startDate AND :endDate")
     List<Order> findOrdersBetweenDates(@Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
 
+    // Counts the number of orders by user ID
     int countByUserId(Integer userId);
 
+    // Deletes orders by status
     @Modifying
     @Query("DELETE FROM Order o WHERE o.status = :status")
     void deleteOrdersByStatus(@Param("status") String status);
 
-    //@Query("SELECT SUM(o.totalPrice) FROM Order o WHERE o.createdAt BETWEEN :startDate AND :endDate")
-    //Double calculateTotalSales(@Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
-
-    //@Query("SELECT AVG(o.totalPrice) FROM Order o WHERE o.createdAt BETWEEN :startDate AND :endDate")
-    //Double findAverageOrderValue(@Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
-
+    // Retrieves all orders by product ID
     @Query("SELECT o FROM Order o JOIN o.cartItems c WHERE c.product.id = :productId")
     List<Order> findByProductId(@Param("productId") Integer productId);
 
+    // Counts the number of orders by user ID and status
     @Query("SELECT COUNT(o) FROM Order o WHERE o.user.id = :userId AND o.status = :status")
     int countByUserIdAndStatus(@Param("userId") Integer userId, @Param("status") String status);
 
-    //@Query("SELECT o FROM Order o WHERE o.user.id = :userId ORDER BY o.createdAt DESC")
-    //List<Order> findRecentOrdersByUserId(@Param("userId") Integer userId, @Param("limit") int limit);
-
+    // Updates the status of multiple orders
     @Modifying
     @Query("UPDATE Order o SET o.status = :status WHERE o.id IN :orderIds")
     void bulkUpdateOrderStatus(@Param("orderIds") List<Integer> orderIds, @Param("status") String status);
 
+    // Counts the number of orders by date
     @Query("SELECT COUNT(o) FROM Order o WHERE o.createdAt = :date")
     int countByDate(@Param("date") LocalDate date);
 
+    // Retrieves all orders with item quantity greater than a specified quantity
     @Query("SELECT o FROM Order o JOIN o.cartItems c WHERE c.quantity > :quantity")
     List<Order> findOrdersWithItemQuantityGreaterThan(@Param("quantity") Integer quantity);
 
-    //List<Order> findByTotalPriceBetween(Double minPrice, Double maxPrice);
-
+    // Retrieves the most frequent buyers, ordered by the number of orders
     @Query("SELECT o.user.id, COUNT(o) FROM Order o GROUP BY o.user.id ORDER BY COUNT(o) DESC")
     List<Object[]> findMostFrequentBuyers();
-
-    //@Query("SELECT SUM(o.totalPrice) FROM Order o WHERE o.createdAt BETWEEN :startDate AND :endDate")
-    //Double calculateTotalSalesByDateRange(@Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
-
 
 }

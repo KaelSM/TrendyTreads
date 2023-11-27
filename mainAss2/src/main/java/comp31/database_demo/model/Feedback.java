@@ -54,10 +54,25 @@ public class Feedback {
         this.rating = rating;
         this.product = product;
     }
+
+    /**
+     * Gets the feedback message.
+     *
+     * @return the feedback message
+     */
     public List<User> getUser(User userId) {
         List<User> user = new ArrayList<User>();
         return user;
         
+    }
+
+    /**
+     * Gets the feedback message.
+     *
+     * @return the feedback message
+     */
+    public Integer getId() {
+        return feedbackId;
     }
 
 }

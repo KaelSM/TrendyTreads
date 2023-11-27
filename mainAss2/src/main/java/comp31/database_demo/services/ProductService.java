@@ -9,6 +9,7 @@ import comp31.database_demo.model.Feedback;
 import comp31.database_demo.model.Product;
 import comp31.database_demo.repos.CartItemRepo;
 import comp31.database_demo.repos.ProductRepo;
+import jakarta.transaction.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,13 +19,7 @@ import java.util.stream.Collectors;
 
 /*
  * ProductService is a service class that handles the business logic for the Product model
- * @param getProductById(Integer id) returns the product with the given id
- * @param getProductsByBrand(String brand) returns a list of all products with the given brand
- * @param saveProduct(Product product) saves the given product
- * @param deleteProduct(Integer id) deletes the product with the given id
- * 
  */
-
 @Service
 public class ProductService {
     @Autowired
@@ -33,14 +28,22 @@ public class ProductService {
     @Autowired
     private CartItemRepo cartItemRepository;
 
-    public ProductService(ProductRepo productRepository) {
-        this.productRepository = productRepository;
-    }
-
+    /**
+     * Saves a new product to the database.
+     * @param product The product to be saved.
+     * @return The saved product.
+     */
     public Product addProduct(Product product) {
         return productRepository.save(product);
     }
 
+    /**
+     * Updates an existing product in the database.
+     * @param productId The ID of the product to be updated.
+     * @param productDetails The updated product details.
+     * @return The updated product.
+     * @throws RuntimeException if the product with the given ID is not found.
+     */
     public Product updateProduct(Integer productId, Product productDetails) {
         Product product = productRepository.findById(productId)
                           .orElseThrow(() -> new RuntimeException("Product not found"));
@@ -53,18 +56,40 @@ public class ProductService {
         return productRepository.save(product);
     }
 
-    public Optional<Product> getProductById(Integer id) {
-        return productRepository.findById(id);
+    /**
+     * Retrieves a product by its ID.
+     * @param productId The ID of the product.
+     * @return An Optional containing the product, or an empty Optional if the product is not found.
+     */
+    public Optional<Product> getProductById(Integer productId) {
+        return productRepository.findById(productId);
     }
 
+    /**
+     * Retrieves all products from the database.
+     * @return A list of all products.
+     */
     public List<Product> getAllProducts() {
         return productRepository.findAll();
     }
 
+    /**
+     * Retrieves a list of products with the given brand.
+     * @param brand The brand of the products.
+     * @return A list of products with the given brand.
+     */
     public List<Product> getProductsByBrand(String brand) {
         return productRepository.findByBrand(brand);
     }
 
+    /**
+     * Adds a new product to the database with the given details.
+     * @param brand The brand of the product.
+     * @param type The type of the product.
+     * @param description The description of the product.
+     * @param category The category of the product.
+     * @return The saved product.
+     */
     public Product addProduct(String brand, String type, String description, String category) {
         Product product = new Product();
         product.setBrand(brand);
@@ -74,18 +99,38 @@ public class ProductService {
         return productRepository.save(product);
     }
 
+    /**
+     * Deletes a product from the database.
+     * @param id The ID of the product to be deleted.
+     */
+    @Transactional             
     public void deleteProduct(Integer id) {
-        productRepository.deleteById(id);
+        cartItemRepository.deleteByProductId(id);
+        productRepository.deleteProductById(id);
     }
 
+    /**
+     * Retrieves a list of products with the given type.
+     * @param type The type of the products.
+     * @return A list of products with the given type.
+     */
     public List<Product> getProductsByType(String type) {
         return productRepository.findByType(type);
     }
 
+    /**
+     * Retrieves a list of products with the given category.
+     * @param category The category of the products.
+     * @return A list of products with the given category.
+     */
     public List<Product> getProductsByCategory(String category) {
         return productRepository.findByCategory(category);
     }
 
+    /**
+     * Retrieves a list of all products with their price range.
+     * @return A list of ProductDTO objects containing the products and their price range.
+     */
     public List<ProductDTO> getAllProductsWithPrice() {
         List<Product> products = productRepository.findAll();
         List<ProductDTO> productDTOs = new ArrayList<>();
@@ -101,13 +146,23 @@ public class ProductService {
         return productDTOs;
     }
 
-     public Set<String> getAvailableColors(Integer productId) {
+    /**
+     * Retrieves a set of available colors for a product.
+     * @param productId The ID of the product.
+     * @return A set of available colors.
+     */
+    public Set<String> getAvailableColors(Integer productId) {
         return cartItemRepository.findByProductId(productId)
                            .stream()
                            .map(CartItem::getColor)
                            .collect(Collectors.toSet());
     }
 
+    /**
+     * Retrieves a set of available sizes for a product.
+     * @param productId The ID of the product.
+     * @return A set of available sizes.
+     */
     public Set<Double> getAvailableSizes(Integer productId) {
         return cartItemRepository.findByProductId(productId)
                            .stream()
@@ -115,6 +170,11 @@ public class ProductService {
                            .collect(Collectors.toSet());
     }
 
+    /**
+     * Retrieves the price range for a product.
+     * @param productId The ID of the product.
+     * @return An Object array containing the minimum and maximum prices.
+     */
     public Object getPriceRange(Integer productId) {
         List<CartItem> cartItems = cartItemRepository.findByProductId(productId);
         double minPrice = cartItems.stream().mapToDouble(CartItem::getPrice).min().orElse(0.0);

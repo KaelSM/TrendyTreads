@@ -67,11 +67,11 @@ public class User {
 
     @OneToMany(mappedBy = "user")
     @ToString.Exclude
-    private List<Order> orders = new ArrayList<>(); // Initialize the list
+    private List<Order> orders = new ArrayList<>(); 
 
     @OneToMany(mappedBy = "user")
     @ToString.Exclude
-    private List<Feedback> feedbacks = new ArrayList<>(); // Initialize the list
+    private List<Feedback> feedbacks = new ArrayList<>(); 
 
     
     public User(String name, String username, String email, String password, String address, String phone, String role, String status) {

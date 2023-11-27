@@ -66,9 +66,13 @@ import comp31.database_demo.repos.*;
                     CartItem cartItem = new CartItem("CartItem" + i + "-" + j, 1, price, size, color, "Available", product, null);
                     cartItemRepo.save(cartItem);
                 }
-            }
-
-            // Create and save Users
+            }           
+        
+        } catch (Exception e) {
+            System.err.println("Error during data initialization: " + e.getMessage());
+                   
+                }
+                // Create and save Users
             User adminUser = new User("Admin User", "admin", "admin@example.com", "adminPass", "Admin Address", "1234567890", "ADMIN", "ACTIVE");
             User authUser = new User("Auth User", "auth", "auth@example.com", "authPass", "Auth Address", "0987654321", "AUTH", "ACTIVE");
             User guestUser = new User("Guest User", "guest", "guest@example.com", "guestPass", "Guest Address", "1230984567", "GUEST", "ACTIVE");
@@ -89,11 +93,6 @@ import comp31.database_demo.repos.*;
                     //logger.info("Created Feedback for Product: {} by User: {}", product.getBrand(), user.getUsername());
                 }
             }
-        
-        } catch (Exception e) {
-            System.err.println("Error during data initialization: " + e.getMessage());
-                   
-                }
     }}
     
 

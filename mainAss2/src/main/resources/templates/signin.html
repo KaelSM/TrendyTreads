@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
@@ -24,10 +24,27 @@
         </div>
 
         <button type="submit" class="btn btn-primary">Sign In</button>
+
+                <!-- New button for guest users -->
+        <a href="/homepage" class="btn btn-secondary">Continue without Log In</a>
+
+        <!-- Link to the sign-up page -->
+        <p>Not a member yet? <a href="/signup">Sign Up</a></p>
+
     </form>
 
-    <!-- Add Bootstrap JS -->
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <!-- Add Bootstrap JS and jQuery -->
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <!-- Script to show alert if there's an error message -->
+        <script>
+            $(document).ready(function() {
+                var errorMessage = "${errorMessage}";
+                if (errorMessage) {
+                    alert(errorMessage);
+                }
+            });
+        </script>
 </body>
 
 </html>

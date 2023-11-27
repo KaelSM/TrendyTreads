@@ -5,6 +5,30 @@
     <title>Product Details</title>
     <!-- Add your CSS links here -->
 </head>
+<script th:inline="javascript">
+    function submitForm() {
+        var orderId = /*[[${orderId}]]*/ 'defaultOrderId'; // Replace with your orderId
+        var numItem = document.getElementById('numItem').value; // Assuming you have an input for numItem
+
+        // AJAX request
+        fetch('/cart/add/' + orderId, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: 'numItem=' + numItem
+        })
+        .then(response => response.text())
+        .then(data => {
+            alert(data); // Show an alert with the response message
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
+
+        return false; // Prevent form from submitting the traditional way
+    }
+</script>
 <body>
 
 <div th:if="${product != null}">
@@ -12,22 +36,13 @@
     <p><strong>Description:</strong> <span th:text="${product.description}">Product Description</span></p>
     <p><strong>Category:</strong> <span th:text="${product.category}">Product Category</span></p>
     <p><strong>Availability:</strong> <span th:text="${product.availability ? 'Available' : 'Unavailable'}">Availability</span></p>
-
-    <div th:if="${not #lists.isEmpty(feedbacks)}">
-        <h2>Feedback</h2>
-        <ul>
-            <li th:each="feedback : ${feedbacks}">
-                <p th:text="${feedback.feedbackMessage}">Feedback message</p>
-            </li>
-        </ul>
-    </div>
 </div>
 
 <div th:unless="${product != null}">
     <p>Product not found.</p>
 </div>
 <h2>Select Options</h2>
-<form th:action="@{/cart/add}" method="post">
+<form th:action="@{/cart/add/{orderId}(orderId=${orderId})}" method="post">
     <input type="hidden" name="productId" th:value="${product.id}" />
 
     <label for="color">Color:</label>
@@ -44,5 +59,16 @@
 
     <button type="submit">Add to Cart</button>
 </form>
+    <div th:if="${not #lists.isEmpty(feedbacks)}">
+        <h2>Feedback</h2>
+        <ul>
+            <li th:each="feedback : ${feedbacks}">
+                <p th:text="${feedback.feedbackMessage}">Feedback message</p>
+            </li>
+        </ul>
+    </div>
+    <div th:unless="${not #lists.isEmpty(feedbacks)}">
+        <p>No feedback available for this product.</p>
+    </div>
 </body>
 </html>

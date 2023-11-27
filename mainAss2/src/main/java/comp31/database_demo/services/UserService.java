@@ -57,4 +57,11 @@ public class UserService {
         return userRepo.findAll();
     }
 
+     public boolean existsByUsername(String username) {
+        Optional<User> userOptional = userRepo.findByUsername(username);
+        return userOptional.map(user -> user.getUsername().equals(username)).orElse(false);
+    }
+
+	
+
 }

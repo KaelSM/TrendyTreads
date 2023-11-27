@@ -32,30 +32,17 @@ public interface UserRepo extends CrudRepository<User, Integer>{
     @Query("SELECT u FROM User u WHERE LOWER(u.name) LIKE LOWER(CONCAT('%', :name, '%'))")
     List<User> findByNameContainingIgnoreCase(@Param("name") String name);
 
-    //@Modifying
-   // @Query("UPDATE User u SET u.isActive = :isActive WHERE u.id = :id")
-    //void updateUserActivityStatus(@Param("id") Integer id, @Param("isActive") Boolean isActive);
-
     @Query("SELECT u FROM User u LEFT JOIN u.orders o WHERE o IS NULL")
     List<User> findUsersWithNoOrders();
 
-        @Query("SELECT COUNT(u), u.role FROM User u GROUP BY u.role")
+    @Query("SELECT COUNT(u), u.role FROM User u GROUP BY u.role")
     List<Object[]> countUsersByRole();
 
-    //List<User> findByIsActive(Boolean isActive);
-
     List<User> findByAddressContaining(String address);
-
-    //@Query("SELECT u FROM User u WHERE u.registrationDate >= :startDate")
-    //List<User> findRecentlyRegisteredUsers(@Param("startDate") LocalDate startDate);
 
     @Modifying
     @Query("UPDATE User u SET u.role = :role WHERE u.id = :id")
     void updateUserRole(@Param("id") Integer id, @Param("role") String role);
-
-   // @Modifying
-   // @Query("UPDATE User u SET u.isActive = false WHERE u.lastActiveDate < :cutoffDate")
-   // void bulkDeactivateInactiveUsers(@Param("cutoffDate") LocalDate cutoffDate);
 
     Optional<User> findByPhone(String phone);
 }

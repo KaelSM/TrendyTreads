@@ -6,22 +6,45 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign In</title>
     <!-- Add Bootstrap CSS -->
+    <link rel="stylesheet" href="/styles.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    
 </head>
 
 <body>
-    <h1>Sign In</h1>
-    <!-- Your sign-in form -->
-    <form action="/signin" method="post">
-        <div class="form-group">
-            <label for="username">Username:</label>
-            <input type="text" class="form-control" id="username" name="username" required>
-        </div>
-        
-        <div class="form-group">
-            <label for="password">Password:</label>
-            <input type="password" class="form-control" id="password" name="password" required>
-        </div>
+    <div class="sticknote">
+        <h3>Assignment 2</h3>
+        <p> By: Seda Dadak, Phuong Uyen Dang, Aibiike Omurzakova, and
+            Kael S Moreira G </p>
+        <p>Right now for testing assignment 2 we have working:
+            <li>Sign in: username: admin password: adminPass <br>
+                or username: auth password: authPass  </li>
+            <li>Sign up: to create new users  </li>
+            <li> is able to use h2 console (db name: trendytreads) </li>
+            <li> we have application.properties file to connect to the database </li>
+            <li> we have 1 controller, we have more than one entity/repos/services </li>
+            <li> we have several thymeleaf template pages and a css static file </li>   
+            <li> initialize data in our datainitializer  </li>
+            <li> when logged in as an admin click on product it will redidrect 
+                to product management where we can add/display/delete and update product (can be seen and demo 
+                with the h2 console) </li>
+        </p>
+        <!-- Add the list of features here -->
+    </div>
+
+    <div class="container">
+        <h1 class="text-center">Sign In</h1>
+        <!-- Your sign-in form -->
+        <form action="/signin" method="post">
+            <div class="form-group">
+                <label for="username">Username:</label>
+                <input type="text" class="form-control" id="username" name="username" style="width: 200px;" required>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" class="form-control" id="password" name="password" style="width: 200px;" required>
+            </div>
 
         <button type="submit" class="btn btn-primary">Sign In</button>
 
@@ -32,6 +55,7 @@
         <p>Not a member yet? <a href="/signup">Sign Up</a></p>
 
     </form>
+
 
         <!-- Add Bootstrap JS and jQuery -->
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>

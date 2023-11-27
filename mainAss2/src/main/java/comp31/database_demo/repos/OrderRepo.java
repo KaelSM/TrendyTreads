@@ -52,20 +52,11 @@ public interface OrderRepo extends CrudRepository<Order, Integer>{
     @Query("DELETE FROM Order o WHERE o.status = :status")
     void deleteOrdersByStatus(@Param("status") String status);
 
-    //@Query("SELECT SUM(o.totalPrice) FROM Order o WHERE o.createdAt BETWEEN :startDate AND :endDate")
-    //Double calculateTotalSales(@Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
-
-    //@Query("SELECT AVG(o.totalPrice) FROM Order o WHERE o.createdAt BETWEEN :startDate AND :endDate")
-    //Double findAverageOrderValue(@Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
-
     @Query("SELECT o FROM Order o JOIN o.cartItems c WHERE c.product.id = :productId")
     List<Order> findByProductId(@Param("productId") Integer productId);
 
     @Query("SELECT COUNT(o) FROM Order o WHERE o.user.id = :userId AND o.status = :status")
     int countByUserIdAndStatus(@Param("userId") Integer userId, @Param("status") String status);
-
-    //@Query("SELECT o FROM Order o WHERE o.user.id = :userId ORDER BY o.createdAt DESC")
-    //List<Order> findRecentOrdersByUserId(@Param("userId") Integer userId, @Param("limit") int limit);
 
     @Modifying
     @Query("UPDATE Order o SET o.status = :status WHERE o.id IN :orderIds")
@@ -77,13 +68,7 @@ public interface OrderRepo extends CrudRepository<Order, Integer>{
     @Query("SELECT o FROM Order o JOIN o.cartItems c WHERE c.quantity > :quantity")
     List<Order> findOrdersWithItemQuantityGreaterThan(@Param("quantity") Integer quantity);
 
-    //List<Order> findByTotalPriceBetween(Double minPrice, Double maxPrice);
-
     @Query("SELECT o.user.id, COUNT(o) FROM Order o GROUP BY o.user.id ORDER BY COUNT(o) DESC")
     List<Object[]> findMostFrequentBuyers();
-
-    //@Query("SELECT SUM(o.totalPrice) FROM Order o WHERE o.createdAt BETWEEN :startDate AND :endDate")
-    //Double calculateTotalSalesByDateRange(@Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
-
 
 }

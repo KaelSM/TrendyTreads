@@ -8,7 +8,7 @@
     <h1>Product Management</h1>
 
     <!-- Form for adding a new product -->
-    <form action="#" th:action="@{/admin/addProduct}" method="post">
+    <form th:action="@{/addProduct}" th:object="${productForm}" method="post">
         <input type="text" name="brand" placeholder="Brand" required>
         <input type="text" name="type" placeholder="Type" required>
         <input type="text" name="description" placeholder="Description" required>
@@ -36,10 +36,11 @@
                 <td>
                     <!-- Update and Delete buttons -->
                     <a th:href="@{/admin/updateProduct/{id}(id=${product.id})}">Update</a>
-                    <a th:href="@{/admin/deleteProduct/{id}(id=${product.id})}">Delete</a>
+                    <a th:href="@{/admin/deleteProduct/{productId}(productId=${product.id})}">Delete</a>
                 </td>
             </tr>
+            
         </tbody>
     </table>
-
-</
+</body>
+</html>

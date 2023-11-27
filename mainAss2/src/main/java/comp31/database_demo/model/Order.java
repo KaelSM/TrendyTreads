@@ -1,6 +1,5 @@
 package comp31.database_demo.model;
 
-//import java.util.Set;
 import java.util.List;
 
 import org.antlr.v4.runtime.misc.NotNull;
@@ -52,7 +51,7 @@ public class Order {
     @NotNull
     private String createdAt;
     @NotNull
-    private Integer numItem; // This can be calculated from CartItems
+    private Integer numItem; 
     @NotNull
     private String address;
     @NotNull
@@ -65,8 +64,7 @@ public class Order {
     private String paypalId;
 
     @OneToMany(mappedBy = "order")
-    @ToString.Exclude // to prevent circular reference in Lombok's toString()
-   // private Set<CartItem> cartItems; // One order can have multiple cart items
+    @ToString.Exclude 
     List<CartItem> cartItems;
 
 
@@ -81,6 +79,7 @@ public class Order {
         this.status = status;
         this.paypalId = paypalId;
     }
+
 
     public Integer getNumItem() {
         return cartItems != null ? cartItems.size() : 0;

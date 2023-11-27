@@ -9,6 +9,7 @@ import comp31.database_demo.model.Feedback;
 import comp31.database_demo.model.Product;
 import comp31.database_demo.repos.CartItemRepo;
 import comp31.database_demo.repos.ProductRepo;
+import jakarta.transaction.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,8 +54,8 @@ public class ProductService {
         return productRepository.save(product);
     }
 
-    public Optional<Product> getProductById(Integer id) {
-        return productRepository.findById(id);
+    public Optional<Product> getProductById(Integer productId) {
+        return productRepository.findById(productId);
     }
 
     public List<Product> getAllProducts() {
@@ -74,8 +75,10 @@ public class ProductService {
         return productRepository.save(product);
     }
 
+    @Transactional             
     public void deleteProduct(Integer id) {
-        productRepository.deleteById(id);
+        cartItemRepository.deleteByProductId(id);
+        productRepository.deleteProductById(id);
     }
 
     public List<Product> getProductsByType(String type) {

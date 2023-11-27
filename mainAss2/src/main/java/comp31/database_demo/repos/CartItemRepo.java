@@ -14,7 +14,7 @@ import comp31.database_demo.model.User;
 
 /***
  * CartItemRepo is an interface that extends CrudRepository
- *  @param findAll() returns a list of all cartItems
+ * @param findAll() returns a list of all cartItems
  * @param findByStatusCartItems(String status) returns a list of all cartItems with the given status
  * @param updateByStatus(String status) updates the status of all cartItems with the given status
  * @param updateByStatusAndProductId(String status, Integer productId) updates the status of all cartItems with the given status and productId
@@ -24,9 +24,9 @@ import comp31.database_demo.model.User;
  *  
  * */
 
- 
-
 public interface CartItemRepo extends CrudRepository<CartItem, Integer>{
+    void deleteByProductId(Integer productId); 
+
     List<CartItem> findByProductId(Integer productId);
 
     List<CartItem> findByProduct_IdAndStatus(Integer productId, String status);
@@ -43,11 +43,8 @@ public interface CartItemRepo extends CrudRepository<CartItem, Integer>{
     @Query("SELECT SUM(c.quantity) FROM CartItem c WHERE c.product.id = :productId AND c.status = :status")
     Integer getTotalQuantityByProductIdAndStatus(@Param("productId") Integer productId, @Param("status") String status);
     
-
     @Query("SELECT c FROM CartItem c WHERE c.product.category = :category")
     List<CartItem> findByProductCategory(@Param("category") String category);
-
-    //void deleteByUser(User user);
 
     int countByStatus(String status);
 
@@ -61,10 +58,6 @@ public interface CartItemRepo extends CrudRepository<CartItem, Integer>{
     void updateQuantity(@Param("id") Integer id, @Param("quantity") Integer quantity);
 
     List<CartItem> findByQuantityGreaterThan(Integer quantity);
-
-    //@Modifying
-    //@Query("DELETE FROM CartItem c WHERE c.expiryDate < :currentDate")
-    //void deleteAllExpiredCartItems(@Param("currentDate") LocalDate currentDate);
 
     List<CartItem> findByStatus(String status);
 

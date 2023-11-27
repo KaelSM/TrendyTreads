@@ -56,4 +56,8 @@ public class FeedbackService {
     public List<Feedback> getFeedbackByBrand(String brand) {
         return null;
     }
+
+	public void deleteByProductId(Integer productId) {
+        feedbackRepo.deleteByProductId(productId);
+    }
 }

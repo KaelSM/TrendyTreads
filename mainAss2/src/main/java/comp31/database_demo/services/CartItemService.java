@@ -34,7 +34,6 @@ public class CartItemService {
     }
 
     public void removeCartItemsByStatus(String status) {
-        // Fetch items and remove them
         List<CartItem> items = cartItemRepo.findByStatus(status);
         cartItemRepo.deleteAll(items);
     }
@@ -42,10 +41,9 @@ public class CartItemService {
     public CartItem updateCartItemStatus(Integer cartItemId, String newStatus) {
         Optional<CartItem> cartItemOptional = cartItemRepo.findById(cartItemId);
         if (cartItemOptional.isPresent()) {
-            // If cart item is found, update its status
             CartItem cartItem = cartItemOptional.get();
             cartItem.setStatus(newStatus);
-            return cartItemRepo.save(cartItem); // Save the updated cart item
+            return cartItemRepo.save(cartItem); 
         } else {
             throw new EntityNotFoundException("CartItem not found with ID: " + cartItemId);
         }
@@ -100,16 +98,23 @@ public class CartItemService {
     }
 
     public void removeItemFromCart(Integer cartItemId) {
-        
         cartItemRepo.deleteById(cartItemId);
     }
 
     public Optional<CartItem> getCartItemDetails(Integer cartItemId) {
-       
         return cartItemRepo.findById(cartItemId);
     }
 
+    public List<CartItem> getCartItemsByProductId(Integer productId) {
+        return cartItemRepo.findByProductId(productId);
+    }
+
+
     public void reserveCartItem(Integer cartItemId) {
         updateCartItemStatus(cartItemId, "Reserved");
+    }
+
+    public CartItem getCartItemById(Integer id) {
+        return cartItemRepo.findById(id).orElse(null);
     }
 }

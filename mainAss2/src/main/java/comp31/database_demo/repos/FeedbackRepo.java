@@ -27,6 +27,7 @@ public interface FeedbackRepo extends CrudRepository<Feedback, Integer>{
     List<Feedback> findByProductId(Integer productId);
     List<Feedback> findByUserIdAndProductId(Integer userId, Integer productId);
     List<Feedback> findByRating(Integer rating);
+    void deleteByProductId(Integer productId);
 
     @Query("SELECT AVG(f.rating) FROM Feedback f WHERE f.product.id = :productId")
     Double findAverageRatingByProductId(@Param("productId") Integer productId);
@@ -34,15 +35,9 @@ public interface FeedbackRepo extends CrudRepository<Feedback, Integer>{
     @Query("SELECT f FROM Feedback f WHERE f.user.id = :userId AND f.rating >= :minRating")
     List<Feedback> findByUserIdAndMinimumRating(@Param("userId") Integer userId, @Param("minRating") Integer minRating);
     
-    // @Query("SELECT f FROM Feedback f ORDER BY f.createdAt DESC")
-    // List<Feedback> findRecentFeedback();
-
     int countByProductId(Integer productId);
 
     List<Feedback> findByRatingBetween(Integer minRating, Integer maxRating);
-
-    //@Query("DELETE FROM Feedback f WHERE f.createdAt < :cutoffDate")
-    //void deleteFeedbackOlderThan(@Param("cutoffDate") LocalDate cutoffDate);
 
     @Query("SELECT f FROM Feedback f WHERE f.feedbackMessage LIKE %:keyword%")
     List<Feedback> findByKeywordInMessage(@Param("keyword") String keyword);

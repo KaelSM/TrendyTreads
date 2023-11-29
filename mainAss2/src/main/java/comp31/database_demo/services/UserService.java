@@ -113,4 +113,19 @@ public class UserService {
         logger.info("----Current Username from session: {}--------", username);
         return username;
     }
+
+    public User updateUserDetails(Integer id, User updatedUserDetails) {
+        User user = userRepo.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
+        // Update the fields that are allowed to be updated
+        user.setName(updatedUserDetails.getName());
+        user.setUsername(updatedUserDetails.getUsername());
+        user.setEmail(updatedUserDetails.getEmail());
+        user.setAddress(updatedUserDetails.getAddress());
+        user.setPhone(updatedUserDetails.getPhone());
+        user.setStatus(updatedUserDetails.getStatus());
+        user.setRole(updatedUserDetails.getRole());
+        user.setPassword(updatedUserDetails.getPassword());
+
+        return userRepo.save(user);
+    }
 }

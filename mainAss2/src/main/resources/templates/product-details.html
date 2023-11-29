@@ -42,7 +42,7 @@
     <p>Product not found.</p>
 </div>
 <h2>Select Options</h2>
-<form th:action="@{/cart/add/{orderId}(orderId=${orderId})}" method="post">
+    <form th:action="@{'/cart/add/' + ${orderId}}" method="post">
     <input type="hidden" name="productId" th:value="${product.id}" />
 
     <label for="color">Color:</label>

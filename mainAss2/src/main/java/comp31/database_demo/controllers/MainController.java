@@ -222,18 +222,20 @@ public class MainController {
         return "productManagement";
     }
 
+    @PostMapping("/add/{orderId}")
+    public String addToCart(@PathVariable("orderId") int orderId, CartItem cartItem) {
+        Order order = orderService.getOrderById(orderId); // Assuming you have a service to fetch the order
+        cartItem.setOrder(order); // Set the order object instead of ID
+        cartItemService.addOrUpdateCartItem(cartItem);
+        return "redirect:/cart";
+    }
+
     // Endpoint for viewing the cart
     @GetMapping("/cart/add/{orderId}")
     public String viewCart(@PathVariable int orderId, Model model) {
         model.addAttribute("orderId", orderId); 
         return "cart"; 
-    }
-
-    // Endpoint for adding or updating cart items
-    @PostMapping("/cart/add/{orderId}")
-    public ResponseEntity<String> addOrUpdateCartItems(@PathVariable int orderId, @RequestParam("numItem") int numItem) {
-        return ResponseEntity.ok("Item added successfully");
-    }
+    } 
 
     // Endpoint for removing cart items
     @PostMapping("/cart/remove/{orderId}")
@@ -338,5 +340,54 @@ public class MainController {
         model.addAttribute("errorMessage", "Feedback not found");
         return "errorPage"; // Or any error handling page you have
     }
+    }
+
+    @PutMapping("/users/{id}")
+    public ResponseEntity<User> updateUser(@PathVariable Integer id, @RequestBody User userDetails) {
+        User updatedUser = userService.updateUserDetails(id, userDetails);
+        return ResponseEntity.ok(updatedUser);
 }
+
+    @GetMapping("/profile")
+    public String userProfile(Model model, HttpSession session) {
+        Integer userId = (Integer) session.getAttribute("userId");
+        if (userId == null) {
+            // Handle not logged in user, maybe redirect to login page
+            return "redirect:/login";
+        }
+
+        User user = userService.findById(userId);
+        if (user == null) {
+            // Handle user not found scenario
+            return "userNotFound";
+        }
+
+        model.addAttribute("user", user);
+        return "userProfile";
+    }
+
+    @PostMapping("/updateProfile")
+    public String updateProfile(@ModelAttribute User user, HttpSession session) {
+    Integer userId = (Integer) session.getAttribute("userId");
+    if (userId == null || !userId.equals(user.getId())) {
+        // Handle unauthorized access
+        return "errorPage";
+    }
+
+    userService.updateUserDetails(userId, user);
+    return "redirect:/profile";
+    }
+
+    @DeleteMapping("/deleteProfile")
+    public ResponseEntity<?> deleteProfile(HttpSession session) {
+        Integer userId = (Integer) session.getAttribute("userId");
+        if (userId == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+
+        userService.deleteUser(userId);
+        session.invalidate(); // Invalidate the session after deleting the profile
+        return ResponseEntity.ok().build();
+    }
+
 }

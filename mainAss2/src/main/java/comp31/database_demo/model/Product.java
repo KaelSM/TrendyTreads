@@ -55,13 +55,12 @@ public class Product {
     @ToString.Exclude
     List<CartItem> cartItems;
 
-    public Product(String brand, String type, String description, String category, Boolean availability) {
+    public Product(String string, String type, String description, String category, Boolean availability) {
         this.brand = brand;
         this.type = type;
         this.description = description;
         this.category = category;
         this.availability = availability;
     }
-
     
 }

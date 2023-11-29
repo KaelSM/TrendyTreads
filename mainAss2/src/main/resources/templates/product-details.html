@@ -64,11 +64,38 @@
         <ul>
             <li th:each="feedback : ${feedbacks}">
                 <p th:text="${feedback.feedbackMessage}">Feedback message</p>
+                <div th:if="${feedback.user.username == username}">
+                    <a th:href="@{/feedback/update/{id}(id=${feedback.feedbackId})}" class="btn btn-primary">Edit</a>
+                    <a th:href="@{/feedback/delete/{feedbackId}(feedbackId=${feedback.feedbackId})}" class="btn btn-danger">Delete Feedback</a>
             </li>
         </ul>
+    </div>
+    <div>
+        <p>Session User: <span th:text="${username}"></span></p>
     </div>
     <div th:unless="${not #lists.isEmpty(feedbacks)}">
         <p>No feedback available for this product.</p>
     </div>
+    <!-- Add Feedback Form -->
+    <h2>Submit Your Feedback</h2>
+    <form th:action="@{/feedback/add}" method="post">
+    <input type="hidden" name="productId" th:value="${product.id}" />
+    <input type="hidden" name="userId" th:value="${userId}" />
+
+    <label for="feedbackMessage">Your Feedback:</label>
+    <textarea name="feedbackMessage" id="feedbackMessage" required></textarea>
+
+    <label for="rating">Rating:</label>
+    <select name="rating" id="rating" required>
+        <option value="">Select a rating</option>
+        <option value="1">1 - Poor</option>
+        <option value="2">2 - Fair</option>
+        <option value="3">3 - Good</option>
+        <option value="4">4 - Very Good</option>
+        <option value="5">5 - Excellent</option>
+    </select>
+
+    <button type="submit">Submit Feedback</button>
+</form>
 </body>
 </html>

@@ -2,6 +2,7 @@ package comp31.database_demo.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.antlr.v4.runtime.misc.NotNull;
 
@@ -89,6 +90,14 @@ public class User {
         if (username != null) {
             return username;
         }
+        return null;
+    }
+
+    public Optional<User> orElseThrow(Object object) {
+        return null;
+    }
+
+    public User orElse(Object object) {
         return null;
     }
 }

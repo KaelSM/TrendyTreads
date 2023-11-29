@@ -1,24 +1,41 @@
 package comp31.database_demo.controllers;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import comp31.database_demo.model.*;
+import comp31.database_demo.repos.UserRepo;
 import comp31.database_demo.services.*;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 
+import java.security.Principal;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
 @Controller
 public class MainController {
+    @Autowired
+    private UserRepo userRepo;
+
+    private static final Logger logger = LoggerFactory.getLogger(MainController.class);
 
     // Constructor injection of services
     private final ProductService productService;
@@ -58,21 +75,43 @@ public class MainController {
 
     // Endpoint for displaying product details
     @GetMapping("/product/details/{productId}")
-    public String productPage(@PathVariable Integer productId, Model model) {
+    public String productPage(@PathVariable Integer productId, Model model, HttpSession session) {
+        logger.info("productPage called with productId: {}", productId);
         // Retrieve product details, feedbacks, available colors, available sizes
         Optional<Product> product = productService.getProductById(productId);
+
+        Integer userId = userService.getCurrentUserId();
+            model.addAttribute("userId", userId);
+
+        logger.info("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!userId is: {}", userId);
+
         if (product.isPresent()) {
             List<Feedback> feedbacks = feedbackService.getFeedbackByProductId(productId);
             Set<String> availableColors = productService.getAvailableColors(productId);
             Set<Double> availableSizes = productService.getAvailableSizes(productId);
 
-            // Add attributes to the model
+            //String username = (String) request.getSession().getAttribute("username");
+
+            //User user = userService.findByUsername(username);
+           //Integer userId = userService.getCurrentUserId();
+           // model.addAttribute("userId", userId);
+
+            if(userId == null) 
+                logger.info("userId is null!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+            else
+                logger.info("userId is not null!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+
             model.addAttribute("product", product.get());
             model.addAttribute("feedbacks", feedbacks);
             model.addAttribute("availableColors", availableColors);
             model.addAttribute("availableSizes", availableSizes);
             model.addAttribute("cartItem", new CartItem());
             model.addAttribute("priceRange", productService.getPriceRange(productId));
+
+            String username = userService.getCurrentUsername();
+
+            model.addAttribute("username", username);
+
 
             return "product-details";
         } else {
@@ -87,23 +126,6 @@ public class MainController {
         return "signin";
     }
 
-    // Endpoint for processing sign-in
-    @PostMapping("/signin")
-    public String processSignIn(@ModelAttribute("user") User user, RedirectAttributes redirectAttributes) {
-        // Check if the user is an admin or a regular user
-        if (user.getUsername().equals("admin") && user.getPassword().equals("adminPass")) {
-            return "redirect:/admin";
-        } else if (userService.existsByUsername(user.getUsername())) {
-            return "redirect:/";
-        } else if (!userService.existsByUsername(user.getUsername())) {
-            redirectAttributes.addFlashAttribute("errorMessage", "Wrong username");
-            return "redirect:/signin";
-        } else {
-            redirectAttributes.addFlashAttribute("errorMessage", "Wrong password");
-            return "redirect:/signin";
-        }
-    }
-
     // Endpoint for showing the sign-up form
     @GetMapping("/signup")
     public String showSignUpForm(Model model) {
@@ -112,16 +134,25 @@ public class MainController {
     }
 
     // Endpoint for processing sign-up
-    @PostMapping("/signup")
-    public String processSignUp(@ModelAttribute("user") User user, Model model) {
-        // Set user role and status, save user
-        user.setRole("auth"); 
-        user.setStatus("active"); 
-        userService.saveUser(user);
-        
-        model.addAttribute("message", "User signed up successfully");
-    
-        return "redirect:/home";
+    @PostMapping("/signin")
+    public String processSignIn(@ModelAttribute("user") User userForm, RedirectAttributes redirectAttributes, HttpSession session) {
+    User user = userRepo.findByUsername(userForm.getUsername()); // Use the repository to find the user
+
+    if (user != null && user.getPassword().equals(userForm.getPassword())) {
+        // Correct password, set the user ID in the session
+        session.setAttribute("userId", user.getId());
+        session.setAttribute("username", user.getUsername());
+        logger.info("------------------------------------User ID {} set in session------------", user.getId());
+        return "homepage";
+    } else if (user == null) {
+        // User does not exist
+        redirectAttributes.addFlashAttribute("errorMessage", "Wrong username");
+        return "redirect:/signin";
+    } else {
+        // Password incorrect
+        redirectAttributes.addFlashAttribute("errorMessage", "Wrong password");
+        return "redirect:/signin";
+    }
     }
 
     // Endpoint for continuing as a guest
@@ -247,4 +278,65 @@ public class MainController {
         productService.addProduct(product);
         return "redirect:/productManagement";
     }
+
+    @PostMapping("/feedback/add")
+    public String addFeedback(@RequestParam Integer productId, 
+                              @RequestParam String feedbackMessage, 
+                              @RequestParam Integer rating,
+                              @RequestParam Integer userId,
+                              Model model) { // Added Model parameter
+                                logger.info("addFeedback called with productId: {}, feedbackMessage: {}, rating: {}, userId: {}", productId, feedbackMessage, rating, userId);
+
+        Product product = productService.findById(productId);
+        User user = userService.findById(userId);
+
+        if (user == null) {
+            // Handle the case where the user doesn't exist or userId is null
+            return "errorPage"; // Redirect to an error page or handle accordingly
+        }
+
+        Feedback feedback = new Feedback("\"" + feedbackMessage + "\" by " + user.getUsername(), rating, user, product); // Used userId instead of user
+        feedbackService.saveFeedback(feedback);
+
+        return "redirect:/product-details";
+    }
+
+
+    @PostMapping("/feedback/update/{id}")
+    public String updateFeedback(@PathVariable Integer id, @ModelAttribute Feedback feedback, HttpServletRequest request) {
+    Feedback existingFeedback = feedbackService.getFeedbackById(id)
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Feedback not found"));
+    
+    existingFeedback.setFeedbackMessage(feedback.getFeedbackMessage());
+    existingFeedback.setRating(feedback.getRating());
+    feedbackService.saveFeedback(existingFeedback);
+
+    if (existingFeedback.getProduct() != null) {
+        return "redirect:/product/details/" + existingFeedback.getProduct().getId();
+    } else {
+        // Handle the case when Product is null
+        // For example, redirect to a generic page or show an error message
+        return "redirect:/some-other-page";
+    }
+    }
+
+    @GetMapping("/feedback/delete/{feedbackId}")
+    public String deleteFeedback(@PathVariable Integer feedbackId, Model model) {
+        feedbackService.deleteFeedback(feedbackId);
+        // Additional logic and model attributes as needed
+        return "redirect:/feedbackManagement"; // Redirect to the appropriate view
+    }
+
+    @GetMapping("/feedback/update/{id}")
+    public String showUpdateFeedbackForm(@PathVariable Integer id, Model model) {
+    Optional<Feedback> feedbackOptional = feedbackService.getFeedbackById(id);
+
+    if (feedbackOptional.isPresent()) {
+        model.addAttribute("feedback", feedbackOptional.get());
+        return "updateFeedback"; // Name of the Thymeleaf template
+    } else {
+        model.addAttribute("errorMessage", "Feedback not found");
+        return "errorPage"; // Or any error handling page you have
+    }
+}
 }

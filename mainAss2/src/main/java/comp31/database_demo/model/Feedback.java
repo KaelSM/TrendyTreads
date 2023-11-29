@@ -2,6 +2,7 @@ package comp31.database_demo.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.antlr.v4.runtime.misc.NotNull;
 
@@ -73,6 +74,12 @@ public class Feedback {
      */
     public Integer getId() {
         return feedbackId;
+    }
+
+    public void setUser(Optional<User> user2) {
+    }
+
+    public Feedback(String feedbackMessage2, int rating2, Optional<User> of, Product product2) {
     }
 
 }

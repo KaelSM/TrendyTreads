@@ -8,9 +8,6 @@ import org.springframework.stereotype.Component;
 import comp31.database_demo.model.*;
 import comp31.database_demo.repos.*;
 
-/**
- * Initializes the database with sample data.
- */
 @Component
 public class DataInitializer implements CommandLineRunner {
     // Repositories
@@ -34,12 +31,6 @@ public class DataInitializer implements CommandLineRunner {
     private static final String[] COLORS = new String[] { "Red", "Blue", "Green", "Yellow", "Black", "White" };
     private static final Double[] SIZES = new Double[] { 36.0, 38.0, 40.0, 42.0, 44.0 }; 
 
-    /**
-     * Runs the data initialization process.
-     * 
-     * @param args The command line arguments.
-     * @throws Exception If an error occurs during data initialization.
-     */
     @Override
     public void run(String... args) throws Exception {
         Random random = new Random();
@@ -54,21 +45,21 @@ public class DataInitializer implements CommandLineRunner {
 
         
         if (args.length == 0) {
-            System.out.println("No arguments provided. Initializing with default values.");
+            
         }
        
         Integer nItems = args.length > 0 ? Integer.parseInt(args[0]) : 10;
 
         try {
             for (int i = 0; i < nItems; i++) {
-                
+                // Create products and save them
                 Product product = new Product(brands[i], types[i], descriptions[i], categories[i], i % 2 == 0);
                 productRepo.save(product);
 
-                for (int j = 0; j < 5; j++) { 
+                for (int j = 0; j < 5; j++) { // Create multiple cart items for each product
                     String color = COLORS[random.nextInt(COLORS.length)];
                     Double size = SIZES[random.nextInt(SIZES.length)];
-                    int price = 10 + random.nextInt(90); 
+                    int price = 10 + random.nextInt(90); // Random price between 10 and 100
 
                     CartItem cartItem = new CartItem("CartItem" + i + "-" + j, 1, price, size, color, "Available",
                             product, null);
@@ -92,13 +83,13 @@ public class DataInitializer implements CommandLineRunner {
         userRepo.save(authUser);
         userRepo.save(guestUser);
 
-        List<User> users = userRepo.findAll(); 
-        List<Product> products = productRepo.findAll(); 
+        List<User> users = userRepo.findAll(); // Assuming you have a method to get all users
+        List<Product> products = productRepo.findAll(); // Assuming you have a method to get all products
 
         for (Product product : products) {
             for (User user : users) {
                 Feedback feedback = new Feedback("Feedback for " + product.getBrand() + " by " + user.getUsername(),
-                        random.nextInt(5) + 1, 
+                        random.nextInt(5) + 1, // Random rating from 1 to 5
                         user, product);
                 feedbackRepo.save(feedback);
                 

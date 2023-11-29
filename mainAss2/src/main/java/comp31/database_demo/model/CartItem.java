@@ -84,4 +84,13 @@ public class CartItem {
                 ", order=" + (order != null ? order.getOrderId() : null) +
                 '}';
     }
+
+    public void setOrder(Order order) {
+        this.order = order;
+    }
+    
+    // Corresponding getter method
+    public Order getOrder() {
+        return this.order;
+    }
 }

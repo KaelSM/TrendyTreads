@@ -182,4 +182,8 @@ public class ProductService {
 
         return new Object[]{minPrice, maxPrice};
     }
+
+	public Product findById(Integer productId) {
+		return productRepository.findById(productId).orElseThrow(() -> new RuntimeException("Product not found"));
+	}
 }

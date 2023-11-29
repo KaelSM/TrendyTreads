@@ -110,4 +110,8 @@ public class FeedbackService {
 	public void deleteByProductId(Integer productId) {
         feedbackRepo.deleteByProductId(productId);
     }
+
+    public Integer getProductId(Feedback feedback) {
+        return feedback.getProduct().getId();
+    }
 }

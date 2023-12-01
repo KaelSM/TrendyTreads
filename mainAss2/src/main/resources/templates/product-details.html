@@ -57,7 +57,7 @@
 
     <p><strong>Price Range:</strong> <span th:text="${priceRange[0] == priceRange[1] ? '$' + priceRange[0] : '$' + priceRange[0] + ' - $' + priceRange[1]}">Price Range</span></p>
 
-    <button type="submit">Add to Cart</button>
+    <a th:href="@{/cart/add/{orderId}(orderId=${orderId})}">Add to Cart</a>
 </form>
     <div th:if="${not #lists.isEmpty(feedbacks)}">
         <h2>Feedback</h2>

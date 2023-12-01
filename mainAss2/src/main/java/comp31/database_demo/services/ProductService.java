@@ -105,7 +105,7 @@ public class ProductService {
      */
     @Transactional             
     public void deleteProduct(Integer id) {
-        cartItemRepository.deleteByProductId(id);
+        cartItemRepository.deleteByProduct_Id(id);
         productRepository.deleteProductById(id);
     }
 
@@ -136,7 +136,7 @@ public class ProductService {
         List<ProductDTO> productDTOs = new ArrayList<>();
 
         for (Product product : products) {
-            List<CartItem> cartItems = cartItemRepository.findByProductId(product.getId());
+            List<CartItem> cartItems = cartItemRepository.findByProduct_Id(product.getId());
             double minPrice = cartItems.stream().mapToDouble(CartItem::getPrice).min().orElse(0.0);
             double maxPrice = cartItems.stream().mapToDouble(CartItem::getPrice).max().orElse(0.0);
 
@@ -152,7 +152,7 @@ public class ProductService {
      * @return A set of available colors.
      */
     public Set<String> getAvailableColors(Integer productId) {
-        return cartItemRepository.findByProductId(productId)
+        return cartItemRepository.findByProduct_Id(productId)
                            .stream()
                            .map(CartItem::getColor)
                            .collect(Collectors.toSet());
@@ -164,7 +164,7 @@ public class ProductService {
      * @return A set of available sizes.
      */
     public Set<Double> getAvailableSizes(Integer productId) {
-        return cartItemRepository.findByProductId(productId)
+        return cartItemRepository.findByProduct_Id(productId)
                            .stream()
                            .map(CartItem::getSize)
                            .collect(Collectors.toSet());
@@ -176,7 +176,7 @@ public class ProductService {
      * @return An Object array containing the minimum and maximum prices.
      */
     public Object getPriceRange(Integer productId) {
-        List<CartItem> cartItems = cartItemRepository.findByProductId(productId);
+        List<CartItem> cartItems = cartItemRepository.findByProduct_Id(productId);
         double minPrice = cartItems.stream().mapToDouble(CartItem::getPrice).min().orElse(0.0);
         double maxPrice = cartItems.stream().mapToDouble(CartItem::getPrice).max().orElse(0.0);
 

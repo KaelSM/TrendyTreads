@@ -97,10 +97,15 @@ document.getElementById('updateUserForm').addEventListener('submit', function(ev
                     window.location.href = '/signin';
                 } else {
                     // Handle errors
+                    console.error('HTTP Error:', response.statusText);
                     alert('There was an error deleting your profile.');
                 }
             })
-            .catch(error => console.error('Error:', error));
+            .catch(error => {
+            // Handle network errors
+            console.error('Network Error:', error);
+            alert('Network error occurred. Please try again.');
+            });
         }
     });
 </script>

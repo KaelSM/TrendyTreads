@@ -1,5 +1,7 @@
 package comp31.database_demo.model;
 
+import java.util.Optional;
+
 import org.antlr.v4.runtime.misc.NotNull;
 
 import jakarta.persistence.Entity;
@@ -93,4 +95,8 @@ public class CartItem {
     public Order getOrder() {
         return this.order;
     }
+
+	public Integer getProductId() {
+		return null;
+	}
 }

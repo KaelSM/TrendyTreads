@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -222,36 +223,70 @@ public class MainController {
         return "productManagement";
     }
 
-    @PostMapping("/add/{orderId}")
+   /* @PostMapping("/cart/add/{orderId}")
     public String addToCart(@PathVariable("orderId") int orderId, CartItem cartItem) {
         Order order = orderService.getOrderById(orderId); // Assuming you have a service to fetch the order
         cartItem.setOrder(order); // Set the order object instead of ID
         cartItemService.addOrUpdateCartItem(cartItem);
         return "redirect:/cart";
-    }
+    } */
 
-    // Endpoint for viewing the cart
+    //This method should handle displaying the form
     @GetMapping("/cart/add/{orderId}")
-    public String viewCart(@PathVariable int orderId, Model model) {
+    public String viewCart(@PathVariable("orderId") Integer orderId, Model model) {
+        if (orderId == null) {
+            // Handle the case where orderId is null
+            // Redirect to an error page or show an error message
+            return "errorPage"; // Redirect to a custom error page or handle it differently
+        }
         model.addAttribute("orderId", orderId); 
         return "cart"; 
     } 
 
-    // Endpoint for removing cart items
-    @PostMapping("/cart/remove/{orderId}")
-    public String removeCartItems(@PathVariable int orderId, @RequestParam("numItem") int numItem) {
-        // Remove cart items and redirect to cart page
-        orderService.removeCartItems(orderId, numItem);
-        return "redirect:/cart/" + orderId;
+    @GetMapping("/cart/update/{orderId}")
+    public String updateCart(@PathVariable("orderId") Integer orderId, Model model) {
+        if (orderId == null) {
+            // Handle the case where orderId is null
+            // Redirect to an error page or show an error message
+            return "errorPage"; // Redirect to a custom error page or handle it differently
+        }
+        model.addAttribute("orderId", orderId); 
+        return "cart"; 
+    } 
+
+    // This method should handle the form submission
+    @PostMapping("/cart/add/{orderId}")
+public String addToCart(@PathVariable("orderId") int orderId,
+                        @Valid @ModelAttribute CartItem cartItem,
+                        BindingResult result,
+                        Model model) {
+    if (result.hasErrors()) {
+        // Send back to the form page if there are errors
+        return "cart";
     }
 
-    // Endpoint for cart checkout
-    @PostMapping("/cart/checkout/{orderId}")
-    public String checkout(@PathVariable int orderId) {
-        // Perform checkout and redirect to cart page
-        orderService.checkout(orderId);
-        return "redirect:/cart/" + orderId;
+    // Validate that the order exists
+    Order order = orderService.getOrderById(orderId);
+    if (order == null) {
+        model.addAttribute("errorMessage", "Invalid order ID");
+        return "cart";
     }
+
+    Optional<Product> productOptional = productService.getProductById(cartItem.getProductId());
+    if (productOptional.isPresent()) {
+        Product product = productOptional.get();
+        cartItem.setProduct(product);
+        cartItem.setOrder(order);
+        cartItemService.addOrUpdateCartItem(cartItem); // This method should handle adding the cartItem to the Order
+    } else {
+        model.addAttribute("errorMessage", "Invalid product ID");
+        return "cart";
+    }
+
+    // Redirect to a page where the user can view their cart
+    return "redirect:/cart/view";
+    }
+
 
     // Endpoint for product management
     @GetMapping("/productManagement")
@@ -378,16 +413,33 @@ public class MainController {
     return "redirect:/profile";
     }
 
-    @DeleteMapping("/deleteProfile")
-    public ResponseEntity<?> deleteProfile(HttpSession session) {
-        Integer userId = (Integer) session.getAttribute("userId");
-        if (userId == null) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-        }
-
-        userService.deleteUser(userId);
-        session.invalidate(); // Invalidate the session after deleting the profile
-        return ResponseEntity.ok().build();
+    @DeleteMapping("/deleteProfile/{userId}")
+public String deleteProfile(@PathVariable Integer userId, RedirectAttributes redirectAttributes) {
+    if (userId == null) {
+        redirectAttributes.addFlashAttribute("errorMessage", "Invalid user ID");
+        return "redirect:/errorPage";
     }
+
+    User user = userService.findById(userId);
+    if (user == null) {
+        redirectAttributes.addFlashAttribute("errorMessage", "User not found");
+        return "redirect:/errorPage";
+    }
+
+    try {
+        List<Feedback> feedbacks = feedbackService.getFeedbackByUserId(user);
+        for (Feedback feedback : feedbacks) {
+            feedbackService.deleteFeedback(feedback.getId());
+        }
+        userService.deleteUser(userId);
+        redirectAttributes.addFlashAttribute("successMessage", "Profile deleted successfully");
+        return "redirect:/"; 
+    } catch (Exception e) {
+        redirectAttributes.addFlashAttribute("errorMessage", "Error occurred while deleting the profile");
+        return "redirect:/errorPage";
+    }
+}
+
+
 
 }

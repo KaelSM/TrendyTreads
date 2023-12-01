@@ -11,6 +11,22 @@
             <div class="card-header">
                 Shopping Cart
             </div>
+            <form th:action="@/cart/add/{productId}" th:object="${cartItem}" method="post">
+                
+                
+            </form>
+            <form th:action="@{cart/update/{id}(id=${cartItem.productId})}" th:object="${cartItem}" method="post">
+                <input type="hidden" th:field="*{id}">
+                <input type="text" th:field="*{name}" placeholder="Name" required>
+                <input type="number" th:field="*{quantity}" placeholder="Quantity" required>
+                <!-- Add other input fields for the properties you want to update -->
+                <button type="submit">Update Cart Item</button>
+            </form>
+            <form th:action="@{/cart/delete/{id}(id=${cartItem.id})}" method="post">
+                <!-- Add hidden input field for the item ID -->
+                <input type="hidden" th:field="*{id}">
+                <button type="submit">Delete Cart Item</button>
+            </form>
             <ul class="list-group list-group-flush">
                 <!-- List of products and prices here -->
             </ul>

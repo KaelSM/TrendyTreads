@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import comp31.database_demo.model.CartItem;
+import comp31.database_demo.model.Order;
 import comp31.database_demo.model.Product;
 import comp31.database_demo.model.User;
 import comp31.database_demo.repos.CartItemRepo;
@@ -20,6 +21,8 @@ public class CartItemService {
     
     @Autowired
     private CartItemRepo cartItemRepo;
+
+    private OrderService orderService;
 
     /**
      * Retrieves a list of cart items based on the specified status.
@@ -194,7 +197,7 @@ public class CartItemService {
      * @return A list of cart items with the specified product ID.
      */
     public List<CartItem> getCartItemsByProductId(Integer productId) {
-        return cartItemRepo.findByProductId(productId);
+        return cartItemRepo.findByProduct_Id(productId);
     }
 
     /**
@@ -215,4 +218,39 @@ public class CartItemService {
     public CartItem getCartItemById(Integer id) {
         return cartItemRepo.findById(id).orElse(null);
     }
+
+    public void addCartItemToOrder(CartItem cartItem, Order order) {
+        cartItem.setOrder(order);
+        cartItemRepo.save(cartItem);
+    }
+
+    public Order checkAndCreateOrder(Integer userId) {
+        // Assuming you have a method to get the latest or current order for a user
+        Order currentOrder = orderService.getCurrentOrderByUserId(userId);
+    
+        if (currentOrder == null || currentOrder.isCheckoutComplete()) {
+            // Create a new order if there is no current order or if the current order is already checked out
+            currentOrder = new Order();
+            // Set additional properties like userId, creation date, etc.
+            // ...
+            orderService.saveOrder(currentOrder);
+        }
+        return currentOrder;
+    }
+
+    public void checkoutOrder(Integer orderId) {
+        Order order = orderService.getOrderById(orderId);
+        if (order != null) {
+            order.setStatus("Checked Out"); // Update status or use an enum
+            orderService.saveOrder(order);
+        }
+    }
+
+    public void addCartItemToCart(Integer userId, CartItem cartItem) {
+        Order order = orderService.checkAndCreateOrder(userId);
+        cartItem.setOrder(order);
+        // Logic to save or update the cart item
+        // ...
+    }
+    
 }

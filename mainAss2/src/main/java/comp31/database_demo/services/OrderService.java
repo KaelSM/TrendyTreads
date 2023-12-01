@@ -2,6 +2,8 @@ package comp31.database_demo.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import comp31.database_demo.model.CartItem;
 import comp31.database_demo.model.Order;
 import comp31.database_demo.model.User;
 import comp31.database_demo.repos.OrderRepo;
@@ -17,6 +19,7 @@ public class OrderService {
 
     @Autowired
     private OrderRepo orderRepo;
+    private CartItemService cartItemService;
 
     public OrderService(OrderRepo OrderRepo) {
         this.OrderRepo = OrderRepo;
@@ -251,5 +254,34 @@ public class OrderService {
     public Order createOrUpdateOrder(Order order) {
         return orderRepo.save(order);
     }
+
+    public void saveOrder(Order order) {
+        orderRepo.save(order);
+    }
+
+    public Order getCurrentOrderByUserId(Integer userId) {
+        return null;
+    }
+
+    public void addCartItemToOrder(Integer userId, CartItem cartItem) {
+    Order order = checkAndCreateOrder(userId);
+    cartItem.setOrder(order);
+    cartItemService.addOrUpdateCartItem(cartItem);
+}
+
+    public Order checkAndCreateOrder(Integer userId) {
+    // Assuming you have a method to get the latest or current order for a user
+    Order currentOrder = getCurrentOrderByUserId(userId);
+
+    if (currentOrder == null || currentOrder.isCheckoutComplete()) {
+        // Create a new order if there is no current order or if the current order is already checked out
+        currentOrder = new Order();
+        // Set additional properties like userId, creation date, etc.
+        // ...
+        saveOrder(currentOrder);
+    }
+    return currentOrder;
+    
+}
    
 }

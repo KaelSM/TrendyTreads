@@ -23,7 +23,7 @@ public interface CartItemRepo extends CrudRepository<CartItem, Integer> {
      * 
      * @param productId the ID of the product
      */
-    void deleteByProductId(Integer productId); 
+    void deleteByProduct_Id(Integer productId); 
 
     /**
      * Finds cart items by product ID.
@@ -31,7 +31,7 @@ public interface CartItemRepo extends CrudRepository<CartItem, Integer> {
      * @param productId the ID of the product
      * @return a list of cart items
      */
-    List<CartItem> findByProductId(Integer productId);
+    List<CartItem> findByProduct_Id(Integer productId);
 
     /**
      * Finds cart items by product ID and status.
@@ -49,7 +49,7 @@ public interface CartItemRepo extends CrudRepository<CartItem, Integer> {
      * @param color the color of the cart items
      * @return a list of cart items
      */
-    List<CartItem> findByProductIdAndColor(Integer productId, String color);
+    List<CartItem> findByProduct_IdAndColor(Integer productId, String color);
 
     /**
      * Finds cart items by product ID and size.
@@ -58,7 +58,7 @@ public interface CartItemRepo extends CrudRepository<CartItem, Integer> {
      * @param size the size of the cart items
      * @return a list of cart items
      */
-    List<CartItem> findByProductIdAndSize(Integer productId, Double size);
+    List<CartItem> findByProduct_IdAndSize(Integer productId, Double size);
 
     /**
      * Finds cart items by user ID in the order.

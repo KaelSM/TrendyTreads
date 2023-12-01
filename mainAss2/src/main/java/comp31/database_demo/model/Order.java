@@ -85,5 +85,9 @@ public class Order {
         return cartItems != null ? cartItems.size() : 0;
     }
 
+    public boolean isCheckoutComplete() {
+        return "Checked Out".equals(this.status);
+    }
+
 
 }

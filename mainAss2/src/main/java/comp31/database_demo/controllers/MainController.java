@@ -52,6 +52,19 @@ public class MainController {
         return "redirect:/login";
     }
 
+    @GetMapping("/management")
+    public String showManagementPage(HttpSession session) {
+        String username = (String) session.getAttribute("username");
+        User user = userService.findByUsername(username);
+
+        if (user != null && "ADMIN".equals(user.getRole())) {
+            return "management"; // Return management view for admin users
+        } else {
+            return "redirect:/login"; // Redirect non-admin users to login page
+        }
+    }
+
+
 /*  post mapping */
 
     @PostMapping("/register")
@@ -74,9 +87,13 @@ public class MainController {
                             HttpSession session, 
                             RedirectAttributes redirectAttributes) {
         User user = userService.findByUsername(username);
-        if (user != null && user.getPassword().equals(password)) { // Password should be hashed in a real app
+        if (user != null && user.getPassword().equals(password)) {
             session.setAttribute("username", username);
-            return "redirect:/profile";
+            if ("ADMIN".equals(user.getRole())) {
+                return "redirect:/management"; // Redirect to management page for admin users
+            } else {
+                return "redirect:/profile"; // Redirect to profile page for regular users
+            }
         } else {
             redirectAttributes.addFlashAttribute("loginError", "Invalid username or password");
             return "redirect:/login";

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+</head>
+<body>
+    <h1>Welcome to the home page!</h1>
+    <!-- Navigation buttons -->
+    <button><a href="/product">Browse Products</a></button>
+    <button><a href="/profile">Profile</a></button>
+    <button><a href="/register">Register</a></button>
+    <!-- Add other navigation buttons as needed -->
+
+    <!-- Logout functionality should be a POST request, adjust if you're using Spring Security -->
+    <form action="/logout" method="post">
+        <button type="submit">Logout</button>
+    </form>
+
+    <!-- Optional: Only show certain buttons if the user is logged in/out -->
+    <!-- Add conditional rendering with Thymeleaf if needed -->
+</body>
+</html>

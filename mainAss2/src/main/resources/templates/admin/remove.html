@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Remove</title>
+</head>
+<body>
+    <h1>Remove Brand/Product</h1>
+    
+    <!-- Form for removing a brand -->
+    <form action="/removeBrand" method="post">
+        <select name="brandId">
+            <option th:each="brand : ${brands}" th:value="${brand.id}" th:text="${brand.name}"></option>
+        </select>
+        <button type="submit">Remove Brand</button>
+    </form>
+
+    <!-- Form for removing a product -->
+    <form action="/removeProduct" method="post">
+        <select name="productId">
+            <option th:each="product : ${products}" th:value="${product.id}" th:text="${product.name}"></option>
+        </select>
+        <button type="submit">Remove Product</button>
+    </form>
+
+    <a href="/management"><button>Back to Management</button></a>
+</body>
+</html>

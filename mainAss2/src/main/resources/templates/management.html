@@ -1,11 +1,33 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Management</title>
 </head>
 <body>
+    <div th:if="${successMessage}" th:text="${successMessage}"></div>
+    <div th:if="${errorMessage}" th:text="${errorMessage}"></div>
     <h1>Admin Management Page</h1>
-    <!-- Add admin-specific functionalities here -->
+       <!-- List of Brands -->
+    <h2>Brands</h2>
+    <ul>
+        <li th:each="brand : ${brands}" th:text="${brand.name}"></li>
+    </ul>
+
+    <!-- List of Products -->
+    <h2>Products</h2>
+    <ul>
+        <li th:each="product : ${products}" th:text="${product.name}"></li>
+        <li th:each="product : ${products}" th:text="${product.brand.name}"></li>
+        <li th:each="product : ${products}" th:text="${product.price}"></li>
+        <li th:each="product : ${products}" th:text="${product.stock}"></li>
+    </ul>
+
+    <!-- Buttons to navigate to add, remove, and update pages -->
+    <a href="/add"><button>Add New</button></a>
+    <a href="/remove"><button>Remove</button></a>
+    <a href="/update"><button>Update</button></a>
+
+
 </body>
 </html>

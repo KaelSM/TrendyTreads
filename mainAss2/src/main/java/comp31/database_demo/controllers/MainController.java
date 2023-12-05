@@ -5,12 +5,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.ui.Model;
+
+import comp31.database_demo.model.Brand;
+import comp31.database_demo.model.Product;
 import comp31.database_demo.model.User;
 import comp31.database_demo.services.UserService;
+import comp31.database_demo.services.BrandService;
+import comp31.database_demo.services.ProductService;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
@@ -18,7 +24,13 @@ public class MainController {
     @Autowired
     private UserService userService;
 
-/* get mapping */
+    @Autowired
+    private BrandService brandService;
+
+    @Autowired
+    private ProductService productService;
+
+/* user contoller */
 
     // Register user
     @GetMapping("/register")
@@ -53,19 +65,18 @@ public class MainController {
     }
 
     @GetMapping("/management")
-    public String showManagementPage(HttpSession session) {
+    public String showManagementPage(Model model, HttpSession session) {
         String username = (String) session.getAttribute("username");
         User user = userService.findByUsername(username);
 
         if (user != null && "ADMIN".equals(user.getRole())) {
-            return "management"; // Return management view for admin users
+            model.addAttribute("brands", brandService.getAllBrands());
+            model.addAttribute("products", productService.getAllProducts());
+            return "management"; // Render the management view for admin users
         } else {
             return "redirect:/login"; // Redirect non-admin users to login page
         }
     }
-
-
-/*  post mapping */
 
     @PostMapping("/register")
     public String registerUser(@ModelAttribute User user) {
@@ -81,6 +92,7 @@ public class MainController {
     }
 
    
+    
     @PostMapping("/perform_login")
     public String performLogin(@RequestParam String username, 
                             @RequestParam String password, 
@@ -88,11 +100,12 @@ public class MainController {
                             RedirectAttributes redirectAttributes) {
         User user = userService.findByUsername(username);
         if (user != null && user.getPassword().equals(password)) {
-            session.setAttribute("username", username);
+            session.setAttribute("username", username); // Ensure this is the correct attribute
+            // Check the user's role
             if ("ADMIN".equals(user.getRole())) {
-                return "redirect:/management"; // Redirect to management page for admin users
+                return "redirect:/management"; // Redirect admin users to management page
             } else {
-                return "redirect:/profile"; // Redirect to profile page for regular users
+                return "redirect:/home"; // Redirect regular users to home page
             }
         } else {
             redirectAttributes.addFlashAttribute("loginError", "Invalid username or password");
@@ -108,15 +121,15 @@ public class MainController {
     * it is not letting the user log in after updating the profile
     */
     @PostMapping("/update_profile")
-    public String updateProfile(@ModelAttribute User user, RedirectAttributes redirectAttributes) {
+    public String updateProfile(@ModelAttribute User user, HttpSession session, RedirectAttributes redirectAttributes) {
         try {
-            // Directly saving the user details
-            userService.saveUser(user); 
+            userService.saveUser(user);
+            session.setAttribute("username", user.getUsername()); // Update session if username changes
             redirectAttributes.addFlashAttribute("profileMessage", "Profile updated successfully.");
-            return "redirect:/home";
+            return "redirect:/profile"; // Redirect to the profile page to see changes
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("profileError", "There was an error updating the profile.");
-            return "redirect:/profile";
+            return "redirect:/profile"; // Stay on profile page if there's an error
         }
     }
     
@@ -132,7 +145,72 @@ public class MainController {
         return "redirect:/login";
     }
 
- }
+/* user contoller end*/
+
+/* product and brand start */
+
+    @GetMapping("/admin/add")
+    public String showAddForm(Model model) {
+        model.addAttribute("brand", new Brand());
+        model.addAttribute("product", new Product());
+        model.addAttribute("brands", brandService.getAllBrands());
+        return "admin/add"; // The view is within the 'admin' subdirectory
+    }
+
+    // Method to process adding a new brand
+    @PostMapping("/admin/addBrand")
+    public String addBrand(@ModelAttribute Brand brand, RedirectAttributes redirectAttributes) {
+        brandService.saveBrand(brand);
+        redirectAttributes.addFlashAttribute("successMessage", "Brand added successfully!");
+        return "redirect:/management"; // Redirect to the 'management' view
+    }
+
+    // Method to process adding a new product
+    @PostMapping("/admin/addProduct")
+    public String addProduct(@ModelAttribute Product product, @RequestParam Long brandId, RedirectAttributes redirectAttributes) {
+        productService.saveProduct(product, brandId);
+        redirectAttributes.addFlashAttribute("successMessage", "Product added successfully!");
+        return "redirect:/management"; // Correct redirect path
+    }
+
+    // Updating an existing brand
+    @PostMapping("/updateBrand")
+    public String updateBrand(@ModelAttribute Brand brand, RedirectAttributes redirectAttributes) {
+        brandService.updateBrand(brand.getId(), brand);
+        redirectAttributes.addFlashAttribute("successMessage", "Brand updated successfully!");
+        return "redirect:/management";
+    }
+
+    // Updating an existing product
+    @PostMapping("/updateProduct")
+    public String updateProduct(@ModelAttribute Product product, @RequestParam Long brandId, RedirectAttributes redirectAttributes) {
+        productService.updateProduct(product.getId(), product, brandId);
+        redirectAttributes.addFlashAttribute("successMessage", "Product updated successfully!");
+        return "redirect:/management";
+    }
+
+    // Deleting an existing brand
+    @GetMapping("/deleteBrand/{id}")
+    public String deleteBrand(@PathVariable Long id, RedirectAttributes redirectAttributes) {
+        brandService.deleteBrand(id);
+        redirectAttributes.addFlashAttribute("successMessage", "Brand and associated products deleted successfully!");
+        return "redirect:/management";
+    }
+
+    // Deleting an existing product
+    @GetMapping("/deleteProduct/{id}")
+    public String deleteProduct(@PathVariable Long id, RedirectAttributes redirectAttributes) {
+        productService.deleteProduct(id);
+        redirectAttributes.addFlashAttribute("successMessage", "Product deleted successfully!");
+        return "redirect:/management";
+    }
+
+
+
+
+/* product and brand end */
+
+}
 
         
     

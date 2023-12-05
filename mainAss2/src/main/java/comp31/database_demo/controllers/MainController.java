@@ -113,13 +113,6 @@ public class MainController {
         }
     }
     
-    /*
-    * TODO: this needs another look
-    * something is wrong with the update_profile post mapping
-    * it is not updating the user details
-    * it is not redirecting to the profile page
-    * it is not letting the user log in after updating the profile
-    */
     @PostMapping("/update_profile")
     public String updateProfile(@ModelAttribute User user, HttpSession session, RedirectAttributes redirectAttributes) {
         try {
@@ -149,77 +142,84 @@ public class MainController {
 
 /* product and brand start */
 
-    @GetMapping("/add")
-    public String showAddForm(Model model) {
-        model.addAttribute("brand", new Brand());
-        model.addAttribute("product", new Product());
-        model.addAttribute("brands", brandService.getAllBrands());
-        return "add"; // Updated to reflect the new path
-    }
-
+    // Add Brand
     @PostMapping("/addBrand")
-    public String addBrand(@ModelAttribute Brand brand, RedirectAttributes redirectAttributes) {
-        try {
-            brandService.saveBrand(brand);
-            redirectAttributes.addFlashAttribute("successMessage", "Brand added successfully!");
-        } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("errorMessage", "Failed to add brand: " + e.getMessage());
-        }
+    public String addBrand(@RequestParam String name, RedirectAttributes redirectAttributes) {
+        Brand brand = new Brand();
+        brand.setName(name);
+        brandService.saveBrand(brand);
+        redirectAttributes.addFlashAttribute("successMessage", "Brand added successfully!");
         return "redirect:/management";
     }
 
+    // Add Product
     @PostMapping("/addProduct")
-    public String addProduct(@ModelAttribute Product product, @RequestParam Long brandId, RedirectAttributes redirectAttributes) {
-        try {
-            productService.saveProduct(product, brandId);
-            redirectAttributes.addFlashAttribute("successMessage", "Product added successfully!");
-        } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("errorMessage", "Failed to add product: " + e.getMessage());
-        }
+    public String addProduct(@RequestParam String name, @RequestParam double price, @RequestParam int stock, @RequestParam Long brandId, RedirectAttributes redirectAttributes) {
+        Product product = new Product();
+        product.setName(name);
+        product.setPrice(price);
+        product.setStock(stock);
+        Brand brand = brandService.getBrandById(brandId);
+        product.setBrand(brand);
+        productService.saveProduct(product, brandId); // Ensure this method saves the product and sets the brand correctly (see ProductService.java
+        redirectAttributes.addFlashAttribute("successMessage", "Product added successfully!");
         return "redirect:/management";
     }
 
-    @PostMapping("/updateBrand")
-    public String updateBrand(@ModelAttribute Brand brand, RedirectAttributes redirectAttributes) {
-        try {
-            brandService.updateBrand(brand.getId(), brand);
-            redirectAttributes.addFlashAttribute("successMessage", "Brand updated successfully!");
-        } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("errorMessage", "Failed to update brand: " + e.getMessage());
-        }
+    // Update Brand
+    @GetMapping("/updateBrand/{id}")
+    public String showUpdateBrandForm(@PathVariable Long id, Model model) {
+        Brand brand = brandService.getBrandById(id);
+        model.addAttribute("brand", brand);
+        return "updateBrandForm"; // You need to create this Thymeleaf view
+    }
+
+    @PostMapping("/updateBrand/{id}")
+    public String updateBrand(@PathVariable Long id, @RequestParam String newName, RedirectAttributes redirectAttributes) {
+        Brand brand = brandService.getBrandById(id);
+        brand.setName(newName);
+        brandService.saveBrand(brand);
+        redirectAttributes.addFlashAttribute("successMessage", "Brand updated successfully!");
         return "redirect:/management";
     }
 
-    @PostMapping("/updateProduct")
-    public String updateProduct(@ModelAttribute Product product, @RequestParam Long brandId, RedirectAttributes redirectAttributes) {
-        try {
-            productService.updateProduct(product.getId(), product, brandId);
-            redirectAttributes.addFlashAttribute("successMessage", "Product updated successfully!");
-        } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("errorMessage", "Failed to update product: " + e.getMessage());
-        }
+    // Update Product
+    @GetMapping("/updateProduct/{id}")
+    public String showUpdateProductForm(@PathVariable Long id, Model model) {
+        Product product = productService.getProductById(id);
+        model.addAttribute("product", product);
+        model.addAttribute("brands", brandService.getAllBrands()); // To populate the brands dropdown
+        return "updateProductForm"; // You need to create this Thymeleaf view
+    }
+
+    @PostMapping("/updateProduct/{id}")
+    public String updateProduct(@PathVariable Long id, @RequestParam String newName, @RequestParam double newPrice, @RequestParam int newStock, RedirectAttributes redirectAttributes) {
+        Product product = productService.getProductById(id);
+        product.setName(newName);
+        product.setPrice(newPrice);
+        product.setStock(newStock);
+        productService.saveProduct(product, product.getBrand().getId()); // Ensure this method saves the product and sets the brand correctly (see ProductService.java)
+        redirectAttributes.addFlashAttribute("successMessage", "Product updated successfully!");
         return "redirect:/management";
     }
 
-    @GetMapping("/deleteBrand/{id}")
+    // Delete Brand
+    @GetMapping("/management/deleteBrand/{id}")
     public String deleteBrand(@PathVariable Long id, RedirectAttributes redirectAttributes) {
         try {
-            brandService.deleteBrand(id);
-            redirectAttributes.addFlashAttribute("successMessage", "Brand and associated products deleted successfully!");
+            brandService.deleteBrandAndRelatedProducts(id); // Ensure this method deletes the brand and its related products
+            redirectAttributes.addFlashAttribute("successMessage", "Brand and related products deleted successfully!");
         } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("errorMessage", "Failed to delete brand: " + e.getMessage());
+            redirectAttributes.addFlashAttribute("errorMessage", "Error deleting brand: " + e.getMessage());
         }
         return "redirect:/management";
     }
 
-    @GetMapping("/deleteProduct/{id}")
+    // Delete Product
+    @GetMapping("/management/deleteProduct/{id}")
     public String deleteProduct(@PathVariable Long id, RedirectAttributes redirectAttributes) {
-        try {
-            productService.deleteProduct(id);
-            redirectAttributes.addFlashAttribute("successMessage", "Product deleted successfully!");
-        } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("errorMessage", "Failed to delete product: " + e.getMessage());
-        }
+        productService.deleteProduct(id);
+        redirectAttributes.addFlashAttribute("successMessage", "Product deleted successfully!");
         return "redirect:/management";
     }
 

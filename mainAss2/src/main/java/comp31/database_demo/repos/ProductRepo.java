@@ -11,4 +11,6 @@ import java.util.List;
 @Repository
 public interface ProductRepo extends JpaRepository<Product, Long> {
     List<Product> findByBrand(Brand brand);
+
+    List<Product> findAllByBrand(Brand brand);
 }

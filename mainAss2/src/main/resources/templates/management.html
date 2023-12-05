@@ -9,23 +9,46 @@
     <div th:if="${errorMessage}" th:text="${errorMessage}"></div>
     <h1>Admin Management Page</h1>
 
-    <!-- List of Brands -->
+    <!-- Add Brand Form -->
+    <h2>Add Brand</h2>
+    <form th:action="@{/addBrand}" method="post">
+        <input type="text" name="name" placeholder="Brand Name">
+        <button type="submit">Add Brand</button>
+    </form>
+
+    <!-- Add Product Form -->
+    <h2>Add Product</h2>
+    <form th:action="@{/addProduct}" method="post">
+        <input type="text" name="name" placeholder="Product Name">
+        <select name="brandId">
+            <option th:each="brand : ${brands}" th:value="${brand.id}" th:text="${brand.name}"></option>
+        </select>
+        <input type="number" name="price" placeholder="Price">
+        <input type="number" name="stock" placeholder="Stock">
+        <button type="submit">Add Product</button>
+    </form>
+
+    <!-- List of Brands with Edit/Delete Options -->
     <h2>Brands</h2>
     <table>
         <thead>
             <tr>
                 <th>Brand Name</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
             <tr th:each="brand : ${brands}">
                 <td th:text="${brand.name}"></td>
-                <!-- Add additional columns for edit/delete as needed -->
+                <td>
+                    <a th:href="@{/updateBrand(id=${brand.id})}">Edit</a> |
+                    <a th:href="@{/deleteBrand(id=${brand.id})}" onclick="return confirm('Are you sure?')">Delete</a>
+                </td>
             </tr>
         </tbody>
     </table>
 
-    <!-- List of Products -->
+    <!-- List of Products with Edit/Delete Options -->
     <h2>Products</h2>
     <table>
         <thead>
@@ -34,7 +57,7 @@
                 <th>Brand</th>
                 <th>Price</th>
                 <th>Stock</th>
-                <!-- Add additional columns for edit/delete as needed -->
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -43,15 +66,13 @@
                 <td th:text="${product.brand.name}"></td>
                 <td th:text="${product.price}"></td>
                 <td th:text="${product.stock}"></td>
+                <td>
+                    <a th:href="@{/updateProduct(id=${product.id})}">Edit</a> |
+                    <a th:href="@{/deleteProduct(id=${product.id})}" onclick="return confirm('Are you sure?')">Delete</a>
+                </td>
             </tr>
         </tbody>
     </table>
 
-    <!-- Buttons to navigate to add, remove, and update pages -->
-    <div>
-        <a href="/add"><button>Add New</button></a>
-        <a href="/remove"><button>Remove</button></a>
-        <a href="/update"><button>Update</button></a>
-    </div>
 </body>
 </html>

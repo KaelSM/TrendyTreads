@@ -39,10 +39,16 @@
         </thead>
         <tbody>
             <tr th:each="brand : ${brands}">
-                <td th:text="${brand.name}"></td>
                 <td>
-                    <a th:href="@{/updateBrand(id=${brand.id})}">Edit</a> |
-                    <a th:href="@{/deleteBrand(id=${brand.id})}" onclick="return confirm('Are you sure?')">Delete</a>
+                    <form th:action="@{/updateBrand(id=${brand.id})}" method="post">
+                        <input type="text" name="newName" th:value="${brand.name}">
+                        <button type="submit">Save</button>
+                    </form>
+                </td>
+                <td>
+                    <form th:action="@{/deleteBrand(id=${brand.id})}" method="post">
+                        <button type="submit" onclick="return confirm('Are you sure?')">Delete</button>
+                    </form>
                 </td>
             </tr>
         </tbody>
@@ -62,13 +68,21 @@
         </thead>
         <tbody>
             <tr th:each="product : ${products}">
-                <td th:text="${product.name}"></td>
-                <td th:text="${product.brand.name}"></td>
-                <td th:text="${product.price}"></td>
-                <td th:text="${product.stock}"></td>
                 <td>
-                    <a th:href="@{/updateProduct(id=${product.id})}">Edit</a> |
-                    <a th:href="@{/deleteProduct(id=${product.id})}" onclick="return confirm('Are you sure?')">Delete</a>
+                    <form th:action="@{/updateProduct(id=${product.id})}" method="post">
+                        <input type="text" name="newName" th:value="${product.name}">
+                        <input type="number" name="newPrice" th:value="${product.price}">
+                        <input type="number" name="newStock" th:value="${product.stock}">
+                        <select name="brandId">
+                            <option th:each="brand : ${brands}" th:value="${brand.id}" th:selected="${brand.id == product.brand.id}" th:text="${brand.name}"></option>
+                        </select>
+                        <button type="submit">Save</button>
+                    </form>
+                </td>
+                <td>
+                    <form th:action="@{/deleteProduct(id=${product.id})}" method="post">
+                        <button type="submit" onclick="return confirm('Are you sure?')">Delete</button>
+                    </form>
                 </td>
             </tr>
         </tbody>

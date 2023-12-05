@@ -27,10 +27,10 @@ public class BrandService {
         return brandRepository.save(brand);
     }
 
-    public Brand updateBrand(Long id, Brand brandDetails) {
+    public Brand updateBrand(Long id, String newName) {
         Brand brand = brandRepository.findById(id)
-            .orElseThrow(() -> new IllegalArgumentException("Brand not found"));
-        brand.setName(brandDetails.getName());
+            .orElseThrow(() -> new RuntimeException("Brand not found with id: " + id));
+        brand.setName(newName);
         return brandRepository.save(brand);
     }
 

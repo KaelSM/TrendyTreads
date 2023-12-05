@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Products</title>
@@ -15,12 +15,12 @@
             </tr>
         </thead>
         <tbody>
-            <tr th:each="product : ${products}">
+            <tr th:each="product : ${product}">
                 <td th:text="${product.name}">Product Name</td>
                 <td th:text="${'$' + product.price}">Product Price</td>
                 <td>
                     <!-- Link to the product detail page -->
-                    <a th:href="@{'/' + ${product.id} + '.html'}">View Details</a>
+                    <a th:href="@{'/productDetails' + ${product.id} }">View Details</a>
                 </td>
             </tr>
         </tbody>

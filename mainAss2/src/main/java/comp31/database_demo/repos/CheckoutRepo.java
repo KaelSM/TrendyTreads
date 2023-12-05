@@ -1,7 +1,11 @@
 package comp31.database_demo.repos;
 
+import org.springframework.data.jpa.repository.JpaRepository;
+
+
 import comp31.database_demo.model.Checkout;
 
-public class CheckoutRepo extends JpaRepository<Checkout, Long> { 
+public interface CheckoutRepo extends JpaRepository<Checkout, Long>{
+
     
-}
+} 

@@ -1,7 +1,5 @@
 package comp31.database_demo.controllers;
 
-
-import org.hibernate.mapping.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -177,57 +175,62 @@ public class MainController {
 
     @PostMapping("/updateBrand/{id}")
     public String updateBrand(@PathVariable Long id, @RequestParam String newName, RedirectAttributes redirectAttributes) {
+    try {
         Brand brand = brandService.getBrandById(id);
         brand.setName(newName);
         brandService.saveBrand(brand);
         redirectAttributes.addFlashAttribute("successMessage", "Brand updated successfully!");
-        return "redirect:/management";
+    } catch (Exception e) {
+        redirectAttributes.addFlashAttribute("errorMessage", "Error updating brand");
     }
+    return "redirect:/management";
+    }
+
 
     // Update Product
-    @GetMapping("/updateProduct/{id}")
-    public String showUpdateProductForm(@PathVariable Long id, Model model) {
-        Product product = productService.getProductById(id);
-        model.addAttribute("product", product);
-        model.addAttribute("brands", brandService.getAllBrands()); // To populate the brands dropdown
-        return "updateProductForm"; // You need to create this Thymeleaf view
-    }
-
     @PostMapping("/updateProduct/{id}")
-    public String updateProduct(@PathVariable Long id, @RequestParam String newName, @RequestParam double newPrice, @RequestParam int newStock, RedirectAttributes redirectAttributes) {
+    public String updateProduct(@PathVariable Long id, @RequestParam String newName, @RequestParam double newPrice, @RequestParam int newStock, @RequestParam Long brandId, RedirectAttributes redirectAttributes) {
+    try {
         Product product = productService.getProductById(id);
         product.setName(newName);
         product.setPrice(newPrice);
         product.setStock(newStock);
-        productService.saveProduct(product, product.getBrand().getId()); // Ensure this method saves the product and sets the brand correctly (see ProductService.java)
+        productService.updateProduct(id, product, brandId); // Assuming this method updates the product and sets the brand correctly
         redirectAttributes.addFlashAttribute("successMessage", "Product updated successfully!");
-        return "redirect:/management";
+    } catch (Exception e) {
+        redirectAttributes.addFlashAttribute("errorMessage", "Error updating product");
+    }
+    return "redirect:/management";
     }
 
     // Delete Brand
-    @GetMapping("/management/deleteBrand/{id}")
-    public String deleteBrand(@PathVariable Long id, RedirectAttributes redirectAttributes) {
+    @PostMapping("/deleteBrand")
+    public String deleteBrand(@RequestParam Long id, RedirectAttributes redirectAttributes) {
         try {
-            brandService.deleteBrandAndRelatedProducts(id); // Ensure this method deletes the brand and its related products
-            redirectAttributes.addFlashAttribute("successMessage", "Brand and related products deleted successfully!");
+            brandService.deleteBrand(id);
+            redirectAttributes.addFlashAttribute("successMessage", "Brand and associated products deleted successfully");
         } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("errorMessage", "Error deleting brand: " + e.getMessage());
+            redirectAttributes.addFlashAttribute("errorMessage", "Error deleting brand");
         }
         return "redirect:/management";
     }
 
     // Delete Product
-    @GetMapping("/management/deleteProduct/{id}")
-    public String deleteProduct(@PathVariable Long id, RedirectAttributes redirectAttributes) {
-        productService.deleteProduct(id);
-        redirectAttributes.addFlashAttribute("successMessage", "Product deleted successfully!");
+    @PostMapping("/deleteProduct")
+    public String deleteProduct(@RequestParam Long id, RedirectAttributes redirectAttributes) {
+        try {
+            productService.deleteProduct(id);
+            redirectAttributes.addFlashAttribute("successMessage", "Product deleted successfully");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Error deleting product");
+        }
         return "redirect:/management";
     }
 
     // View Products
     @GetMapping("/product")
     public String showProductsPage(Model model) {
-        model.addAttribute("products", productService.getAllProducts());
+        model.addAttribute("product", productService.getAllProducts());
         return "product"; // The name of your products view template
     }
 
@@ -238,7 +241,7 @@ public class MainController {
 
         // The return statement here constructs the view name dynamically based on the product ID.
         // For example, if the product ID is 1, it will return "1" which should match "1.html" in the templates directory.
-        return id.toString(); // Just convert the ID to a string to match the template name
+        return "productDetails"; // Just convert the ID to a string to match the template name
     }
 
 /* product and brand end */

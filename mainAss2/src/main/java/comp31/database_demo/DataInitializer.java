@@ -52,6 +52,14 @@ public class DataInitializer implements CommandLineRunner {
         brand4.setName("Crocs");
         brandService.saveBrand(brand4);
 
+        Brand brand5 = new Brand();
+        brand5.setName("Nike");
+        brandService.saveBrand(brand5);
+
+        Brand brand6 = new Brand();
+        brand6.setName("Puma");
+        brandService.saveBrand(brand6);
+
         Product product1 = new Product();
         product1.setName("COURT GRAFFIK");
         product1.setStock(100);
@@ -79,5 +87,19 @@ public class DataInitializer implements CommandLineRunner {
         product4.setPrice(45.00);
         product4.setBrand(brand4);
         productService.saveProduct(product4, brand4.getId());
+
+        Product product5 = new Product();
+        product5.setName("MANTECA 4 HI WR HIGH-TOP SHOES");
+        product5.setStock(10);
+        product5.setPrice(115.00);
+        product5.setBrand(brand1);
+        productService.saveProduct(product5, brand1.getId());
+
+        Product product6 = new Product();
+        product6.setName("WOODLAND BOOTS WINTER BOOTS");
+        product6.setStock(80);
+        product6.setPrice(125.00);
+        product6.setBrand(brand1);
+        productService.saveProduct(product6, brand1.getId());
     }
 }

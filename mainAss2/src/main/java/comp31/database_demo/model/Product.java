@@ -21,7 +21,7 @@ public class Product {
     @JoinColumn(name = "brand_id")
     private Brand brand;
 
-    private int quantity;
+    private int stock;
     private double price;
 
     public Long getId() {
@@ -48,14 +48,14 @@ public class Product {
         this.brand = brand;
     }
 
-    public int getQuantity() {
-        return quantity;
+    public int getStock() {
+        return stock;
     }
 
-    public void setQuantity(int quantity) {
-        if (quantity < 0)
-            throw new IllegalArgumentException("Quantity cannot be negative");
-        this.quantity = quantity;
+    public void setStock(int stock) {
+        if (stock < 0)
+            throw new IllegalArgumentException("Stock cannot be negative");
+        this.stock = stock;
     }   
 
     public double getPrice() {

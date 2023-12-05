@@ -40,7 +40,7 @@ public class ProductService {
             .orElseThrow(() -> new RuntimeException("Product not found with id: " + id));
     
         product.setName(productDetails.getName());
-        product.setQuantity(productDetails.getQuantity());
+        product.setStock(productDetails.getStock());
         product.setPrice(productDetails.getPrice());
     
         // Update the brand if necessary

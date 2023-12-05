@@ -149,64 +149,79 @@ public class MainController {
 
 /* product and brand start */
 
-    @GetMapping("/admin/add")
+    @GetMapping("/add")
     public String showAddForm(Model model) {
         model.addAttribute("brand", new Brand());
         model.addAttribute("product", new Product());
         model.addAttribute("brands", brandService.getAllBrands());
-        return "admin/add"; // The view is within the 'admin' subdirectory
+        return "add"; // Updated to reflect the new path
     }
 
-    // Method to process adding a new brand
-    @PostMapping("/admin/addBrand")
+    @PostMapping("/addBrand")
     public String addBrand(@ModelAttribute Brand brand, RedirectAttributes redirectAttributes) {
-        brandService.saveBrand(brand);
-        redirectAttributes.addFlashAttribute("successMessage", "Brand added successfully!");
-        return "redirect:/management"; // Redirect to the 'management' view
+        try {
+            brandService.saveBrand(brand);
+            redirectAttributes.addFlashAttribute("successMessage", "Brand added successfully!");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Failed to add brand: " + e.getMessage());
+        }
+        return "redirect:/management";
     }
 
-    // Method to process adding a new product
-    @PostMapping("/admin/addProduct")
+    @PostMapping("/addProduct")
     public String addProduct(@ModelAttribute Product product, @RequestParam Long brandId, RedirectAttributes redirectAttributes) {
-        productService.saveProduct(product, brandId);
-        redirectAttributes.addFlashAttribute("successMessage", "Product added successfully!");
-        return "redirect:/management"; // Correct redirect path
+        try {
+            productService.saveProduct(product, brandId);
+            redirectAttributes.addFlashAttribute("successMessage", "Product added successfully!");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Failed to add product: " + e.getMessage());
+        }
+        return "redirect:/management";
     }
 
-    // Updating an existing brand
     @PostMapping("/updateBrand")
     public String updateBrand(@ModelAttribute Brand brand, RedirectAttributes redirectAttributes) {
-        brandService.updateBrand(brand.getId(), brand);
-        redirectAttributes.addFlashAttribute("successMessage", "Brand updated successfully!");
+        try {
+            brandService.updateBrand(brand.getId(), brand);
+            redirectAttributes.addFlashAttribute("successMessage", "Brand updated successfully!");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Failed to update brand: " + e.getMessage());
+        }
         return "redirect:/management";
     }
 
-    // Updating an existing product
     @PostMapping("/updateProduct")
     public String updateProduct(@ModelAttribute Product product, @RequestParam Long brandId, RedirectAttributes redirectAttributes) {
-        productService.updateProduct(product.getId(), product, brandId);
-        redirectAttributes.addFlashAttribute("successMessage", "Product updated successfully!");
+        try {
+            productService.updateProduct(product.getId(), product, brandId);
+            redirectAttributes.addFlashAttribute("successMessage", "Product updated successfully!");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Failed to update product: " + e.getMessage());
+        }
         return "redirect:/management";
     }
 
-    // Deleting an existing brand
     @GetMapping("/deleteBrand/{id}")
     public String deleteBrand(@PathVariable Long id, RedirectAttributes redirectAttributes) {
-        brandService.deleteBrand(id);
-        redirectAttributes.addFlashAttribute("successMessage", "Brand and associated products deleted successfully!");
+        try {
+            brandService.deleteBrand(id);
+            redirectAttributes.addFlashAttribute("successMessage", "Brand and associated products deleted successfully!");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Failed to delete brand: " + e.getMessage());
+        }
         return "redirect:/management";
     }
 
-    // Deleting an existing product
     @GetMapping("/deleteProduct/{id}")
     public String deleteProduct(@PathVariable Long id, RedirectAttributes redirectAttributes) {
-        productService.deleteProduct(id);
-        redirectAttributes.addFlashAttribute("successMessage", "Product deleted successfully!");
+        try {
+            productService.deleteProduct(id);
+            redirectAttributes.addFlashAttribute("successMessage", "Product deleted successfully!");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Failed to delete product: " + e.getMessage());
+        }
         return "redirect:/management";
     }
-
-
-
 
 /* product and brand end */
 

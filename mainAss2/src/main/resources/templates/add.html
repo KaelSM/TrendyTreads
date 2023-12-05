@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Add Brand/Product</title>
+</head>
+<body>
+    <h1>Add Brand</h1>
+    <form th:action="@{/addBrand}" th:object="${brand}" method="post">
+        <input type="text" th:field="*{name}" placeholder="Brand Name" />
+        <button type="submit">Add Brand</button>
+    </form>
+
+    <h1>Add Product</h1>
+    <form th:action="@{/addProduct}" th:object="${product}" method="post">
+        <input type="text" th:field="*{name}" placeholder="Product Name" />
+        <!-- Assuming 'brand' in Product has a field 'id' -->
+        <select th:field="*{brand.id}">
+            <option th:each="brand : ${brands}" th:value="${brand.id}" th:text="${brand.name}"></option>
+        </select>
+        <input type="number" th:field="*{quantity}" placeholder="Quantity" />
+        <input type="number" th:field="*{price}" placeholder="Price" />
+        <button type="submit">Add Product</button>
+    </form>
+
+    <a href="/management">Back to management</a>
+</body>
+</html>

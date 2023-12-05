@@ -8,26 +8,50 @@
     <div th:if="${successMessage}" th:text="${successMessage}"></div>
     <div th:if="${errorMessage}" th:text="${errorMessage}"></div>
     <h1>Admin Management Page</h1>
-       <!-- List of Brands -->
+
+    <!-- List of Brands -->
     <h2>Brands</h2>
-    <ul>
-        <li th:each="brand : ${brands}" th:text="${brand.name}"></li>
-    </ul>
+    <table>
+        <thead>
+            <tr>
+                <th>Brand Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="brand : ${brands}">
+                <td th:text="${brand.name}"></td>
+                <!-- Add additional columns for edit/delete as needed -->
+            </tr>
+        </tbody>
+    </table>
 
     <!-- List of Products -->
     <h2>Products</h2>
-    <ul>
-        <li th:each="product : ${products}" th:text="${product.name}"></li>
-        <li th:each="product : ${products}" th:text="${product.brand.name}"></li>
-        <li th:each="product : ${products}" th:text="${product.price}"></li>
-        <li th:each="product : ${products}" th:text="${product.stock}"></li>
-    </ul>
+    <table>
+        <thead>
+            <tr>
+                <th>Product Name</th>
+                <th>Brand</th>
+                <th>Price</th>
+                <th>Stock</th>
+                <!-- Add additional columns for edit/delete as needed -->
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="product : ${products}">
+                <td th:text="${product.name}"></td>
+                <td th:text="${product.brand.name}"></td>
+                <td th:text="${product.price}"></td>
+                <td th:text="${product.stock}"></td>
+            </tr>
+        </tbody>
+    </table>
 
     <!-- Buttons to navigate to add, remove, and update pages -->
-    <a href="/add"><button>Add New</button></a>
-    <a href="/remove"><button>Remove</button></a>
-    <a href="/update"><button>Update</button></a>
-
-
+    <div>
+        <a href="/add"><button>Add New</button></a>
+        <a href="/remove"><button>Remove</button></a>
+        <a href="/update"><button>Update</button></a>
+    </div>
 </body>
 </html>

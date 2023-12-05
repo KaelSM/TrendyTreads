@@ -1,6 +1,7 @@
 package comp31.database_demo.controllers;
 
 
+import org.hibernate.mapping.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -222,6 +223,15 @@ public class MainController {
         redirectAttributes.addFlashAttribute("successMessage", "Product deleted successfully!");
         return "redirect:/management";
     }
+
+    // View Products
+    @GetMapping("/product")
+    public String showProductsPage(Model model) {
+        model.addAttribute("products", productService.getAllProducts());
+        return "product"; // The name of your products view template
+    }
+
+
 
 /* product and brand end */
 

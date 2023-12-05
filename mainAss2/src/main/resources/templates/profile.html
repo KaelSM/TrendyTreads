@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Profile</title>
+</head>
+<body>
+    <div th:if="${profileMessage}" th:text="${profileMessage}"></div>
+    <div th:if="${profileError}" th:text="${profileError}"></div>
+    <h1>Profile</h1>
+    <form action="/update_profile" method="post">
+        <input type="hidden" name="id" th:value="${user.id}">
+        
+        <div>
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" th:value="${user.username}" required>
+        </div>
+        <div>
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" th:value="${user.name}" required>
+        </div>
+        <div>
+            <label for="password">New Password:</label>
+            <input type="password" id="password" name="password" required>
+        </div>
+        
+        <button type="submit">Update Profile</button>
+    </form>
+    
+
+    <form action="/delete_user" method="post">
+        <input type="hidden" name="id" th:value="${user.id}">
+        <button type="submit">Delete Account</button>
+    </form>
+
+    <button><a href="/home">home</a></button>
+</body>
+</html>

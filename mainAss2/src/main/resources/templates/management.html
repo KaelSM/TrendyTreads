@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Management</title>
+</head>
+<body>
+    <div th:if="${successMessage}" th:text="${successMessage}"></div>
+    <div th:if="${errorMessage}" th:text="${errorMessage}"></div>
+    <h1>Admin Management Page</h1>
+
+    <!-- Add Brand Form -->
+    <h2>Add Brand</h2>
+    <form th:action="@{/addBrand}" method="post">
+        <input type="text" name="name" placeholder="Brand Name">
+        <button type="submit">Add Brand</button>
+    </form>
+
+    <!-- Add Product Form -->
+    <h2>Add Product</h2>
+    <form th:action="@{/addProduct}" method="post">
+        <input type="text" name="name" placeholder="Product Name">
+        <select name="brandId">
+            <option th:each="brand : ${brands}" th:value="${brand.id}" th:text="${brand.name}"></option>
+        </select>
+        <input type="number" name="price" placeholder="Price">
+        <input type="number" name="stock" placeholder="Stock">
+        <button type="submit">Add Product</button>
+    </form>
+
+    <!-- List of Brands with Edit/Delete Options -->
+    <h2>Brands</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Brand Name</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="brand : ${brands}">
+                <td>
+                    <form th:action="@{/updateBrand(id=${brand.id})}" method="post">
+                        <input type="text" name="newName" th:value="${brand.name}">
+                        <button type="submit">Save</button>
+                    </form>
+                </td>
+                <td>
+                    <form th:action="@{/deleteBrand(id=${brand.id})}" method="post">
+                        <button type="submit" onclick="return confirm('Are you sure?')">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- List of Products with Edit/Delete Options -->
+    <h2>Products</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Product Name</th>
+                <th>Brand</th>
+                <th>Price</th>
+                <th>Stock</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="product : ${products}">
+                <td>
+                    <form th:action="@{/updateProduct(id=${product.id})}" method="post">
+                        <input type="text" name="newName" th:value="${product.name}">
+                        <input type="number" name="newPrice" th:value="${product.price}">
+                        <input type="number" name="newStock" th:value="${product.stock}">
+                        <select name="brandId">
+                            <option th:each="brand : ${brands}" th:value="${brand.id}" th:selected="${brand.id == product.brand.id}" th:text="${brand.name}"></option>
+                        </select>
+                        <button type="submit">Save</button>
+                    </form>
+                </td>
+                <td>
+                    <form th:action="@{/deleteProduct(id=${product.id})}" method="post">
+                        <button type="submit" onclick="return confirm('Are you sure?')">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+</body>
+</html>

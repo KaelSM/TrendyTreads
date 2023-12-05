@@ -1,66 +1,71 @@
 package comp31.database_demo.model;
 
-import java.util.List;
-
-import org.antlr.v4.runtime.misc.NotNull;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
-
-
-/**
-    * Constructs a new Product with the specified brand, type, description, and category.
-    *
-    * @param id          the id of the product
-    * @param brand       the brand of the product
-    * @param type        the type of the product
-    * @param description the description of the product
-    * @param category    the category of the product
-    * @param feedbacks   the feedbacks of the product
-    * @param cartItems   the cart items of the product
-    * @return a new Product with the specified brand, type, description, and category
-    *
-    */
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 
 @Entity
-@Data
-@NoArgsConstructor
 public class Product {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
-    @NotNull
-    private String brand;
-    @NotNull
-    private String type;
-    @NotNull
-    private String description;
-    @NotNull
-    private String category;
-    @NotNull
-    private Boolean availability;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String name;
 
-    @OneToMany(mappedBy = "product")
-    @ToString.Exclude 
-    List<Feedback> feedbacks;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "brand_id")
+    private Brand brand;
 
-    @OneToMany(mappedBy = "product")
-    @ToString.Exclude
-    List<CartItem> cartItems;
+    private int stock;
+    private double price;
 
-    public Product(String string, String type, String description, String category, Boolean availability) {
-        this.brand = brand;
-        this.type = type;
-        this.description = description;
-        this.category = category;
-        this.availability = availability;
+    public Long getId() {
+        return id;
     }
-    
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Brand getBrand() {
+        return brand;
+    }
+
+    public void setBrand(Brand brand) {
+        this.brand = brand;
+    }
+
+    public int getStock() {
+        return stock;
+    }
+
+    public void setStock(int stock) {
+        if (stock < 0)
+            throw new IllegalArgumentException("Stock cannot be negative");
+        this.stock = stock;
+    }   
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        if (price < 0)
+            throw new IllegalArgumentException("Price cannot be negative");
+        this.price = price;
+    }
+
 }

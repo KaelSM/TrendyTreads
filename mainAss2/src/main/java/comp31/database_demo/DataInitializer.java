@@ -1,99 +1,105 @@
 package comp31.database_demo;
-
-import java.util.List;
-import java.util.Random;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
-import comp31.database_demo.model.*;
-import comp31.database_demo.repos.*;
+
+import comp31.database_demo.model.Brand;
+import comp31.database_demo.model.Product;
+import comp31.database_demo.model.User;
+import comp31.database_demo.services.BrandService;
+import comp31.database_demo.services.ProductService;
+import comp31.database_demo.services.UserService;
 
 @Component
 public class DataInitializer implements CommandLineRunner {
-    // Repositories
-    private final ProductRepo productRepo;
-    private final UserRepo userRepo;
-    private final OrderRepo orderRepo;
-    private final FeedbackRepo feedbackRepo;
-    private final CartItemRepo cartItemRepo;
 
-    // Constructor
-    public DataInitializer(ProductRepo productRepo, UserRepo userRepo,
-            OrderRepo orderRepo, FeedbackRepo feedbackRepo,
-            CartItemRepo cartItemRepo) {
-        this.productRepo = productRepo;
-        this.userRepo = userRepo;
-        this.orderRepo = orderRepo;
-        this.feedbackRepo = feedbackRepo;
-        this.cartItemRepo = cartItemRepo;
-    }
-
-    private static final String[] COLORS = new String[] { "Red", "Blue", "Green", "Yellow", "Black", "White" };
-    private static final Double[] SIZES = new Double[] { 36.0, 38.0, 40.0, 42.0, 44.0 }; 
+    @Autowired
+    private UserService userService;
+    @Autowired
+    private BrandService brandService;
+    @Autowired
+    private ProductService productService;
 
     @Override
     public void run(String... args) throws Exception {
-        Random random = new Random();
+        User admin = new User();
+        admin.setUsername("admin");
+        admin.setName("Administrator");
+        admin.setPassword("adminpass"); // You should encrypt this
+        admin.setRole("ADMIN");
+        userService.saveUser(admin);
 
-        String[] brands = { "Nike", "Adidas", "Reebok", "Puma", "Converse" };
-        String[] types = { "Running Shoes", "Sneakers", "Trail Shoes", "Basketball Shoes", "Casual Shoes" };
-        String[] descriptions = { "Comfortable and durable", "Lightweight and stylish", "Rugged and supportive",
-                "High performance", "Classic design" };
-        String[] categories = { "Sports", "Casual", "Outdoor", "Athletic", "Fashion" };
-        Double[] sizes = { 7.0, 8.0, 9.0, 10.0, 11.0 };
-        String[] colors = { "Black", "White", "Blue", "Red", "Green" };
+        User user = new User();
+        user.setUsername("user");
+        user.setName("User");
+        user.setPassword("userpass"); // And this too
+        user.setRole("USER");
+        userService.saveUser(user);
 
-        
-        if (args.length == 0) {
-            
-        }
-       
-        Integer nItems = args.length > 0 ? Integer.parseInt(args[0]) : 10;
+        Brand brand1 = new Brand();
+        brand1.setName("DC");
+        brandService.saveBrand(brand1);
 
-        try {
-            for (int i = 0; i < nItems; i++) {
-                // Create products and save them
-                Product product = new Product(brands[i], types[i], descriptions[i], categories[i], i % 2 == 0);
-                productRepo.save(product);
+        Brand brand2 = new Brand();
+        brand2.setName("Timberland");
+        brandService.saveBrand(brand2);
 
-                for (int j = 0; j < 5; j++) { // Create multiple cart items for each product
-                    String color = COLORS[random.nextInt(COLORS.length)];
-                    Double size = SIZES[random.nextInt(SIZES.length)];
-                    int price = 10 + random.nextInt(90); // Random price between 10 and 100
+        Brand brand3 = new Brand();
+        brand3.setName("Dr. Martens");
+        brandService.saveBrand(brand3);
 
-                    CartItem cartItem = new CartItem("CartItem" + i + "-" + j, 1, price, size, color, "Available",
-                            product, null);
-                    cartItemRepo.save(cartItem);
-                }
-            }
+        Brand brand4 = new Brand();
+        brand4.setName("Crocs");
+        brandService.saveBrand(brand4);
 
-        } catch (Exception e) {
-            System.err.println("Error during data initialization: " + e.getMessage());
+        Brand brand5 = new Brand();
+        brand5.setName("Nike");
+        brandService.saveBrand(brand5);
 
-        }
-        
-        User adminUser = new User("Admin User", "admin", "admin@example.com", "adminPass", "Admin Address",
-                "1234567890", "ADMIN", "ACTIVE");
-        User authUser = new User("Auth User", "auth", "auth@example.com", "authPass", "Auth Address", "0987654321",
-                "AUTH", "ACTIVE");
-        User guestUser = new User("Guest User", "guest", "guest@example.com", "guestPass", "Guest Address",
-                "1230984567", "GUEST", "ACTIVE");
+        Brand brand6 = new Brand();
+        brand6.setName("Puma");
+        brandService.saveBrand(brand6);
 
-        userRepo.save(adminUser);
-        userRepo.save(authUser);
-        userRepo.save(guestUser);
+        Product product1 = new Product();
+        product1.setName("COURT GRAFFIK");
+        product1.setStock(100);
+        product1.setPrice(90.00);
+        product1.setBrand(brand1);
+        productService.saveProduct(product1, brand1.getId());
 
-        List<User> users = userRepo.findAll(); // Assuming you have a method to get all users
-        List<Product> products = productRepo.findAll(); // Assuming you have a method to get all products
+        Product product2 = new Product();
+        product2.setName("6-INCH PREMIUM WATERPROOF BOOTS");
+        product2.setStock(30);
+        product2.setPrice(198.00);
+        product2.setBrand(brand2);
+        productService.saveProduct(product2, brand2.getId());
 
-        for (Product product : products) {
-            for (User user : users) {
-                Feedback feedback = new Feedback("Feedback for " + product.getBrand() + " by " + user.getUsername(),
-                        random.nextInt(5) + 1, // Random rating from 1 to 5
-                        user, product);
-                feedbackRepo.save(feedback);
-                
-            }
-        }
+        Product product3 = new Product();
+        product3.setName("1460 SMOOTH LEATHER LACE UP BOOTS");
+        product3.setStock(50);
+        product3.setPrice(350.00);
+        product3.setBrand(brand3);
+        productService.saveProduct(product3, brand3.getId());
+
+        Product product4 = new Product();
+        product4.setName("KIDS' CLASSIC POKEMON CLOG");
+        product4.setStock(20);
+        product4.setPrice(45.00);
+        product4.setBrand(brand4);
+        productService.saveProduct(product4, brand4.getId());
+
+        Product product5 = new Product();
+        product5.setName("MANTECA 4 HI WR HIGH-TOP SHOES");
+        product5.setStock(10);
+        product5.setPrice(115.00);
+        product5.setBrand(brand1);
+        productService.saveProduct(product5, brand1.getId());
+
+        Product product6 = new Product();
+        product6.setName("WOODLAND BOOTS WINTER BOOTS");
+        product6.setStock(80);
+        product6.setPrice(125.00);
+        product6.setBrand(brand1);
+        productService.saveProduct(product6, brand1.getId());
     }
 }

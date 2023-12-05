@@ -15,12 +15,14 @@
         <label for="address">Address:</label>
         <textarea id="address" name="address" required></textarea><br><br>
         
-        <label for="payment">Payment Method:</label>
-        <select id="payment" name="payment" required>
-            <option value="credit">Credit Card</option>
-            <option value="debit">Debit Card</option>
-            <option value="paypal">PayPal</option>
-        </select><br><br>
+        <label for="payment">Payment Method:</label><br>
+        <input type="radio" id="credit" name="payment" value="1" required>
+        <label for="credit">Credit Card</label><br>
+        <input type="radio" id="debit" name="payment" value="2" required>
+        <label for="debit">Debit Card</label><br>
+        <input type="radio" id="paypal" name="payment" value="3" required>
+        <label for="paypal">PayPal</label><br><br>
+        <input type="submit" value="Place Order">
         
         <input type="submit" value="Place Order">
     </form>

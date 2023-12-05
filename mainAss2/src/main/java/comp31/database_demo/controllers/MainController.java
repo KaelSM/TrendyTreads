@@ -11,10 +11,14 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.ui.Model;
 
 import comp31.database_demo.model.Brand;
+import comp31.database_demo.model.Cart;
+import comp31.database_demo.model.Checkout;
 import comp31.database_demo.model.Product;
 import comp31.database_demo.model.User;
 import comp31.database_demo.services.UserService;
 import comp31.database_demo.services.BrandService;
+import comp31.database_demo.services.CartService;
+import comp31.database_demo.services.CheckoutService;
 import comp31.database_demo.services.ProductService;
 import jakarta.servlet.http.HttpSession;
 
@@ -28,6 +32,13 @@ public class MainController {
 
     @Autowired
     private ProductService productService;
+
+    @Autowired
+    private CartService cartService;
+
+    @Autowired
+    private CheckoutService checkoutService;
+    
 
 /* user contoller */
 
@@ -245,6 +256,49 @@ public class MainController {
     }
 
 /* product and brand end */
+
+/* cart and checkout start*/
+
+// Add product to cart (assuming you have a form to submit this request)
+@PostMapping("/add-to-cart")
+public String addToCart(@RequestParam Long productId, @RequestParam int quantity, Model model) {
+    // You will need to obtain the current user's ID for this method
+    Long userId = /* Get the user ID from the session or security context */;
+    cartService.addProductToCart(userId, productId, quantity);
+    return "redirect:/cart"; // Redirect to the cart page
+}
+
+ // Display the cart for the current user
+    @GetMapping("/cart")
+    public String viewCart(Model model) {
+        Long userId = /* Get the user ID from the session or security context */;
+        Cart cart = cartService.getUserCart(userId);
+        model.addAttribute("cart", cart);
+        return "cart"; // Name of the Thymeleaf template for the cart page
+    }
+
+    // Process checkout and redirect to success page
+    @PostMapping("/checkout")
+    public String processCheckout(@ModelAttribute Checkout checkout, Model model) {
+        // Use the checkout object filled from the form submission
+        checkoutService.processCheckout(checkout.getCart().getId(), 
+                                        checkout.getName(), 
+                                        checkout.getAddress(), 
+                                        checkout.getEmail(), 
+                                        checkout.getPhone(), 
+                                        checkout.getCountry(), 
+                                        checkout.getPaymentMethod());
+
+        return "redirect:/order-success"; // Redirect to the order success page
+    }
+
+    // Display order success page
+    @GetMapping("/order-success")
+    public String orderSuccess(Model model) {
+        return "order-success"; // Name of the Thymeleaf template for the order success page
+    }
+
+/* cart and checkout end*/
 
 }
 

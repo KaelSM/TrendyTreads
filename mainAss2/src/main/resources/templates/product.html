@@ -15,11 +15,12 @@
             </tr>
         </thead>
         <tbody>
-            <tr th:each="product, iterStat : ${products}">
+            <tr th:each="product : ${products}">
                 <td th:text="${product.name}">Product Name</td>
                 <td th:text="${'$' + product.price}">Product Price</td>
                 <td>
-                    <a th:href="@{'/productDetails/' + ${iterStat.index + 1} + '.html'}">View Details</a>
+                    <!-- Link to the product detail page -->
+                    <a th:href="@{'/' + ${product.id} + '.html'}">View Details</a>
                 </td>
             </tr>
         </tbody>

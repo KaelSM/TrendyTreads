@@ -231,7 +231,15 @@ public class MainController {
         return "product"; // The name of your products view template
     }
 
+    @GetMapping("/productDetails/{id}")
+    public String showProductDetails(@PathVariable Long id, Model model) {
+        Product product = productService.getProductById(id);
+        model.addAttribute("product", product);
 
+        // The return statement here constructs the view name dynamically based on the product ID.
+        // For example, if the product ID is 1, it will return "1" which should match "1.html" in the templates directory.
+        return id.toString(); // Just convert the ID to a string to match the template name
+    }
 
 /* product and brand end */
 

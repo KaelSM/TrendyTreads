@@ -20,7 +20,7 @@
                 <td th:text="${'$' + product.price}">Product Price</td>
                 <td>
                     <!-- Link to the product detail page -->
-                    <a th:href="@{'/productDetails' + ${product.id} }">View Details</a>
+                    <a th:href="@{'/productDetails/' + ${product.id} }">View Details</a>
                 </td>
             </tr>
         </tbody>

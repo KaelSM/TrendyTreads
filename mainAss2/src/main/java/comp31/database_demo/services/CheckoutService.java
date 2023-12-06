@@ -38,7 +38,6 @@ public class CheckoutService {
         checkout.setPayMethord(paymentMethod); 
         // Save the checkout details
         checkoutRepo.save(checkout);
-
     }
 
 

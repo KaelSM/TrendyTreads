@@ -31,6 +31,8 @@ public class Cart {
     @Column(name = "quantity")
     private Map<Product, Integer> products = new HashMap<>();
 
+    private double totalAmount;
+
 
     public Long getId() {
         return id;
@@ -55,6 +57,14 @@ public class Cart {
     public void setProducts(Map<Product, Integer> products) {
         this.products = products;
     } 
+
+    public double getTotalAmount() {
+        return totalAmount;
+    }
+
+    public void setTotalAmount(double totalAmount) {
+        this.totalAmount = totalAmount;
+    }
 
   
 }

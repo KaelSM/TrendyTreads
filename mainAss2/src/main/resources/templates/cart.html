@@ -30,6 +30,20 @@
                 <td th:text="${productEntity.key.price * productEntity.value}">Total Price</td>
             </tr>
         </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="2">Subtotal:</td>
+                <td th:text="${#numbers.formatDecimal(subtotal, 1, 'COMMA', 2, 'POINT')}"></td>
+            </tr>
+            <tr>
+                <td colspan="2">Tax: (13%)</td>
+                <td th:text="${#numbers.formatDecimal(tax, 1, 'COMMA', 2, 'POINT')}"></td>
+            </tr>
+            <tr>
+                <td colspan="2">Total Amount:</td>
+                <td th:text="${#numbers.formatDecimal(totalAmount, 1, 'COMMA', 2, 'POINT')}"></td>
+            </tr>
+        </tfoot>
     </table>
    
     <!-- Continue Shopping button -->

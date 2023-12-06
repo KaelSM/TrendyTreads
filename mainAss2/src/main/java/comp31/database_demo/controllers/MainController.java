@@ -298,13 +298,22 @@ public class MainController {
         return "redirect:/cart";
     }
 
-    @GetMapping("cart")
+    @GetMapping("/cart")
     public String viewCart(Model model, HttpSession session) {
         Long userId = (Long) session.getAttribute("userId");
+        if (userId == null) {
+            return "redirect:/login";
+        }
         Cart cart = cartService.getUserCart(userId);
+        double subtotal = cartService.calculateSubtotal(cart.getProducts());
+        double tax = cartService.calculateTax(subtotal);
+        double totalAmount = subtotal + tax;
         model.addAttribute("cart", cart);
-        return "cart"; // Name of the Thymeleaf template for the cart page
-    }  
+        model.addAttribute("subtotal", subtotal);
+        model.addAttribute("tax", tax);
+        model.addAttribute("totalAmount", totalAmount);
+        return "cart";
+    }
 
     @PostMapping("/cart/update")
     public String updateCartItem(@RequestParam Long productId, @RequestParam int quantity, HttpSession session) {

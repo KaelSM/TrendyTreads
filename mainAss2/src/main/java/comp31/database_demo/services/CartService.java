@@ -117,19 +117,46 @@ public class CartService {
             return cartRepo.save(cart); // Assuming cartRepo is your JPA repository
         }
     
-
-        public double calculateTotalAmount(Cart cart) {
-        double totalAmount = 0;
-        for (Map.Entry<Product, Integer> entry : cart.getProducts().entrySet()) {
-            Product product = entry.getKey();
-            int quantity = entry.getValue();
-            double productTotal = product.getPrice() * quantity;
-
-            // Debugging output
-            System.out.println("Product: " + product.getName() + ", Quantity: " + quantity + ", Total: " + productTotal);
-
-            totalAmount += productTotal;
+        public void updateProductQuantityAndCalculateTotal(Long userId, Long productId, int quantity) {
+            Cart cart = getUserCart(userId);
+            updateProductQuantity(cart, productId, quantity);
+            calculateAndSetCartTotal(cart);
         }
-        return totalAmount;
+    
+        private void updateProductQuantity(Cart cart, Long productId, int quantity) {
+            Map<Product, Integer> products = cart.getProducts();
+            Product product = productRepo.findById(productId).orElseThrow(() -> new IllegalArgumentException("Product not found"));
+            // Check for stock before adding or updating the quantity
+            if (product.getStock() < quantity) {
+                throw new IllegalArgumentException("Not enough stock for product: " + product.getName());
+            }
+    
+            products.put(product, quantity);
+            cart.setProducts(products);
+            cartRepo.save(cart);
         }
+    
+        private void calculateAndSetCartTotal(Cart cart) {
+            double subtotal = calculateSubtotal(cart.getProducts());
+            double tax = calculateTax(subtotal);
+            double total = subtotal + tax;
+            cart.setTotalAmount(total);
+            cartRepo.save(cart);
+        }
+    
+        public double calculateSubtotal(Map<Product, Integer> products) {
+            double subtotal = 0;
+            for (Map.Entry<Product, Integer> entry : products.entrySet()) {
+                Product product = entry.getKey();
+                Integer quantity = entry.getValue();
+                subtotal += product.getPrice() * quantity;
+            }
+            return subtotal;
+        }
+    
+        public double calculateTax(double subtotal) {
+            final double TAX_RATE = 0.13; // 13% tax rate
+            return subtotal * TAX_RATE;
+        }
+    
     }

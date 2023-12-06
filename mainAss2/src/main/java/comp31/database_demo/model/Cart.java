@@ -31,7 +31,6 @@ public class Cart {
     @Column(name = "quantity")
     private Map<Product, Integer> products = new HashMap<>();
 
-    private static final double TAX_RATE = 0.13;
 
     public Long getId() {
         return id;
@@ -57,21 +56,5 @@ public class Cart {
         this.products = products;
     } 
 
-    public double getTotalPriceBeforeTax() {
-        double total = 0;
-        for (Map.Entry<Product, Integer> entry : products.entrySet()) {
-            total += entry.getKey().getPrice() * entry.getValue();
-        }
-        return total;
-    }
-
-    // Method to calculate total tax
-    public double getTotalTax() {
-        return getTotalPriceBeforeTax() * TAX_RATE;
-    }
-
-    // Method to calculate total price after tax
-    public double getTotalPriceAfterTax() {
-        return getTotalPriceBeforeTax() + getTotalTax();
-    }
+  
 }

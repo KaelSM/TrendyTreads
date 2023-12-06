@@ -9,12 +9,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.ui.Model;
+import java.util.List;
 
 import comp31.database_demo.model.Brand;
 import comp31.database_demo.model.Cart;
 import comp31.database_demo.model.Checkout;
 import comp31.database_demo.model.Product;
 import comp31.database_demo.model.User;
+import comp31.database_demo.repos.UserRepo;
 import comp31.database_demo.services.UserService;
 import comp31.database_demo.services.BrandService;
 import comp31.database_demo.services.CartService;
@@ -55,6 +57,23 @@ public class MainController {
         return "login";
     }
 
+    //Logout
+    @GetMapping("/logout")
+    public String logout(HttpSession session) {
+        // Invalidate the session and redirect to the login page
+        session.invalidate();
+        session = null;
+        return "logout";
+    }
+
+    @PostMapping("/logout")
+    public String logoutPost(HttpSession session) {
+    // Invalidate the session and redirect to the logout page
+    session.invalidate();
+    session = null;
+    return "redirect:/logout"; // Redirect to the logout page
+}
+
     // Home page
     @GetMapping("/home")
     public String home() {
@@ -82,6 +101,11 @@ public class MainController {
         if (user != null && "ADMIN".equals(user.getRole())) {
             model.addAttribute("brands", brandService.getAllBrands());
             model.addAttribute("products", productService.getAllProducts());
+
+            // Add a list of checkout orders to the model
+            List<Checkout> orders = checkoutService.listAll(); // Assuming checkoutService has a method to list all checkouts
+            model.addAttribute("orders", orders);
+
             return "management"; // Render the management view for admin users
         } else {
             return "redirect:/login"; // Redirect non-admin users to login page
@@ -263,7 +287,7 @@ public class MainController {
 /* cart and checkout start*/
 
 // Add product to cart 
-@PostMapping("/add-to-cart")
+@PostMapping("/add-cart")
     public String addToCart(@RequestParam Long productId, @RequestParam int quantity, HttpSession session) {
         // Simulate getting the user ID (for example, setting a static user ID for the demo)
         Long userId = (Long) session.getAttribute("userId");
@@ -275,7 +299,7 @@ public class MainController {
         return "redirect:/cart";
     }
 
-    @GetMapping("/cart")
+    @GetMapping("cart")
     public String viewCart(Model model, HttpSession session) {
         Long userId = (Long) session.getAttribute("userId");
         Cart cart = cartService.getUserCart(userId);
@@ -296,6 +320,11 @@ public class MainController {
         cartService.removeProductFromCart(userId, productId);
         return "redirect:/cart";
     }
+    //continue shopping 
+    @GetMapping("/continue-shopping")
+    public String continueShopping() {
+        return "redirect:/product"; // Redirect to the product details page
+    }
 
     @PostMapping("/checkout")
     public String processCheckout(@ModelAttribute Checkout checkout, HttpSession session, RedirectAttributes redirectAttributes) {
@@ -315,7 +344,7 @@ public class MainController {
                 checkout.getEmail(),
                 checkout.getPhone(),
                 checkout.getCountry(),
-                checkout.getPayMethord()
+                checkout.getPaymentMethod()
             );
             return "redirect:/order-success";
         } catch (Exception e) {
@@ -324,6 +353,17 @@ public class MainController {
         }
     }
 
+    @GetMapping("/checkout")
+    public String showCheckoutForm(Model model, HttpSession session) {
+        User currentUser = userService.getCurrentUser(session);
+        if (currentUser == null) {
+            return "redirect:/login"; // Redirect to login if user not found
+        }
+        Checkout checkout = new Checkout();
+        checkout.setName(currentUser.getName());
+        model.addAttribute("checkout", checkout);
+        return "checkout";
+}
 /* cart and checkout end*/
 
 }

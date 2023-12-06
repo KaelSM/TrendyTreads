@@ -5,19 +5,32 @@
     <title>Management</title>
 </head>
 <body>
+
+     <!-- Navigation Menu -->
+     <nav>
+        <ul>
+            <li><a href="#addBrandSection">Add Brand</a></li>
+            <li><a href="#addProductSection">Add Product</a></li>
+            <li><a href="#brandsSection">Brands</a></li>
+            <li><a href="#productsSection">Products</a></li>
+            <li><a href="#ordersSection">Orders</a></li>
+        </ul>
+    </nav>
+
+    <!-- Success/Error Messages -->
     <div th:if="${successMessage}" th:text="${successMessage}"></div>
     <div th:if="${errorMessage}" th:text="${errorMessage}"></div>
     <h1>Admin Management Page</h1>
 
     <!-- Add Brand Form -->
-    <h2>Add Brand</h2>
+    <h2  id="addBrandSection">Add Brand</h2>
     <form th:action="@{/addBrand}" method="post">
         <input type="text" name="name" placeholder="Brand Name">
         <button type="submit">Add Brand</button>
     </form>
 
     <!-- Add Product Form -->
-    <h2>Add Product</h2>
+    <h2  id="addProductSection">Add Product</h2>
     <form th:action="@{/addProduct}" method="post">
         <input type="text" name="name" placeholder="Product Name">
         <select name="brandId">
@@ -29,7 +42,7 @@
     </form>
 
     <!-- List of Brands with Edit/Delete Options -->
-    <h2>Brands</h2>
+    <h2  id="brandsSection">Brands</h2>
     <table>
         <thead>
             <tr>
@@ -57,7 +70,7 @@
     </table>
 
     <!-- List of Products with Edit/Delete Options -->
-    <h2>Products</h2>
+    <h2  id="productsSection">Products</h2>
     <table>
         <thead>
             <tr>
@@ -87,6 +100,27 @@
                         <button type="submit" onclick="return confirm('Are you sure?')">Delete</button>
                     </form>
                 </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- List of Checkout Orders -->
+    <h2  id="ordersSection">Orders</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Order ID</th>
+                <th>User</th>
+                <th>Total Amount</th>
+                <th>Details</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="order : ${orders}">
+                <td th:text="${order.id}"></td>
+                <td th:text="${order.user.username}"></td>
+                <td th:text="${order.totalAmount}"></td>
+                <td><a th:href="@{/orderDetails/{id}(id=${order.id})}">View Details</a></td>
             </tr>
         </tbody>
     </table>

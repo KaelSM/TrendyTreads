@@ -3,6 +3,7 @@ import org.springframework.stereotype.Service;
 
 import comp31.database_demo.model.User;
 import comp31.database_demo.repos.UserRepo;
+import jakarta.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -25,5 +26,9 @@ public class UserService {
         UserRepo.deleteById(id);
     }
 
-    
+    public User getCurrentUser(HttpSession session) {
+        Long userId = (Long) session.getAttribute("userId");
+        // Fetch the user from the database or session
+        return UserRepo.findById(userId).orElse(null); // Replace with your user fetching logic
+    }
 }

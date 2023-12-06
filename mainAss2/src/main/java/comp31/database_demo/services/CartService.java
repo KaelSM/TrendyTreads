@@ -43,6 +43,11 @@ public class CartService {
         }
     }
 
+    // Retrieve the cart for a specific user
+    public Cart getUserCart(Long userId) {
+        return cartRepo.findByUserId(userId).orElseGet(() -> createNewCart(userId));
+    }
+
     // Create a new cart for the user
     private Cart createNewCart(Long userId) {
         Optional<User> userOpt = userRepo.findById(userId);
@@ -108,8 +113,18 @@ public class CartService {
             }
         }
 
-        public Cart getUserCart(Long userId) {
-            return null;
+        public double calculateTotalAmount(Cart cart) {
+        double totalAmount = 0;
+        for (Map.Entry<Product, Integer> entry : cart.getProducts().entrySet()) {
+            Product product = entry.getKey();
+            int quantity = entry.getValue();
+            double productTotal = product.getPrice() * quantity;
+
+            // Debugging output
+            System.out.println("Product: " + product.getName() + ", Quantity: " + quantity + ", Total: " + productTotal);
+
+            totalAmount += productTotal;
         }
-        
+        return totalAmount;
+        }
     }

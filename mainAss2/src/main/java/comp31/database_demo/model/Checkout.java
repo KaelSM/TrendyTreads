@@ -21,7 +21,7 @@ public class Checkout {
     private String email;
     private String phone;
     private String country;
-    private int payMethord;
+    private String paymentMethod;
     
 
     public Long getCheckoutId() {
@@ -80,13 +80,13 @@ public class Checkout {
         this.country = country;
     }
 
-    public int getPayMethord() {
-        return payMethord;
+    public String getPaymentMethod() {
+        return this.paymentMethod;
     }
-
-    public void setPayMethord(int payMethord) {
-        this.payMethord = payMethord;
-    }
+    
+    public void setPaymentMethod(String paymentMethod) {
+        this.paymentMethod = paymentMethod;
+    }    
     
     public Checkout() {}
     

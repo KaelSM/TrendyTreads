@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
-</head>
-<body>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="shortcut icon" href="../static/img/favicon.png" type="image/x-icon">
+        <title>Home</title>
+        <link rel="stylesheet" href="../static/css/styles.css">
+    <body>
     <h1>Welcome to the home page!</h1>
     <!-- Navigation buttons -->
     <button><a href="/product">Browse Products</a></button>
@@ -15,10 +16,16 @@
 
     <!-- Logout functionality should be a POST request, adjust if you're using Spring Security -->
     <form action="/logout" method="post">
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
         <button type="submit">Logout</button>
     </form>
 
     <!-- Optional: Only show certain buttons if the user is logged in/out -->
     <!-- Add conditional rendering with Thymeleaf if needed -->
+
+
+    <script src="../static/js/script.js"></script>
+    <script src="../static/js/carousel-home.min.js"></script>
+
 </body>
 </html>

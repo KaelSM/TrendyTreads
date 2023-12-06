@@ -5,7 +5,8 @@
 </head>
 <body>
     <h1>Checkout</h1>
-    <form th:action="@{/checkout}" th:object="${checkout}" method="post">        <label for="name">Name:</label>
+    <form th:action="@{/checkout}" th:object="${checkout}" method="post">        
+        <label for="name">Name:</label>
         <input type="text" id="name" th:field="*{name}" required><br><br>
         
         <label for="email">Email:</label>
@@ -15,12 +16,12 @@
         <textarea id="address" th:field="*{address}" required></textarea><br><br>
         
         <label for="paymentMethod">Payment Method:</label><br>
-        <input type="radio" id="credit" th:field="*{paymentMethod}" value="credit" required>
-        <label for="credit">Credit Card</label><br>
+        <input type="radio" id="credit" name="paymentMethod" th:field="*{paymentMethod}" value="credit" required>
+        <label for="credit">Credit Card</label>
         <input type="radio" id="debit" th:field="*{paymentMethod}" value="debit" required>
-        <label for="debit">Debit Card</label><br>
+        <label for="debit">Debit Card</label>
         <input type="radio" id="paypal" th:field="*{paymentMethod}" value="paypal" required>
-        <label for="paypal">PayPal</label><br><br>
+        <label for="paypal">PayPal</label>
 
         <input type="submit" value="Place Order">
     </form>

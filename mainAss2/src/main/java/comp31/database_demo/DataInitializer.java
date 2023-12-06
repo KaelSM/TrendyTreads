@@ -22,19 +22,23 @@ public class DataInitializer implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
+
+        // Create some users
         User admin = new User();
         admin.setUsername("admin");
         admin.setName("Administrator");
-        admin.setPassword("adminpass"); // You should encrypt this
+        admin.setPassword("adminpass"); 
         admin.setRole("ADMIN");
         userService.saveUser(admin);
 
         User user = new User();
         user.setUsername("user");
         user.setName("User");
-        user.setPassword("userpass"); // And this too
+        user.setPassword("userpass"); 
         user.setRole("USER");
         userService.saveUser(user);
+
+        // Create some brands
 
         Brand brand1 = new Brand();
         brand1.setName("DC");
@@ -59,6 +63,8 @@ public class DataInitializer implements CommandLineRunner {
         Brand brand6 = new Brand();
         brand6.setName("Puma");
         brandService.saveBrand(brand6);
+
+        // Create some products
 
         Product product1 = new Product();
         product1.setName("COURT GRAFFIK");
@@ -101,5 +107,8 @@ public class DataInitializer implements CommandLineRunner {
         product6.setPrice(125.00);
         product6.setBrand(brand1);
         productService.saveProduct(product6, brand1.getId());
+
+        // Create some carts
+        
     }
 }

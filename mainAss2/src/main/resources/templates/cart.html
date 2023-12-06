@@ -17,27 +17,26 @@
             </tr>
         </thead>
         <tbody>
-            <tr th:each="item : ${cart.items}">
-                <td th:text="${item.product.name}"></td>
-                <td th:text="${item.product.price}"></td>
+            <tr th:each="productEntity : ${cart.products}">
+                <td th:text="${productEntity.key.name}"></td>
+                <td th:text="${productEntity.key.price}"></td>
                 <td>
                     <form th:action="@{/cart/update}" method="post">
-                        <input type="hidden" th:name="productId" th:value="${item.product.id}" />
-                        <input type="number" th:name="quantity" th:value="${item.quantity}" />
+                        <input type="hidden" th:name="productId" th:value="${productEntity.key.id}" />
+                        <input type="number" th:name="quantity" th:value="${productEntity.value}" />
                         <input type="submit" value="Update" />
                     </form>
                 </td>
-                <td th:text="${item.totalPrice}"></td>
-                <td>
-                    <form th:action="@{/cart/remove}" method="post">
-                        <input type="hidden" th:name="productId" th:value="${item.product.id}" />
-                        <input type="submit" value="Remove" />
-                    </form>
-                </td>
+                <td th:text="${productEntity.key.price * productEntity.value}">Total Price</td>
             </tr>
         </tbody>
     </table>
-
-    <button onclick="window.location.href='@{/checkout}'">Checkout</button>
+   
+    <!-- Continue Shopping button -->
+    <form th:action="@{/continue-shopping}" method="get">
+        <input type="submit" value="Continue Shopping" />
+    </form>
+    <a th:href="@{/checkout}">Checkout</a>
+    
 </body>
 </html>

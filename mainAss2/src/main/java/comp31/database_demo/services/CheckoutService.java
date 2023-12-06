@@ -27,10 +27,9 @@ public class CheckoutService {
     private ProductRepo productRepo;
 
     @Transactional
-    public void processCheckout(Long cartId, String name, String address, String email, String phone, String country, int paymentMethod) {
+    public void processCheckout(Long cartId, String name, String address, String email, String phone, String country, String string) {
         // Retrieve the cart based on cartId
         Cart cart = cartRepo.findById(cartId).orElseThrow(() -> new IllegalArgumentException("Cart not found with ID: " + cartId));
-
        
         // Create a new Checkout instance and set its properties
         Checkout checkout = new Checkout();
@@ -40,11 +39,10 @@ public class CheckoutService {
         checkout.setEmail(email);
         checkout.setPhone(phone);
         checkout.setCountry(country);
-        checkout.setPayMethord(paymentMethod); 
+        checkout.setPaymentMethod(string); 
         // Save the checkout details
         checkoutRepo.save(checkout);
     }
-
 
     public List<Checkout> listAll() {
         return checkoutRepo.findAll();

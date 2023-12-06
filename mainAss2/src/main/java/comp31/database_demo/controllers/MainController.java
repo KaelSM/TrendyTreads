@@ -248,6 +248,9 @@ public class MainController {
     @GetMapping("/productDetails/{id}")
     public String showProductDetails(@PathVariable Long id, Model model) {
         Product product = productService.getProductById(id);
+        if (product == null) {
+            throw new IllegalArgumentException("Invalid product ID: " + id);
+        }
         model.addAttribute("product", product);
 
         // The return statement here constructs the view name dynamically based on the product ID.

@@ -1,12 +1,21 @@
 package comp31.database_demo;
+import java.util.HashMap;
+
+
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import comp31.database_demo.model.Brand;
+import comp31.database_demo.model.Cart;
 import comp31.database_demo.model.Product;
+import comp31.database_demo.model.Checkout;
 import comp31.database_demo.model.User;
+import comp31.database_demo.repos.CartRepo;
 import comp31.database_demo.services.BrandService;
+import comp31.database_demo.services.CartService;
+import comp31.database_demo.services.CheckoutService;
 import comp31.database_demo.services.ProductService;
 import comp31.database_demo.services.UserService;
 
@@ -19,6 +28,14 @@ public class DataInitializer implements CommandLineRunner {
     private BrandService brandService;
     @Autowired
     private ProductService productService;
+    @Autowired
+    private CartService cartService;
+    @Autowired
+    private CheckoutService checkoutService;
+
+    @Autowired
+    private CartRepo cartRepo;
+
 
     @Override
     public void run(String... args) throws Exception {
@@ -37,6 +54,13 @@ public class DataInitializer implements CommandLineRunner {
         user.setPassword("userpass"); 
         user.setRole("USER");
         userService.saveUser(user);
+
+        User user2 = new User();
+        user2.setUsername("user2");
+        user2.setName("User2");
+        user2.setPassword("userpass2");
+        user2.setRole("USER");
+        userService.saveUser(user2);
 
         // Create some brands
 
@@ -109,6 +133,46 @@ public class DataInitializer implements CommandLineRunner {
         productService.saveProduct(product6, brand1.getId());
 
         // Create some carts
-        
+        user = userService.findByUsername("user");
+        product1 = productService.getProductById(1L);
+
+        Cart cart1 = new Cart();
+        cart1.setUser(user);
+        Map<Product, Integer> productsInCart = new HashMap<>();
+        productsInCart.put(product1, 2);
+        cart1.setProducts(productsInCart);
+        cartService.save(cart1); 
+
+        user2 = userService.findByUsername("user2");
+        product2 = productService.getProductById(2L);
+        product3 = productService.getProductById(3L);
+
+        Cart cart2 = new Cart();
+        cart2.setUser(user2);
+        Map<Product, Integer> productsInCart2 = new HashMap<>();
+        productsInCart2.put(product2, 1);
+        productsInCart2.put(product3, 5);
+        cart2.setProducts(productsInCart2);
+        cartService.save(cart2);
+
+        // Create some checkouts
+        Cart existingCart = cartRepo.findById(1L).orElseThrow(() -> new RuntimeException("Cart not found"));
+        Checkout checkout = new Checkout();
+        checkout.setCart(existingCart);
+        checkout.setName("User Name");
+        checkout.setAddress("1234 Main Street");
+        checkout.setEmail("user@example.com");
+        checkout.setPaymentMethod("Credit");
+        checkoutService.saveCheckout(checkout); 
+
+        Cart existingCart2 = cartRepo.findById(2L).orElseThrow(() -> new RuntimeException("Cart not found"));
+        Checkout checkout2 = new Checkout();
+        checkout2.setCart(existingCart2);
+        checkout2.setName("User2 Name");
+        checkout2.setAddress("1234 Main Street");
+        checkout2.setEmail("user2@example.com");
+        checkout2.setPaymentMethod("Paypal");
+        checkoutService.saveCheckout(checkout2);
+
     }
 }

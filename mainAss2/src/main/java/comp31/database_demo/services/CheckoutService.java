@@ -27,7 +27,7 @@ public class CheckoutService {
     private ProductRepo productRepo;
 
     @Transactional
-    public void processCheckout(Long cartId, String name, String address, String email, String phone, String country, String string) {
+    public void processCheckout(Long cartId, String name, String address, String email, String string) {
         // Retrieve the cart based on cartId
         Cart cart = cartRepo.findById(cartId).orElseThrow(() -> new IllegalArgumentException("Cart not found with ID: " + cartId));
        
@@ -37,8 +37,6 @@ public class CheckoutService {
         checkout.setName(name);
         checkout.setAddress(address);
         checkout.setEmail(email);
-        checkout.setPhone(phone);
-        checkout.setCountry(country);
         checkout.setPaymentMethod(string); 
         // Save the checkout details
         checkoutRepo.save(checkout);

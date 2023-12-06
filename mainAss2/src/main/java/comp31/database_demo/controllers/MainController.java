@@ -16,7 +16,6 @@ import comp31.database_demo.model.Cart;
 import comp31.database_demo.model.Checkout;
 import comp31.database_demo.model.Product;
 import comp31.database_demo.model.User;
-import comp31.database_demo.repos.UserRepo;
 import comp31.database_demo.services.UserService;
 import comp31.database_demo.services.BrandService;
 import comp31.database_demo.services.CartService;
@@ -286,8 +285,8 @@ public class MainController {
 
 /* cart and checkout start*/
 
-// Add product to cart 
-@PostMapping("/add-cart")
+    // Add product to cart 
+    @PostMapping("/add-cart")
     public String addToCart(@RequestParam Long productId, @RequestParam int quantity, HttpSession session) {
         // Simulate getting the user ID (for example, setting a static user ID for the demo)
         Long userId = (Long) session.getAttribute("userId");
@@ -342,11 +341,9 @@ public class MainController {
                 checkout.getName(),
                 checkout.getAddress(),
                 checkout.getEmail(),
-                checkout.getPhone(),
-                checkout.getCountry(),
                 checkout.getPaymentMethod()
             );
-            return "redirect:/order-success";
+            return "redirect:/orderMessage";
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("checkoutError", "Checkout process failed: " + e.getMessage());
             return "redirect:/cart";
@@ -355,15 +352,28 @@ public class MainController {
 
     @GetMapping("/checkout")
     public String showCheckoutForm(Model model, HttpSession session) {
-        User currentUser = userService.getCurrentUser(session);
-        if (currentUser == null) {
-            return "redirect:/login"; // Redirect to login if user not found
-        }
-        Checkout checkout = new Checkout();
-        checkout.setName(currentUser.getName());
-        model.addAttribute("checkout", checkout);
-        return "checkout";
-}
+    String username = (String) session.getAttribute("username");
+    if (username == null) {
+        return "redirect:/login"; // Redirect to login if user not found
+    }
+    
+    User currentUser = userService.findByUsername(username);
+    if (currentUser == null) {
+        // Handle case where the user is not found in the database
+        return "redirect:/login";
+    }
+    
+    Checkout checkout = new Checkout();
+    checkout.setName(currentUser.getName()); // Ensure the currentUser object has the correct name
+    model.addAttribute("checkout", checkout);
+    
+    return "checkout";
+    }
+
+    @GetMapping("/orderMessage")
+    public String orderMessage() {
+        return "orderMessage"; 
+    }
 /* cart and checkout end*/
 
 }

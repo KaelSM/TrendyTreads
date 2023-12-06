@@ -113,6 +113,11 @@ public class CartService {
             }
         }
 
+        public Cart save(Cart cart) {
+            return cartRepo.save(cart); // Assuming cartRepo is your JPA repository
+        }
+    
+
         public double calculateTotalAmount(Cart cart) {
         double totalAmount = 0;
         for (Map.Entry<Product, Integer> entry : cart.getProducts().entrySet()) {

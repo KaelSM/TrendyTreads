@@ -107,5 +107,9 @@ public class CartService {
                 throw new IllegalArgumentException("Cart not found");
             }
         }
+
+        public Cart getUserCart(Long userId) {
+            return null;
+        }
         
     }

@@ -11,10 +11,14 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.ui.Model;
 
 import comp31.database_demo.model.Brand;
+import comp31.database_demo.model.Cart;
+import comp31.database_demo.model.Checkout;
 import comp31.database_demo.model.Product;
 import comp31.database_demo.model.User;
 import comp31.database_demo.services.UserService;
 import comp31.database_demo.services.BrandService;
+import comp31.database_demo.services.CartService;
+import comp31.database_demo.services.CheckoutService;
 import comp31.database_demo.services.ProductService;
 import jakarta.servlet.http.HttpSession;
 
@@ -28,6 +32,13 @@ public class MainController {
 
     @Autowired
     private ProductService productService;
+
+    @Autowired
+    private CartService cartService;
+
+    @Autowired
+    private CheckoutService checkoutService;
+    
 
 /* user contoller */
 
@@ -237,6 +248,9 @@ public class MainController {
     @GetMapping("/productDetails/{id}")
     public String showProductDetails(@PathVariable Long id, Model model) {
         Product product = productService.getProductById(id);
+        if (product == null) {
+            throw new IllegalArgumentException("Invalid product ID: " + id);
+        }
         model.addAttribute("product", product);
 
         // The return statement here constructs the view name dynamically based on the product ID.
@@ -245,6 +259,72 @@ public class MainController {
     }
 
 /* product and brand end */
+
+/* cart and checkout start*/
+
+// Add product to cart 
+@PostMapping("/add-to-cart")
+    public String addToCart(@RequestParam Long productId, @RequestParam int quantity, HttpSession session) {
+        // Simulate getting the user ID (for example, setting a static user ID for the demo)
+        Long userId = (Long) session.getAttribute("userId");
+        if (userId == null) {
+            userId = 1L; // For the purpose of the demo, let's use '1L' as the default user ID
+            session.setAttribute("userId", userId);
+        }
+        cartService.addProductToCart(userId, productId, quantity);
+        return "redirect:/cart";
+    }
+
+    @GetMapping("/cart")
+    public String viewCart(Model model, HttpSession session) {
+        Long userId = (Long) session.getAttribute("userId");
+        Cart cart = cartService.getUserCart(userId);
+        model.addAttribute("cart", cart);
+        return "cart"; // Name of the Thymeleaf template for the cart page
+    }  
+
+    @PostMapping("/cart/update")
+    public String updateCartItem(@RequestParam Long productId, @RequestParam int quantity, HttpSession session) {
+        Long userId = (Long) session.getAttribute("userId");
+        cartService.updateProductQuantity(userId, productId, quantity);
+        return "redirect:/cart";
+    }
+
+    @PostMapping("/cart/remove")
+    public String removeProductFromCart(@RequestParam Long productId, HttpSession session) {
+        Long userId = (Long) session.getAttribute("userId");
+        cartService.removeProductFromCart(userId, productId);
+        return "redirect:/cart";
+    }
+
+    @PostMapping("/checkout")
+    public String processCheckout(@ModelAttribute Checkout checkout, HttpSession session, RedirectAttributes redirectAttributes) {
+        Long userId = (Long) session.getAttribute("userId");
+        if (userId == null) {
+            redirectAttributes.addFlashAttribute("checkoutError", "User is not recognized.");
+            return "redirect:/login";
+        }
+
+        try {
+            Cart cart = cartService.getUserCart(userId); // Retrieve the cart associated with the user
+            // Extract the necessary details from the checkout object and pass them to the processCheckout method
+            checkoutService.processCheckout(
+                cart.getId(), // Assuming cart ID is needed
+                checkout.getName(),
+                checkout.getAddress(),
+                checkout.getEmail(),
+                checkout.getPhone(),
+                checkout.getCountry(),
+                checkout.getPayMethord()
+            );
+            return "redirect:/order-success";
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("checkoutError", "Checkout process failed: " + e.getMessage());
+            return "redirect:/cart";
+        }
+    }
+
+/* cart and checkout end*/
 
 }
 

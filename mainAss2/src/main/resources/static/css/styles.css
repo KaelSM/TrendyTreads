@@ -1,8 +1,156 @@
-body {
+/* Ensure that the Bootstrap .nav class does not interfere */
+.main-menu .nav {
+    display: flex;
+    padding-left: 0;
+    margin-bottom: 0;
+    list-style: none;
+}
+
+/* Adjust the .nav-link class to remove Bootstrap styles if needed */
+.main-menu .nav .nav-item .nav-link {
+    padding: .5rem 1rem;
+    color: #333;
+}
+
+/* Update your .contact-logout class */
+.contact-logout {
+    display: flex;
+    align-items: center;
+    gap: 15px; /* Adjust the space between the phone number and the logout button */
+}
+
+/* If you're using Bootstrap's .btn class, make sure to customize it to match your logout button */
+form[action="/logout"] .btn {
+    background-color: #48ceaf; /* Accent color */
+    border-color: #48ceaf; /* Border color if needed */
+    /* Other styles... */
+}
+
+/* Additional styles */
+.phone_top {
+    color: #333; /* Adjust the color to match your design */
+    text-decoration: none;
+}
+
+/* Adjust the media query for better responsiveness if needed */
+@media (max-width: 768px) {
+    /* Collapse the main-menu earlier if needed, and adjust other elements for mobile */
+    .main-menu {
+        display: none;
+    }
+    .contact-logout {
+        flex-direction: column;
+        align-items: flex-end;
+    }
+}
+
+#carousel-home .owl-carousel .owl-slide {
+    height: 500px; /* Set a fixed height or use a responsive height */
+    background-size: cover; /* Cover ensures the image covers the slide */
+    background-position: center; /* Center the image within the slide */
+    display: flex; /* Using flex to align any child content */
+    justify-content: center; /* Center horizontal alignment for child content */
+    align-items: center; /* Center vertical alignment for child content */
+}
+
+
+/* Ensure that the carousel has a height if there's no content inside it */
+#carousel-home .owl-carousel {
+    height: 500px; /* This height should match the height of the .owl-slide */
+}
+
+/* If you have content inside the slide, this ensures it's centered */
+.owl-slide-animated {
+    z-index: 2; /* Make sure the content is above the background image */
+}
+
+/* Dots and navigation customized styling */
+.owl-carousel .owl-dots .owl-dot,
+.owl-carousel .owl-nav .owl-prev,
+.owl-carousel .owl-nav .owl-next {
+    background: #48ceaf; /* Your accent color for active dots/nav */
+}
+
+/* Make sure the navigation buttons and dots are visible */
+.owl-carousel .owl-dots,
+.owl-carousel .owl-nav {
+    z-index: 5; /* Above the slide images */
+}
+
+.main_footer {
+    background-color: black; /* Footer background color */
+    color: white; /* Footer text color */
+    text-align: center; /* Center the text inside the footer */
+    font-style: italic; /* Make the text italic */
+    padding: 20px; /* Add some padding */
+}
+
+.main_footer p {
+    margin: 0; /* Remove default margins from paragraphs */
+    font-size: 16px; /* Adjust the font size as needed */
+}
+
+.container {
+    max-width: 1200px; /* Adjust the maximum width of the container as needed */
+    margin: auto; /* Center the container */
+    padding: 20px; /* Add some padding inside the container */
+}
+
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: -15px; /* Adjust the negative margin to account for the column padding */
+    margin-right: -15px;
+}
+
+.title {
+    font-size: 2.5rem; /* Large, readable title size */
+    color: #333; /* A dark color for the title */
+    margin-bottom: 20px; /* Space between the title and paragraph */
+}
+
+.col-md-6 {
+    position: relative;
+    width: 100%;
+    padding-right: 15px; /* Padding for spacing between columns */
+    padding-left: 15px;
+    box-sizing: border-box;
+}
+
+/* Styling for the text column */
+.col-md-6:first-child {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    height: 100vh;
+    justify-content: center; /* Vertically center the content */
+}
+
+/* Styling for the image column */
+.col-md-6 img {
+    max-width: 100%;
+    height: auto; /* Make the image responsive */
+    display: block; /* Remove any inline behavior */
+    margin-left: auto; /* Center the image in its column */
+    margin-right: auto;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .title {
+        font-size: 2rem; /* Slightly smaller title on smaller devices */
+    }
+
+    .col-md-6 {
+        flex-basis: 100%; /* Let each column take full width on small devices */
+        margin-bottom: 20px; /* Space between the stacked columns */
+    }
+}
+
+
+/* General body styling */
+body {
+    font-family: 'Roboto', sans-serif;
+    color: #333; /* Dark grey color for text */
+    background: #ccc;
 }
 
 .sticknote::before {
@@ -49,6 +197,43 @@ body {
     border: 2px solid grey;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }  
+
+/* Carousel styling */
+#carousel-home .owl-carousel .owl-slide {
+    position: relative;
+    background-size: cover;
+    background-position: center;
+    height: 500px; /* Set a fixed height or use a responsive height */
+}
+
+/* Dots navigation styling */
+#carousel-home .owl-carousel .owl-dots {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+#carousel-home .owl-carousel .owl-dot {
+    background: #48ceaf; /* Accent color for active dot */
+    opacity: 0.7;
+    transition: opacity 0.3s;
+}
+
+#carousel-home .owl-carousel .owl-dot.active {
+    opacity: 1;
+}
+
+#carousel-home .owl-carousel .owl-dot:not(.active) {
+    background: #fff; /* White for inactive dots */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .main-menu ul {
+        flex-direction: column; /* Stack the menu items under each other on mobile */
+    }
+}
 
 
 /* Chatbot */

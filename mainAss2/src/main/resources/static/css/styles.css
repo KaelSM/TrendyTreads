@@ -413,6 +413,18 @@ header h2 {
     cursor: pointer;
 }
 
+.close-btn {
+    /* Styles for the close button inside the chatbot */
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    cursor: pointer;
+    width: 24px; /* Example size, you can adjust as needed */
+    height: auto;
+}
+
+
+
 /* Initially hide the close icon in the toggler */
 .chatbot-toggler img.close-icon {
     display: none;
@@ -422,6 +434,13 @@ header h2 {
 body.show-chatbot .chatbot-toggler img.open-icon {
     display: none;
 }
+
+.open-icon, .close-icon {
+    /* Styles to ensure the icons look good on the button */
+    width: 24px; /* Example size, you can adjust as needed */
+    height: auto;
+}
+
 
 /* Show the close icon when the chatbot is active */
 body.show-chatbot .chatbot-toggler img.close-icon {

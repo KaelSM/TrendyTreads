@@ -55,6 +55,11 @@ public class UserController{
         if (user != null && "ADMIN".equals(user.getRole())) {
             model.addAttribute("brands", brandService.getAllBrands());
             model.addAttribute("products", productService.getAllProducts());
+            //model.addAllAttributes("carts", checkoutService.getAllCarts());
+
+             // Retrieve and add the list of checkout orders to the model
+            List<Checkout> checkouts = checkoutService.getAllCheckouts(); // Adjust the method name as per your service
+            model.addAttribute("checkouts", checkouts);
 
             // Add a list of checkout orders to the model
             List<Checkout> orders = checkoutService.listAll(); // Assuming checkoutService has a method to list all checkouts

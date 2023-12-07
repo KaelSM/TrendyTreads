@@ -66,5 +66,4 @@ public class Cart {
         this.totalAmount = totalAmount;
     }
 
-  
 }

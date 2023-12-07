@@ -112,17 +112,15 @@
                 <th>Order ID</th>
                 <th>User</th>
                 <th>Total Amount</th>
-                <th>Details</th>
             </tr>
         </thead>
         <tbody>
-            <tr th:each="order : ${orders}">
-                <!--<td th:text="${order.id}"></td>-->
-                <td th:text="${order.user.username}"></td>
-                <td th:text="${order.totalAmount}"></td>
-                <td><a th:href="@{/orderDetails/{id}(id=${order.id})}">View Details</a></td>
+            <tr th:each="checkout : ${checkouts}">
+                <td th:text="${checkout.id}"></td>
+                <td th:text="${checkout.name}"></td>
+                <td th:text="${checkout.cart.totalAmount}"></td>
             </tr>
-        </tbody>
+        </tbody>        
     </table>
 
 </body>

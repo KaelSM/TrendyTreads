@@ -85,5 +85,9 @@ public class CheckoutService {
 
         // Additional checkout logic such as saving the checkout, clearing the cart, etc.
     }
+
+    public List<Checkout> getAllCheckouts() {
+        return checkoutRepo.findAll();
+    }
     
 }

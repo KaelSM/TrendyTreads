@@ -30,6 +30,10 @@ public class Checkout {
         this.id = id;
     }
 
+    public Long getId() {
+        return this.id;
+    }    
+
     public Cart getCart() {
         return cart;
     }

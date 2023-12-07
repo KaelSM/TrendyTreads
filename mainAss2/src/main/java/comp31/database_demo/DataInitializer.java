@@ -141,6 +141,7 @@ public class DataInitializer implements CommandLineRunner {
         Map<Product, Integer> productsInCart = new HashMap<>();
         productsInCart.put(product1, 2);
         cart1.setProducts(productsInCart);
+        cart1.setTotalAmount(180.00);
         cartService.save(cart1); 
 
         user2 = userService.findByUsername("user2");
@@ -152,6 +153,7 @@ public class DataInitializer implements CommandLineRunner {
         Map<Product, Integer> productsInCart2 = new HashMap<>();
         productsInCart2.put(product2, 1);
         productsInCart2.put(product3, 5);
+        cart2.setTotalAmount(2150.00);
         cart2.setProducts(productsInCart2);
         cartService.save(cart2);
 

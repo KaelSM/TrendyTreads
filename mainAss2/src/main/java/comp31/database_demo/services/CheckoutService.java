@@ -27,19 +27,39 @@ public class CheckoutService {
     private ProductRepo productRepo;
 
     @Transactional
-    public void processCheckout(Long cartId, String name, String address, String email, String string) {
-        // Retrieve the cart based on cartId
+    public void processCheckout(Long cartId, String name, String address, String email, String paymentMethod, String shipmentMethod) {
         Cart cart = cartRepo.findById(cartId).orElseThrow(() -> new IllegalArgumentException("Cart not found with ID: " + cartId));
-       
-        // Create a new Checkout instance and set its properties
+        double totalAmount = cart.getTotalAmount(); // Assuming this method exists and calculates total amount of the cart.
+        double shippingCost = calculateShippingCost(shipmentMethod);
+
         Checkout checkout = new Checkout();
         checkout.setCart(cart);
         checkout.setName(name);
         checkout.setAddress(address);
         checkout.setEmail(email);
-        checkout.setPaymentMethod(string); 
-        // Save the checkout details
+        cart.getTotalAmount();
+        checkout.setPaymentMethod(paymentMethod);
+        checkout.setShipmentMethod(shipmentMethod);
+        checkout.setTotalAmount(totalAmount + shippingCost);
+        
         checkoutRepo.save(checkout);
+    }
+    private double calculateShippingCost(String shipmentMethod) {
+        double shippingCost = 0.0;
+        switch (shipmentMethod) {
+            case "standard":
+                shippingCost = 20.0;
+                break;
+            case "express":
+                shippingCost = 40.0;
+                break;
+            case "nextDay":
+                shippingCost = 120.0;
+                break;
+            default:
+                break;
+        }
+        return shippingCost;
     }
 
     public List<Checkout> listAll() {
@@ -58,7 +78,7 @@ public class CheckoutService {
         checkoutRepo.deleteById(id);
     }
 
-     public void finalizeCheckout(Cart cart) {
+    public void finalizeCheckout(Cart cart) {
         // Check if the cart is empty
         if (cart.getProducts().isEmpty()) {
             throw new IllegalArgumentException("Cart is empty");

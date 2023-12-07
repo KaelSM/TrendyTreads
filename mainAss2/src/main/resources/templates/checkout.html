@@ -7,13 +7,27 @@
     <h1>Checkout</h1>
     <form th:action="@{/checkout}" th:object="${checkout}" method="post">        
         <label for="name">Name:</label>
-        <input type="text" id="name" th:field="*{name}" required><br><br>
+        <input type="text" id="name" th:field="*{name}" readonly><br><br>
         
         <label for="email">Email:</label>
         <input type="email" id="email" th:field="*{email}" required><br><br>
         
         <label for="address">Address:</label>
         <textarea id="address" th:field="*{address}" required></textarea><br><br>
+        
+        <label for="totalAmount">Total Due:</label>
+        <input type="text" id="totalAmount" th:value="${#numbers.formatDecimal(cart.totalAmount, 1, 2)}" readonly><br><br>
+
+        <label for="shipmentMethod">Shipment Method:</label><br>
+        <input type="radio" id="standard" name="shipmentMethod" value="standard" required>
+        <label for="standard">Standard - Add $20</label><br>
+        <input type="radio" id="express" name="shipmentMethod" value="express" required>
+        <label for="express">Express - Add $40</label><br>
+        <input type="radio" id="nextDay" name="shipmentMethod" value="nextDay" required>
+        <label for="nextDay">Next Day - Add $120</label><br><br>
+
+        <label for="FinalPrice">Amount to pay:</label>
+        <input type="text" id="FinalPrice" th:value="${#numbers.formatDecimal(checkout.finalPrice, 1, 2)}" readonly><br><br>
         
         <label for="paymentMethod">Payment Method:</label><br>
         <input type="radio" id="credit" name="paymentMethod" th:field="*{paymentMethod}" value="credit" required>

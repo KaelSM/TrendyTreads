@@ -335,29 +335,32 @@ public class MainController {
     }
 
     @PostMapping("/checkout")
-    public String processCheckout(@ModelAttribute Checkout checkout, HttpSession session, RedirectAttributes redirectAttributes) {
-        Long userId = (Long) session.getAttribute("userId");
-        if (userId == null) {
-            redirectAttributes.addFlashAttribute("checkoutError", "User is not recognized.");
-            return "redirect:/login";
-        }
-
-        try {
-            Cart cart = cartService.getUserCart(userId); // Retrieve the cart associated with the user
-            // Extract the necessary details from the checkout object and pass them to the processCheckout method
-            checkoutService.processCheckout(
-                cart.getId(), // Assuming cart ID is needed
-                checkout.getName(),
-                checkout.getAddress(),
-                checkout.getEmail(),
-                checkout.getPaymentMethod()
-            );
-            return "redirect:/orderMessage";
-        } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("checkoutError", "Checkout process failed: " + e.getMessage());
-            return "redirect:/cart";
-        }
+public String processCheckout(@ModelAttribute Checkout checkout, HttpSession session, RedirectAttributes redirectAttributes) {
+    Long userId = (Long) session.getAttribute("userId");
+    if (userId == null) {
+        redirectAttributes.addFlashAttribute("checkoutError", "User is not recognized.");
+        return "redirect:/login";
     }
+
+    try {
+        Cart cart = cartService.getUserCart(userId);
+        // Make sure your Checkout model has a getShipmentMethod method
+        String shipmentMethod = checkout.getShipmentMethod();
+        checkoutService.processCheckout(
+            cart.getId(),
+            checkout.getName(),
+            checkout.getAddress(),
+            checkout.getEmail(),
+            cart.getTotalAmount(),
+            checkout.getPaymentMethod(),
+            shipmentMethod // This should now be included in your processCheckout call
+        );
+        return "redirect:/orderMessage";
+    } catch (Exception e) {
+        redirectAttributes.addFlashAttribute("checkoutError", "Checkout process failed: " + e.getMessage());
+        return "redirect:/cart";
+    }
+}
 
     @GetMapping("/checkout")
     public String showCheckoutForm(Model model, HttpSession session) {

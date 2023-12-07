@@ -44,6 +44,12 @@ form[action="/logout"] .btn {
     }
 }
 
+.main_header {
+    z-index: 10;
+    position: relative;
+}
+
+
 #carousel-home .owl-carousel .owl-slide {
     height: 500px; /* Set a fixed height or use a responsive height */
     background-size: cover; /* Cover ensures the image covers the slide */
@@ -80,41 +86,62 @@ form[action="/logout"] .btn {
 .main_footer {
     background-color: black; /* Footer background color */
     color: white; /* Footer text color */
-    text-align: center; /* Center the text inside the footer */
-    font-style: italic; /* Make the text italic */
-    padding: 20px; /* Add some padding */
+    text-align: center; /* Centers the text */
+    padding: 20px 0; /* Adds padding above and below the text */
+    font-size: 0.9rem; /* Smaller font size */
+    font-style: italic; /* Italic text style */
+    position: absolute; /* Takes the footer out of the document flow */
+    bottom: 0; /* Positions the footer at the bottom */
+    left: 0;
+    right: 0; /* Stretches the footer to the left and right edges */
+    width: 100%; /* Ensures the footer is the full width of the viewport */
 }
 
 .main_footer p {
-    margin: 0; /* Remove default margins from paragraphs */
-    font-size: 16px; /* Adjust the font size as needed */
+    margin: 0; /* Removes default margin */
 }
 
-.container {
-    max-width: 1200px; /* Adjust the maximum width of the container as needed */
-    margin: auto; /* Center the container */
-    padding: 20px; /* Add some padding inside the container */
+/* /* .container {
+    max-width: 1200px; 
+    margin: auto; 
+    padding: 20px; 
 }
 
 .row {
     display: flex;
     flex-wrap: wrap;
-    margin-left: -15px; /* Adjust the negative margin to account for the column padding */
-    margin-right: -15px;
+    margin-left: -15px; 
+    margin-right: -15px; 
+} */
+
+
+
+.container .row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center; /* Aligns items vertically */
+    justify-content: space-between; /* Adds space between the text and image */
+    margin-bottom: 50px; /* Adds space before the footer */
 }
 
 .title {
-    font-size: 2.5rem; /* Large, readable title size */
-    color: #333; /* A dark color for the title */
-    margin-bottom: 20px; /* Space between the title and paragraph */
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
 }
 
 .col-md-6 {
-    position: relative;
-    width: 100%;
-    padding-right: 15px; /* Padding for spacing between columns */
-    padding-left: 15px;
-    box-sizing: border-box;
+    margin-bottom: 30px; /* Adds space between the columns on mobile */
+}
+
+.container .row .col-md-6 {
+    flex: 0 0 50%; /* Each column takes up half the width of the row */
+    max-width: 50%; /* Maximum width of each column is half the parent */
+}
+
+.col-md-6 p {
+    font-size: 1.25rem; /* A comfortable reading size for paragraphs */
+    line-height: 1.6; /* Improves readability */
+    color: #555; /* A slightly lighter color for the text */
 }
 
 /* Styling for the text column */
@@ -124,13 +151,13 @@ form[action="/logout"] .btn {
     justify-content: center; /* Vertically center the content */
 }
 
-/* Styling for the image column */
-.col-md-6 img {
-    max-width: 100%;
-    height: auto; /* Make the image responsive */
-    display: block; /* Remove any inline behavior */
-    margin-left: auto; /* Center the image in its column */
-    margin-right: auto;
+.container .row .col-md-6:first-child {
+    padding-right: 15px; /* Adds padding between the text and image */
+}
+
+.container .row .col-md-6 img {
+    height: auto; /* Maintains aspect ratio */
+    display: block; /* Removes any inline behavior */
 }
 
 /* Responsive adjustments */
@@ -145,12 +172,21 @@ form[action="/logout"] .btn {
     }
 }
 
+.signature-image {
+    max-width: 200px; /* Adjust this value to fit the size of the signature */
+    display: block; /* Makes it a block-level element */
+    margin: 20px auto; /* Centers the image horizontally and adds some space above */
+    height: auto; /* Maintains the aspect ratio */
+}
 
 /* General body styling */
 body {
     font-family: 'Roboto', sans-serif;
     color: #333; /* Dark grey color for text */
     background: #ccc;
+    position: relative;
+    padding-bottom: 80px;
+    margin-bottom: 80px;
 }
 
 .sticknote::before {
@@ -228,6 +264,10 @@ body {
     background: #fff; /* White for inactive dots */
 }
 
+.main-menu {
+    z-index: 10;
+}
+
 /* Responsive adjustments */
 @media (max-width: 768px) {
     .main-menu ul {
@@ -252,6 +292,22 @@ body {
     border-radius: 50%;
     background: #9fcefa;
     transition: all 0.2s ease;
+    z-index: 9999;
+    font-size: 24px;
+    color: #FFF;
+}
+
+.chatbot-container {
+    position: fixed; /* Fixed position to stay in place on scroll */
+    bottom: 20px; /* Distance from the bottom of the viewport */
+    right: 20px; /* Distance from the right of the viewport */
+    z-index: 9999; /* High z-index to ensure it stays on top */
+}
+
+.chatbot-image {
+    width: 100px; /* Or whatever size you prefer */
+    height: auto; /* To maintain aspect ratio */
+    display: block; /* To ensure it takes up the full space of its container */
 }
 
 body.show-chatbot .chatbot-toggler {
@@ -272,6 +328,7 @@ body.show-chatbot .chatbot-toggler span:last-child {
 }
 
 .chatbot {
+    z-index: 9998;
     position: fixed;
     right: 35px;
     bottom: 90px;
@@ -339,6 +396,36 @@ header h2 {
 .chatbox .chat {
     display: flex;
     list-style: none;
+}
+
+.chatbot header .close-btn {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    cursor: pointer;
+}
+
+.chatbot-toggler img,
+.chatbot header img.close-btn,
+.chatbox li.chat img.robot-icon {
+    width: 24px; /* Adjust as needed */
+    height: 24px; /* Adjust as needed */
+    cursor: pointer;
+}
+
+/* Initially hide the close icon in the toggler */
+.chatbot-toggler img.close-icon {
+    display: none;
+}
+
+/* Show the open icon only when the chatbot is not active */
+body.show-chatbot .chatbot-toggler img.open-icon {
+    display: none;
+}
+
+/* Show the close icon when the chatbot is active */
+body.show-chatbot .chatbot-toggler img.close-icon {
+    display: inline;
 }
 
 .chatbox .incoming span {

@@ -9,11 +9,14 @@
         <link rel="stylesheet" href="../static/css/bootstrap.css">
         <link rel="stylesheet" href="../static/css/jquery.mmenu.all.css">
         <link rel="stylesheet" href="../static/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+       
         <!-- Owl Carousel CSS -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
     </head>
-    <body>
+    <body class="show-chatbot">
         <header class="main_header">
             <div class="container d-flex align-items-center justify-content-between">
                 <!-- Logo on the left -->
@@ -70,6 +73,7 @@
                          showcasing footwear that's both fashionable and functional, crafted just for you. So step on in and find 
                          your perfect fit – your journey to incredible style starts here!
                     </p>
+                    <img class="signature-image" src="../static/img/sign.png" alt="sign" >
                 </div>
                 <!-- Right column -->
                 <div class ="col-md-6">
@@ -77,12 +81,38 @@
                 </div>
             </div>
 
+            <!-- dummy chatbot-->
+            <button class="chatbot-toggler">
+                <img src="../static/img/open.png" class="open-icon" alt="Open Chat">
+                <img src="../static/img/close.png" class="close-icon" alt="Close Chat" style="display: none;">
+            </button>
+
+        <!-- Chatbot container -->
+        <div class="chatbot">
+            <header>
+                <h2>Chatbot</h2>
+                <img src="../static/img/close.png"class="close-btn" alt="Close">
+            </header>
+            <ul class="chatbox">
+                <li class="chat incoming">
+                    <img src="../static/img/ai.png" class="robot-icon" alt="Smart Toy">
+                    <p>Hi, I'm ShoeBot. <br> How can I help you today?</p>
+                </li>
+            </li>
+            </ul>
+            <div class="chat-input">
+            <textarea placeholder="Enter a message..." spellcheck="false" required></textarea>
+            <span id="send-btn" class="material-symbols-rounded">send</span>
+            </div>
+        </div>
         <!-- Scripts -->
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <!-- Owl Carousel JS -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
         <!-- Your custom script -->
         <script src="../static/js/script.js"></script>
+        <!-- Chatbot -->
+        <script src="../static/js/Chatscript.js"></script>
 </body>
 
 <footer class="main_footer">

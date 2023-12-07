@@ -117,7 +117,7 @@
         </thead>
         <tbody>
             <tr th:each="order : ${orders}">
-                <td th:text="${order.id}"></td>
+                <!--<td th:text="${order.id}"></td>-->
                 <td th:text="${order.user.username}"></td>
                 <td th:text="${order.totalAmount}"></td>
                 <td><a th:href="@{/orderDetails/{id}(id=${order.id})}">View Details</a></td>

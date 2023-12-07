@@ -19,10 +19,7 @@ public class Checkout {
     private String name;
     private String address;
     private String email;
-    private double totalAmount;
-    private double finalPrice;
     private String paymentMethod;
-    private String shipmentMethod;
     
 
     public Long getCheckoutId() {
@@ -73,33 +70,6 @@ public class Checkout {
         this.paymentMethod = paymentMethod;
     }    
 
-    public double getTotalAmount() {
-        return totalAmount;
-    }
-
-    public void setTotalAmount(double totalAmount) {
-        this.totalAmount = this.cart.getTotalAmount();
-    }
-
-    public double getFinalPrice() {
-        return finalPrice;
-    }
-
-    public void setFinalPrice(double finalPrice) {
-        this.finalPrice = finalPrice;
-    }
-
-    public void setShipmentMethod(String shipmentMethod) {
-        this.shipmentMethod = shipmentMethod;
-    }
-
-    public String getShipmentMethod() {
-        return this.shipmentMethod;
-    }
-
-
-    
-    
     public Checkout() {}
     
 }

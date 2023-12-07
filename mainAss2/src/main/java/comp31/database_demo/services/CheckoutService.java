@@ -27,40 +27,19 @@ public class CheckoutService {
     private ProductRepo productRepo;
 
     @Transactional
-    public void processCheckout(Long cartId, String name, String address, String email, String paymentMethod, String shipmentMethod) {
+    public void processCheckout(Long cartId, String name, String address, String email, String paymentMethod) {
         Cart cart = cartRepo.findById(cartId).orElseThrow(() -> new IllegalArgumentException("Cart not found with ID: " + cartId));
-        double totalAmount = cart.getTotalAmount(); // Assuming this method exists and calculates total amount of the cart.
-        double shippingCost = calculateShippingCost(shipmentMethod);
+        
 
         Checkout checkout = new Checkout();
         checkout.setCart(cart);
         checkout.setName(name);
         checkout.setAddress(address);
         checkout.setEmail(email);
-        cart.getTotalAmount();
-        checkout.setPaymentMethod(paymentMethod);
-        checkout.setShipmentMethod(shipmentMethod);
-        checkout.setTotalAmount(totalAmount + shippingCost);
-        
+        checkout.setPaymentMethod(paymentMethod);       
         checkoutRepo.save(checkout);
     }
-    private double calculateShippingCost(String shipmentMethod) {
-        double shippingCost = 0.0;
-        switch (shipmentMethod) {
-            case "standard":
-                shippingCost = 20.0;
-                break;
-            case "express":
-                shippingCost = 40.0;
-                break;
-            case "nextDay":
-                shippingCost = 120.0;
-                break;
-            default:
-                break;
-        }
-        return shippingCost;
-    }
+    
 
     public List<Checkout> listAll() {
         return checkoutRepo.findAll();

@@ -779,6 +779,8 @@ body.show-chatbot .chatbot-toggler img.close-icon {
     }
 }
 
+
+
 #order-confirmation {
     text-align: center;
     padding: 40px;
@@ -864,3 +866,49 @@ body.show-chatbot .chatbot-toggler img.close-icon {
         padding: 8px 10px;
     }
 }
+
+/* Main container for the error page */
+.error-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 50px 15px;
+    text-align: center;
+    margin-top: 10em;
+}
+
+/* Styling for the 404 image */
+.error-image {
+    max-width: 600px;
+    height: auto;
+    margin-bottom: 30px;
+}
+
+/* Styling for the main error message */
+.error-title {
+    font-size: 2em;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* Paragraph with additional error information */
+.error-message {
+    font-size: 1.2em;
+    color: #666;
+    margin-bottom: 30px;
+}
+
+/* Main area styling */
+.bg_gray {
+    background-color: #f7f7f7;
+}
+
+/* Centering elements in a flex container */
+.justify-content-center {
+    justify-content: center;
+}
+
+/* Text centering class */
+.text-center {
+    text-align: center;
+}
+

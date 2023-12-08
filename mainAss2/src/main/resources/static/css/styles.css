@@ -249,6 +249,68 @@ body {
     text-decoration: underline;
 }
 
+.register-container {
+    width: 100%;
+    margin-top: 10em;
+    max-width: 400px;
+    padding: 20px;
+    background-color: rgb(224, 224, 224);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    border-radius: 8px;
+    text-align: center; /* Center everything in the container */
+}
+
+.register-form .logo {
+    max-width: 200px;
+    margin-bottom: 20px;
+}
+
+.register-title {
+    margin-bottom: 20px;
+}
+
+.form-fields input,
+.form-fields .select-role {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.form-fields .select-role {
+    display: block; /* To make the dropdown full width */
+    -webkit-appearance: none; /* To remove default styles in WebKit browsers */
+    -moz-appearance: none; /* To remove default styles in Firefox */
+    appearance: none; /* Standard syntax to remove default dropdown styles */
+}
+
+.submit-btn {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    background-color: #0056b3;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.submit-btn:hover {
+    background-color: #00397a;
+}
+
+.login-link {
+    color: #0056b3;
+    text-decoration: none;
+    display: inline-block; /* To allow margin-top */
+    margin-top: 15px;
+}
+
+.login-link:hover {
+    text-decoration: underline;
+}
+
 .login-error {
     color: red;
     margin-bottom: 15px;

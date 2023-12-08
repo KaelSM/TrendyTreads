@@ -1,20 +1,42 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <title>Register</title>
-</head>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="shortcut icon" href="../static/img/favicon.png" type="image/x-icon">
+        <title>Register </title>
+        <link rel="stylesheet" href="../static/css/styles.css">
+        <link rel="stylesheet" href="../static/css/bootstrap.css">
+        <link rel="stylesheet" href="../static/css/jquery.mmenu.all.css">
+        <link rel="stylesheet" href="../static/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+       
+        <!-- Owl Carousel CSS -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
+    </head>
 <body>
-    <h2>Register</h2>
-    <form action="/register" method="post">
-        <input type="text" name="username" placeholder="Username" required>
-        <input type="text" name="name" placeholder="Name" required>
-        <input type="password" name="password" placeholder="Password" required>
-        <select name="role">
-            <option value="USER">User</option>
-            <option value="ADMIN">Admin</option>
-        </select>
-        <button type="submit">Register</button>
-    </form>
-    <a href="/login">Login</a>
-</body>
-</html>
+
+    <div class="register-container">
+        <div class="register-form">
+            <img src="../static/img/logo.png" alt="Trendy Treads Logo" class="logo"> <!-- Assuming you have a logo to display -->
+            <h2 class="register-title">Register</h2>
+            
+            <form action="/register" method="post" class="form-fields">
+                <input type="text" name="username" placeholder="Username" value="user5" required>
+                <input type="text" name="name" placeholder="Name" value="new user" required>
+                <input type="password" name="password" placeholder="Password" value="user5" required>
+                <select name="role" class="select-role">
+                    <option value="USER">User</option>
+                    <option value="ADMIN">Admin</option>
+                </select>
+                <button type="submit" class="submit-btn">Register</button>
+            </form>
+            
+            <a href="/login" class="login-link">Login</a>
+        </div>
+    </div>
+    
+    </body>
+    </html>

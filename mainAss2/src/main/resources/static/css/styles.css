@@ -309,7 +309,7 @@ body {
  
 /* Link styling */
 a {
-    color: #0056b3;
+    color: #28a745;
     text-decoration: none;
     font-weight: bold;
 }
@@ -900,6 +900,9 @@ body.show-chatbot .chatbot-toggler img.close-icon {
 /* Main area styling */
 .bg_gray {
     background-color: #f7f7f7;
+    margin-top: 5em;
+    width: 200%;
+    margin-bottom: 5em;
 }
 
 /* Centering elements in a flex container */
@@ -912,3 +915,83 @@ body.show-chatbot .chatbot-toggler img.close-icon {
     text-align: center;
 }
 
+/* General Admin Page Styles */
+.admin-management {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    color: #333;
+}
+
+/* Success/Error Message Styles */
+.success-message, .error-message {
+    color: #28a745; /* or #dc3545 for error messages */
+    margin-bottom: 1rem;
+}
+
+/* Section Title Styles */
+.custom-section {
+    color: #28a745;
+    margin-bottom: 0.5rem;
+}
+
+/* Admin Table Styles */
+.admin-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 2rem;
+}
+
+.admin-table th, .admin-table td {
+    border: 1px solid #dee2e6;
+    padding: 0.75rem;
+    text-align: left;
+}
+
+.admin-table th {
+    background-color: #f8f9fa;
+}
+
+/* Form Input Styles */
+input[type="text"],
+input[type="number"],
+select {
+    width: 100%;
+    padding: 0.375rem 0.75rem;
+    margin-bottom: 0.5rem;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+}
+
+/* Button Styles */
+button {
+    color: #fff;
+    background-color: #007bff;
+    border-color: #007bff;
+    padding: 0.375rem 0.75rem;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    margin-right: 0.5rem;
+}
+
+button:hover {
+    background-color: #0069d9;
+    border-color: #0062cc;
+}
+
+/* Confirm Delete Action */
+button[onclick^="return confirm"] {
+    background-color: #dc3545;
+    border-color: #dc3545;
+}
+
+button[onclick^="return confirm"]:hover {
+    background-color: #c82333;
+    border-color: #bd2130;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .admin-table, input[type="text"], input[type="number"], select {
+        width: auto;
+    }
+}

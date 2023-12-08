@@ -1,36 +1,64 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Management</title>
-</head>
-<body>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="shortcut icon" href="../static/img/favicon.png" type="image/x-icon">
+        <title>Management</title>
+        <!-- <link rel="stylesheet" href="../static/css/styles.css"> -->
+        <link rel="stylesheet" href="../static/css/adminStyle.css">
+        <link rel="stylesheet" href="../static/css/bootstrap.css">
+        <link rel="stylesheet" href="../static/css/jquery.mmenu.all.css">
+        <link rel="stylesheet" href="../static/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
-     <!-- Navigation Menu -->
-     <nav>
-        <ul>
-            <li><a href="#addBrandSection">Add Brand</a></li>
-            <li><a href="#addProductSection">Add Product</a></li>
-            <li><a href="#brandsSection">Brands</a></li>
-            <li><a href="#productsSection">Products</a></li>
-            <li><a href="#ordersSection">Orders</a></li>
-        </ul>
-    </nav>
-
+       
+        <!-- Owl Carousel CSS -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
+    </head>
+<body class="admin-page-container">
+   
+    <header class="main_header">
+        <div class="container d-flex align-items-center justify-content-between">
+            <!-- Logo on the left -->
+            <div id="logo">
+                <a href="/"><img src="../static/img/logo.png" alt="Company Logo" width="150" height="120"></a>
+            </div>
+            
+            <!-- Centered navigation -->
+            <nav class="main-menu d-none d-lg-block">
+                <ul class="nav">
+                    <li class="nav-item"><a href="#addBrandSection">>Browse Products</a></li>
+                    <li class="nav-item"><a href="#addProductSection">Add Product</a></li>
+                    <li class="nav-item"><a href="#brandsSection">Brands</a></a></li>
+                    <li class="nav-item"><a href="#productsSection">Products</a></li>
+                    <li class="nav-item"><a href="#ordersSection">Orders</a></li>
+                </ul>
+            </nav>
+            
+            <!-- Contact and logout on the right -->
+            <div class="contact-logout">               
+                <form action="/logout" method="post" class="d-inline">
+                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                    <button type="submit" class="btn">Logout</button>
+                </form>
+            </div>
+        </div>
+    </header>
     <!-- Success/Error Messages -->
     <div th:if="${successMessage}" th:text="${successMessage}"></div>
     <div th:if="${errorMessage}" th:text="${errorMessage}"></div>
-    <h1>Admin Management Page</h1>
+    <h1 style="text-align: center; text-decoration: solid;">Admin Management Page</h1>
 
     <!-- Add Brand Form -->
-    <h2  id="addBrandSection">Add Brand</h2>
+    <h2  class="custom-section" id="addBrandSection">Add Brand</h2> <br>
     <form th:action="@{/addBrand}" method="post">
         <input type="text" name="name" placeholder="Brand Name">
         <button type="submit">Add Brand</button>
-    </form>
-
+    </form><br>
     <!-- Add Product Form -->
-    <h2  id="addProductSection">Add Product</h2>
+    <h2 class="custom-section"  id="addProductSection">Add Product</h2> <br>
     <form th:action="@{/addProduct}" method="post">
         <input type="text" name="name" placeholder="Product Name">
         <select name="brandId">
@@ -40,10 +68,12 @@
         <input type="number" name="stock" placeholder="Stock">
         <button type="submit">Add Product</button>
     </form>
+    <br>
 
     <!-- List of Brands with Edit/Delete Options -->
     <h2  id="brandsSection">Brands</h2>
-    <table>
+    <br>
+    <table class="admin-table">
         <thead>
             <tr>
                 <th>Brand Name</th>
@@ -70,14 +100,15 @@
     </table>
 
     <!-- List of Products with Edit/Delete Options -->
+    <br>
     <h2  id="productsSection">Products</h2>
-    <table>
+    <table class="admin-table">
         <thead>
-            <tr>
-                <th>Product Name</th>
-                <th>Brand</th>
+            <tr >
+                <th >Product Name</th>                
                 <th>Price</th>
                 <th>Stock</th>
+                <th>Brand</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -103,10 +134,11 @@
             </tr>
         </tbody>
     </table>
+    <br>
 
     <!-- List of Checkout Orders -->
     <h2  id="ordersSection">Orders</h2>
-    <table>
+    <table class="admin-table">
         <thead>
             <tr>
                 <th>Order ID</th>

@@ -19,6 +19,68 @@
     gap: 15px; /* Adjust the space between the phone number and the logout button */
 }
 
+.input-group {
+    margin-bottom: 10px;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.input-group input[type="text"],
+.input-group input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.btn-danger {
+    background-color: #dc3545;
+}
+
+.btn-danger:hover {
+    background-color: #c82333;
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+}
+
+.btn-secondary:hover {
+    background-color: #5a6268;
+}
+
+.btn-secondary a {
+    color: white;
+    text-decoration: none; /* Removes underline from links */
+    display: block; /* Makes the link fill the button for better clickability */
+}
+
+.profile-form {
+    margin-bottom: 10px;
+}
+
+/* Additional styles for messages */
+.profile-message,
+.profile-error {
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 4px;
+    text-align: center;
+    color: white;
+}
+
+.profile-message {
+    background-color: #28a745;
+}
+
+.profile-error {
+    background-color: #dc3545;
+}
+
 /* If you're using Bootstrap's .btn class, make sure to customize it to match your logout button */
 form[action="/logout"] .btn {
     background-color: #48ceaf; /* Accent color */
@@ -100,21 +162,6 @@ form[action="/logout"] .btn {
 .main_footer p {
     margin: 0; /* Removes default margin */
 }
-
-/* /* .container {
-    max-width: 1200px; 
-    margin: auto; 
-    padding: 20px; 
-}
-
-.row {
-    display: flex;
-    flex-wrap: wrap;
-    margin-left: -15px; 
-    margin-right: -15px; 
-} */
-
-
 
 .container .row {
     display: flex;
@@ -239,7 +286,7 @@ body {
 }
 
 .register-link {
-    color: #0056b3;
+    color: #296e5e;
     text-decoration: none;
     display: inline-block; /* To allow margin-top */
     margin-top: 15px;
@@ -258,6 +305,21 @@ body {
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
     border-radius: 8px;
     text-align: center; /* Center everything in the container */
+}
+ 
+/* Link styling */
+a {
+    color: #0056b3;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+h1 {
+    margin-bottom: 20px;
 }
 
 .register-form .logo {
@@ -289,7 +351,7 @@ body {
     width: 100%;
     padding: 10px;
     margin-top: 10px;
-    background-color: #0056b3;
+    background-color: #48ceaf;
     color: white;
     border: none;
     border-radius: 4px;
@@ -297,7 +359,48 @@ body {
 }
 
 .submit-btn:hover {
-    background-color: #00397a;
+    background-color: #296e5e;
+}
+
+.auth-container {
+    padding: 20px;
+}
+
+.auth-card {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 4px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 300px;
+}
+
+.auth-card .logo {
+    width: 100px;
+    margin-bottom: 20px;
+}
+
+.auth-card h2 {
+    margin-bottom: 10px;
+}
+
+.auth-card p {
+    margin-bottom: 20px;
+}
+
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    text-decoration: none;
+    color: #fff;
+    background-color: #48ceaf;;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.btn-primary:hover {
+    background-color: #296e5e;;
 }
 
 .login-link {

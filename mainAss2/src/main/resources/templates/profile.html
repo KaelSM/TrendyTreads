@@ -1,38 +1,62 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Profile</title>
-</head>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="shortcut icon" href="../static/img/favicon.png" type="image/x-icon">
+        <title>Profile</title>
+        <link rel="stylesheet" href="../static/css/styles.css">
+        <link rel="stylesheet" href="../static/css/bootstrap.css">
+        <link rel="stylesheet" href="../static/css/jquery.mmenu.all.css">
+        <link rel="stylesheet" href="../static/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+       
+        <!-- Owl Carousel CSS -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
+    </head>
 <body>
-    <div th:if="${profileMessage}" th:text="${profileMessage}"></div>
-    <div th:if="${profileError}" th:text="${profileError}"></div>
-    <h1>Profile</h1>
-    <form action="/update_profile" method="post">
-        <input type="hidden" name="id" th:value="${user.id}">
-        
-        <div>
-            <label for="username">Username:</label>
-            <input type="text" id="username" name="username" th:value="${user.username}" required>
+    <div class="auth-container">
+        <div class="auth-card">
+            <img src="../static/img/logo.png" alt="Trendy Treads Logo" class="logo">
+            <h2>Profile</h2>
+            <form action="/update_profile" method="post" class="profile-form">
+                <!-- Include the user ID in a hidden field -->
+                <input type="hidden" name="id" th:value="${user.id}">
+                <div class="input-group">
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" name="username" th:value="${user.username}" required>
+                </div>
+                <div class="input-group">
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" name="name" th:value="${user.name}" required>
+                </div>
+                <div class="input-group">
+                    <label for="password">New Password:</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Update Profile</button>
+            </form>
+            <form action="/delete_user" method="post" class="profile-form">
+                <input type="hidden" name="id" th:value="${user.id}">
+                <button type="submit" class="btn btn-danger">Delete Account</button>
+            </form>
+            <button class="btn btn-secondary"><a href="/home">Home</a></button>
         </div>
-        <div>
-            <label for="name">Name:</label>
-            <input type="text" id="name" name="name" th:value="${user.name}" required>
-        </div>
-        <div>
-            <label for="password">New Password:</label>
-            <input type="password" id="password" name="password" required>
-        </div>
-        
-        <button type="submit">Update Profile</button>
-    </form>
-    
+    </div>
 
-    <form action="/delete_user" method="post">
-        <input type="hidden" name="id" th:value="${user.id}">
-        <button type="submit">Delete Account</button>
-    </form>
-
-    <button><a href="/home">home</a></button>
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Owl Carousel JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+    <!-- Your custom script -->
+    <script src="../static/js/script.js"></script>
+    <!-- Chatbot -->
+    <script src="../static/js/Chatscript.js"></script>
 </body>
+
+<footer class="main_footer">
+<p>Kael S. Moreira G., Seda Dadak, Aibiike Omurzakova, Phuong Uyen Dang © 2023 - All Rights Reserved</p>
+</footer>
 </html>

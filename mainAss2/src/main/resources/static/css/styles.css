@@ -183,10 +183,75 @@ form[action="/logout"] .btn {
 body {
     font-family: 'Roboto', sans-serif;
     color: #333; /* Dark grey color for text */
-    background: #ccc;
+    height: 100%;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Arial, sans-serif;
+    background-color: #f2f2f7;
     position: relative;
     padding-bottom: 80px;
     margin-bottom: 80px;
+}
+
+.login-container {
+    width: 100%;
+    max-width: 400px;
+    padding: 20px;
+    margin-top: 10em;
+    background-color: rgb(224, 224, 224);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    border-radius: 8px;
+    text-align: center; /* Center everything in the container */
+}
+
+.login-form .logo {
+    max-width: 200px;
+    margin-bottom: 20px;
+}
+
+.login-title {
+    margin-bottom: 20px;
+}
+
+.form-fields input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.submit-btn {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    background-color: #48ceaf;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.submit-btn:hover {
+    background-color: #296e5e;
+}
+
+.register-link {
+    color: #0056b3;
+    text-decoration: none;
+    display: inline-block; /* To allow margin-top */
+    margin-top: 15px;
+}
+
+.register-link:hover {
+    text-decoration: underline;
+}
+
+.login-error {
+    color: red;
+    margin-bottom: 15px;
 }
 
 .sticknote::before {

@@ -8,39 +8,51 @@ import jakarta.servlet.http.HttpSession;
 @Controller
 public class MainController {
     
-    // Login
+    /**
+     * Renders the login form.
+     * 
+     * @return The name of the login view template.
+     */
     @GetMapping("/login")
     public String loginForm() {
         return "login";
     }
 
-    //Logout
+    /**
+     * Invalidates the current session and renders the logout view.
+     * 
+     * @param session The HttpSession object.
+     * @return The name of the logout view template.
+     */
     @GetMapping("/logout")
     public String logout(HttpSession session) {
-        // Invalidate the session and redirect to the login page
         session.invalidate();
         session = null;
         return "logout";
     }
 
+    /**
+     * Invalidates the current session and redirects to the logout endpoint.
+     * 
+     * @param session The HttpSession object.
+     * @return A redirect to the logout endpoint.
+     */
     @PostMapping("/logout")
     public String logoutPost(HttpSession session) {
-    // Invalidate the session and redirect to the logout page
-    session.invalidate();
-    session = null;
-    return "redirect:/logout"; // Redirect to the logout page
+        session.invalidate();
+        session = null;
+        return "redirect:/logout"; 
     }
 
-    // Home page
+    /**
+     * Renders the home view.
+     * 
+     * @return The name of the home view template.
+     */
     @GetMapping("/home")
     public String home() {
         return "home";
     }
-   
-    
-
-
-
 }
 
         

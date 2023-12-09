@@ -20,7 +20,17 @@ public class ProductController {
     ProductService productService;
     @Autowired
     BrandService brandService;
-    // Add Product
+
+    /**
+     * Endpoint to add a new product.
+     * 
+     * @param name               The name of the product.
+     * @param price              The price of the product.
+     * @param stock              The stock quantity of the product.
+     * @param brandId            The ID of the brand associated with the product.
+     * @param redirectAttributes The redirect attributes for flash messages.
+     * @return The redirect URL after adding the product.
+     */
     @PostMapping("/addProduct")
     public String addProduct(@RequestParam String name, @RequestParam double price, @RequestParam int stock, @RequestParam Long brandId, RedirectAttributes redirectAttributes) {
         Product product = new Product();
@@ -29,33 +39,44 @@ public class ProductController {
         product.setStock(stock);
         Brand brand = brandService.getBrandById(brandId);
         product.setBrand(brand);
-        productService.saveProduct(product, brandId); // Ensure this method saves the product and sets the brand correctly (see ProductService.java
+        productService.saveProduct(product, brandId); 
         redirectAttributes.addFlashAttribute("successMessage", "Product added successfully!");
         return "redirect:/management";
     }
 
-    
-
-
-    // Update Product
+    /**
+     * Endpoint to update an existing product.
+     * 
+     * @param id                 The ID of the product to update.
+     * @param newName            The new name of the product.
+     * @param newPrice           The new price of the product.
+     * @param newStock           The new stock quantity of the product.
+     * @param brandId            The ID of the brand associated with the product.
+     * @param redirectAttributes The redirect attributes for flash messages.
+     * @return The redirect URL after updating the product.
+     */
     @PostMapping("/updateProduct/{id}")
     public String updateProduct(@PathVariable Long id, @RequestParam String newName, @RequestParam double newPrice, @RequestParam int newStock, @RequestParam Long brandId, RedirectAttributes redirectAttributes) {
-    try {
-        Product product = productService.getProductById(id);
-        product.setName(newName);
-        product.setPrice(newPrice);
-        product.setStock(newStock);
-        productService.updateProduct(id, product, brandId); // Assuming this method updates the product and sets the brand correctly
-        redirectAttributes.addFlashAttribute("successMessage", "Product updated successfully!");
-    } catch (Exception e) {
-        redirectAttributes.addFlashAttribute("errorMessage", "Error updating product");
-    }
-    return "redirect:/management";
+        try {
+            Product product = productService.getProductById(id);
+            product.setName(newName);
+            product.setPrice(newPrice);
+            product.setStock(newStock);
+            productService.updateProduct(id, product, brandId); 
+            redirectAttributes.addFlashAttribute("successMessage", "Product updated successfully!");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Error updating product");
+        }
+        return "redirect:/management";
     }
 
-    
-
-    // Delete Product
+    /**
+     * Endpoint to delete a product.
+     * 
+     * @param id                 The ID of the product to delete.
+     * @param redirectAttributes The redirect attributes for flash messages.
+     * @return The redirect URL after deleting the product.
+     */
     @PostMapping("/deleteProduct")
     public String deleteProduct(@RequestParam Long id, RedirectAttributes redirectAttributes) {
         try {
@@ -67,13 +88,26 @@ public class ProductController {
         return "redirect:/management";
     }
 
-    // View Products
+    /**
+     * Endpoint to display all products.
+     * 
+     * @param model The model to add the products to.
+     * @return The view name for displaying all products.
+     */
     @GetMapping("/product")
     public String showProductsPage(Model model) {
         model.addAttribute("product", productService.getAllProducts());
-        return "product"; // The name of your products view template
+        return "product"; 
     }
 
+    /**
+     * Endpoint to display product details.
+     * 
+     * @param id    The ID of the product to display details for.
+     * @param model The model to add the product details to.
+     * @return The view name for displaying product details.
+     * @throws IllegalArgumentException If the product ID is invalid.
+     */
     @GetMapping("/productDetails/{id}")
     public String showProductDetails(@PathVariable Long id, Model model) {
         Product product = productService.getProductById(id);
@@ -81,12 +115,6 @@ public class ProductController {
             throw new IllegalArgumentException("Invalid product ID: " + id);
         }
         model.addAttribute("product", product);
-
-        // The return statement here constructs the view name dynamically based on the product ID.
-        // For example, if the product ID is 1, it will return "1" which should match "1.html" in the templates directory.
-        return "productDetails"; // Just convert the ID to a string to match the template name
+        return "productDetails"; 
     }
-
-
-
 }

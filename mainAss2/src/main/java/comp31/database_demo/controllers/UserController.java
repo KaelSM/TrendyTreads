@@ -27,7 +27,6 @@ public class UserController{
     private BrandService brandService;
     @Autowired
     private CheckoutService checkoutService;
-    // Register user
     @GetMapping("/register")
     public String registerForm(Model model) {
         model.addAttribute("user", new User());
@@ -55,19 +54,14 @@ public class UserController{
         if (user != null && "ADMIN".equals(user.getRole())) {
             model.addAttribute("brands", brandService.getAllBrands());
             model.addAttribute("products", productService.getAllProducts());
-            //model.addAllAttributes("carts", checkoutService.getAllCarts());
-
-             // Retrieve and add the list of checkout orders to the model
-            List<Checkout> checkouts = checkoutService.getAllCheckouts(); // Adjust the method name as per your service
+            List<Checkout> checkouts = checkoutService.getAllCheckouts(); 
             model.addAttribute("checkouts", checkouts);
-
-            // Add a list of checkout orders to the model
-            List<Checkout> orders = checkoutService.listAll(); // Assuming checkoutService has a method to list all checkouts
+            List<Checkout> orders = checkoutService.listAll(); 
             model.addAttribute("orders", orders);
 
-            return "management"; // Render the management view for admin users
+            return "management"; 
         } else {
-            return "redirect:/login"; // Redirect non-admin users to login page
+            return "redirect:/login"; 
         }
     }
 
@@ -77,7 +71,6 @@ public class UserController{
         return "redirect:/login";
     }
 
-    // Delete user (add necessary security checks)
     @PostMapping("/delete")
     public String deleteUser(@RequestParam Long userId) {
         userService.deleteUser(userId);
@@ -93,12 +86,11 @@ public class UserController{
                             RedirectAttributes redirectAttributes) {
         User user = userService.findByUsername(username);
         if (user != null && user.getPassword().equals(password)) {
-            session.setAttribute("username", username); // Ensure this is the correct attribute
-            // Check the user's role
+            session.setAttribute("username", username); 
             if ("ADMIN".equals(user.getRole())) {
-                return "redirect:/management"; // Redirect admin users to management page
+                return "redirect:/management"; 
             } else {
-                return "redirect:/home"; // Redirect regular users to home page
+                return "redirect:/home"; 
             }
         } else {
             redirectAttributes.addFlashAttribute("loginError", "Invalid username or password");
@@ -110,12 +102,12 @@ public class UserController{
     public String updateProfile(@ModelAttribute User user, HttpSession session, RedirectAttributes redirectAttributes) {
         try {
             userService.saveUser(user);
-            session.setAttribute("username", user.getUsername()); // Update session if username changes
+            session.setAttribute("username", user.getUsername());
             redirectAttributes.addFlashAttribute("profileMessage", "Profile updated successfully.");
-            return "redirect:/profile"; // Redirect to the profile page to see changes
+            return "redirect:/profile"; 
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("profileError", "There was an error updating the profile.");
-            return "redirect:/profile"; // Stay on profile page if there's an error
+            return "redirect:/profile"; 
         }
     }
     
@@ -124,7 +116,7 @@ public class UserController{
         try {
             userService.deleteUser(id);
             redirectAttributes.addFlashAttribute("successMessage", "User deleted successfully.");
-            // Invalidate session or do other cleanup as necessary
+            
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("errorMessage", "Error deleting user.");
         }

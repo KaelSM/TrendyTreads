@@ -54,18 +54,18 @@
     <!-- Add Brand Form -->
     <h2  class="custom-section" id="addBrandSection">Add Brand</h2> <br>
     <form th:action="@{/addBrand}" method="post">
-        <input type="text" name="name" placeholder="Brand Name">
+        <input type="text" name="name" placeholder="Brand Name" value="adidas">
         <button type="submit">Add Brand</button>
     </form><br>
     <!-- Add Product Form -->
     <h2 class="custom-section"  id="addProductSection">Add Product</h2> <br>
     <form th:action="@{/addProduct}" method="post">
-        <input type="text" name="name" placeholder="Product Name">
+        <input type="text" name="name" placeholder="Product Name" value="COPA PURE II.4 FLEXIBLE GROUND CLEATS">
         <select name="brandId">
             <option th:each="brand : ${brands}" th:value="${brand.id}" th:text="${brand.name}"></option>
         </select>
-        <input type="number" name="price" placeholder="Price">
-        <input type="number" name="stock" placeholder="Stock">
+        <input type="number" name="price" placeholder="Price" value="80">
+        <input type="number" name="stock" placeholder="Stock" value="50">
         <button type="submit">Add Product</button>
     </form>
     <br>

@@ -19,68 +19,6 @@
     gap: 15px; /* Adjust the space between the phone number and the logout button */
 }
 
-.input-group {
-    margin-bottom: 10px;
-}
-
-.input-group label {
-    display: block;
-    margin-bottom: 5px;
-}
-
-.input-group input[type="text"],
-.input-group input[type="password"] {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-}
-
-.btn-danger {
-    background-color: #dc3545;
-}
-
-.btn-danger:hover {
-    background-color: #c82333;
-}
-
-.btn-secondary {
-    background-color: #6c757d;
-}
-
-.btn-secondary:hover {
-    background-color: #5a6268;
-}
-
-.btn-secondary a {
-    color: white;
-    text-decoration: none; /* Removes underline from links */
-    display: block; /* Makes the link fill the button for better clickability */
-}
-
-.profile-form {
-    margin-bottom: 10px;
-}
-
-/* Additional styles for messages */
-.profile-message,
-.profile-error {
-    padding: 10px;
-    margin-bottom: 15px;
-    border-radius: 4px;
-    text-align: center;
-    color: white;
-}
-
-.profile-message {
-    background-color: #28a745;
-}
-
-.profile-error {
-    background-color: #dc3545;
-}
-
 /* If you're using Bootstrap's .btn class, make sure to customize it to match your logout button */
 form[action="/logout"] .btn {
     background-color: #48ceaf; /* Accent color */
@@ -163,6 +101,21 @@ form[action="/logout"] .btn {
     margin: 0; /* Removes default margin */
 }
 
+/* /* .container {
+    max-width: 1200px; 
+    margin: auto; 
+    padding: 20px; 
+}
+
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: -15px; 
+    margin-right: -15px; 
+} */
+
+
+
 .container .row {
     display: flex;
     flex-wrap: wrap;
@@ -230,193 +183,10 @@ form[action="/logout"] .btn {
 body {
     font-family: 'Roboto', sans-serif;
     color: #333; /* Dark grey color for text */
-    height: 100%;
-    margin: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-family: Arial, sans-serif;
-    background-color: #f2f2f7;
+    background: #ccc;
     position: relative;
     padding-bottom: 80px;
     margin-bottom: 80px;
-}
-
-.login-container {
-    width: 100%;
-    max-width: 400px;
-    padding: 20px;
-    margin-top: 10em;
-    background-color: rgb(224, 224, 224);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    border-radius: 8px;
-    text-align: center; /* Center everything in the container */
-}
-
-.login-form .logo {
-    max-width: 200px;
-    margin-bottom: 20px;
-}
-
-.login-title {
-    margin-bottom: 20px;
-}
-
-.form-fields input {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-}
-
-.submit-btn {
-    width: 100%;
-    padding: 10px;
-    margin-top: 10px;
-    background-color: #48ceaf;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-.submit-btn:hover {
-    background-color: #296e5e;
-}
-
-.register-link {
-    color: #296e5e;
-    text-decoration: none;
-    display: inline-block; /* To allow margin-top */
-    margin-top: 15px;
-}
-
-.register-link:hover {
-    text-decoration: underline;
-}
-
-.register-container {
-    width: 100%;
-    margin-top: 10em;
-    max-width: 400px;
-    padding: 20px;
-    background-color: rgb(224, 224, 224);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    border-radius: 8px;
-    text-align: center; /* Center everything in the container */
-}
- 
-/* Link styling */
-a {
-    color: #0056b3;
-    text-decoration: none;
-    font-weight: bold;
-}
-
-a:hover {
-    text-decoration: underline;
-}
-
-h1 {
-    margin-bottom: 20px;
-}
-
-.register-form .logo {
-    max-width: 200px;
-    margin-bottom: 20px;
-}
-
-.register-title {
-    margin-bottom: 20px;
-}
-
-.form-fields input,
-.form-fields .select-role {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-}
-
-.form-fields .select-role {
-    display: block; /* To make the dropdown full width */
-    -webkit-appearance: none; /* To remove default styles in WebKit browsers */
-    -moz-appearance: none; /* To remove default styles in Firefox */
-    appearance: none; /* Standard syntax to remove default dropdown styles */
-}
-
-.submit-btn {
-    width: 100%;
-    padding: 10px;
-    margin-top: 10px;
-    background-color: #48ceaf;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-.submit-btn:hover {
-    background-color: #296e5e;
-}
-
-.auth-container {
-    padding: 20px;
-}
-
-.auth-card {
-    background-color: #ffffff;
-    padding: 20px;
-    border-radius: 4px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    width: 300px;
-}
-
-.auth-card .logo {
-    width: 100px;
-    margin-bottom: 20px;
-}
-
-.auth-card h2 {
-    margin-bottom: 10px;
-}
-
-.auth-card p {
-    margin-bottom: 20px;
-}
-
-.btn {
-    display: inline-block;
-    padding: 10px 20px;
-    text-decoration: none;
-    color: #fff;
-    background-color: #48ceaf;;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-.btn-primary:hover {
-    background-color: #296e5e;;
-}
-
-.login-link {
-    color: #0056b3;
-    text-decoration: none;
-    display: inline-block; /* To allow margin-top */
-    margin-top: 15px;
-}
-
-.login-link:hover {
-    text-decoration: underline;
-}
-
-.login-error {
-    color: red;
-    margin-bottom: 15px;
 }
 
 .sticknote::before {
@@ -777,135 +547,4 @@ body.show-chatbot .chatbot-toggler img.close-icon {
     .chatbot header span {
       display: block;
     }
-}
-
-
-#order-confirmation {
-    text-align: center;
-    padding: 40px;
-    background-color: #ece5e5;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    max-width: 600px;
-    margin: 50px auto;
-}
-
-.order-title {
-    color: #27ae60;
-    font-size: 24px;
-    margin-bottom: 20px;
-}
-
-.order-message {
-    color: #333;
-    font-size: 16px;
-    margin-bottom: 30px;
-}
-
-.back-home {
-    background-color: #27ae60;
-    color: #ffffff;
-    padding: 10px 15px;
-    text-decoration: none;
-    border-radius: 5px;
-    display: inline-block;
-    transition: background-color 0.3s ease;
-}
-
-.back-home:hover {
-    background-color: #2ecc71;
-}
-
-/* Add this to your CSS file */
-@keyframes stroke {
-    to {
-      stroke-dashoffset: 0;
-    }
-  }
-
-  @keyframes scale {
-    0%, 100% {
-      transform: none;
-    }
-    50% {
-      transform: scale3d(1.1, 1.1, 1);
-    }
-  }
-
-  .icon--order-success svg {
-    animation: stroke 0.6s ease forwards, scale 0.3s ease 0.6s both;
-  }
-
-  .icon--order-success circle {
-    stroke-dasharray: 240px;
-    stroke-dashoffset: 240px;
-    animation-delay: 0.3s; /* Start the circle animation after the checkmark */
-  }
-
-  .icon--order-success path {
-    stroke-dasharray: 50px;
-    stroke-dashoffset: 50px;
-  }
-
-
-@media (max-width: 768px) {
-    #order-confirmation {
-        padding: 20px;
-    }
-
-    .order-title {
-        font-size: 20px;
-    }
-
-    .order-message {
-        font-size: 14px;
-    }
-
-    .back-home {
-        padding: 8px 10px;
-    }
-}
-
-/* Main container for the error page */
-.error-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 50px 15px;
-    text-align: center;
-    margin-top: 10em;
-}
-
-/* Styling for the 404 image */
-.error-image {
-    max-width: 600px;
-    height: auto;
-    margin-bottom: 30px;
-}
-
-/* Styling for the main error message */
-.error-title {
-    font-size: 2em;
-    color: #333;
-    margin-bottom: 20px;
-}
-
-/* Paragraph with additional error information */
-.error-message {
-    font-size: 1.2em;
-    color: #666;
-    margin-bottom: 30px;
-}
-/* Main area styling */
-.bg_gray {
-    background-color: #f7f7f7;
-}
-
-/* Centering elements in a flex container */
-.justify-content-center {
-    justify-content: center;
-}
-
-/* Text centering class */
-.text-center {
-    text-align: center;
 }

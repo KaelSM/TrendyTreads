@@ -22,7 +22,6 @@
             <img src="../static/img/logo.png" alt="Trendy Treads Logo" class="logo">
             <h2>Profile</h2>
             <form action="/update_profile" method="post" class="profile-form">
-                <!-- Include the user ID in a hidden field -->
                 <input type="hidden" name="id" th:value="${user.id}">
                 <div class="input-group">
                     <label for="username">Username:</label>
@@ -32,10 +31,8 @@
                     <label for="name">Name:</label>
                     <input type="text" id="name" name="name" th:value="${user.name}" required>
                 </div>
-                <div class="input-group">
-                    <label for="password">New Password:</label>
-                    <input type="password" id="password" name="password" required>
-                </div>
+                <label for="password">New Password:</label>
+                <input type="password" id="password" name="password" required>
                 <button type="submit" class="btn btn-primary">Update Profile</button>
             </form>
             <form action="/delete_user" method="post" class="profile-form">

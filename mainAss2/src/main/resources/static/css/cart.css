@@ -1,4 +1,4 @@
-/* Header with logo and title */
+
 .header-container {
     display: flex;
     align-items: center;
@@ -14,10 +14,9 @@
 
 .logo {
     height: 180px;
-    margin-left: 5em; /* Adjust size as needed */
+    margin-left: 5em; 
 }
 
-/* Table Styles */
 table {
     width: 100%;
     border-collapse: collapse;
@@ -30,7 +29,6 @@ th, td {
     border-bottom: 1px solid #ddd;
 }
 
-/* Actions Container */
 .actions-container {
     display: flex;
     justify-content: space-between;
@@ -58,7 +56,6 @@ th, td {
     margin-right: 3em;
 }
 
-/* Footer Styles */
 .main_footer {
     background-color: #333;
     color: white;
@@ -69,7 +66,7 @@ th, td {
     width: 100%;
 }
 
-/* Responsive Styles */
+
 @media (max-width: 768px) {
     .header-container, .actions-container {
         flex-direction: column;
@@ -83,20 +80,20 @@ th, td {
 }
 
 .main_footer {
-    background-color: black; /* Footer background color */
-    color: white; /* Footer text color */
-    text-align: center; /* Centers the text */
-    padding: 20px 0; /* Adds padding above and below the text */
-    font-size: 0.9rem; /* Smaller font size */
-    font-style: italic; /* Italic text style */
-    position: absolute; /* Takes the footer out of the document flow */
-    bottom: 0; /* Positions the footer at the bottom */
+    background-color: black; 
+    color: white; 
+    text-align: center; 
+    padding: 20px 0; 
+    font-size: 0.9rem;
+    font-style: italic; 
+    position: absolute; 
+    bottom: 0; 
     left: 0;
-    right: 0; /* Stretches the footer to the left and right edges */
-    width: 100%; /* Ensures the footer is the full width of the viewport */
+    right: 0; 
+    width: 100%; 
 }
 
 .main_footer p {
-    margin: 0; /* Removes default margin */
+    margin: 0; 
     color: white;
 }

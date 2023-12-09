@@ -1,4 +1,3 @@
-/* Ensure that the Bootstrap .nav class does not interfere */
 .main-menu .nav {
     display: flex;
     padding-left: 0;
@@ -6,17 +5,15 @@
     list-style: none;
 }
 
-/* Adjust the .nav-link class to remove Bootstrap styles if needed */
 .main-menu .nav .nav-item .nav-link {
     padding: .5rem 1rem;
     color: #333;
 }
 
-/* Update your .contact-logout class */
 .contact-logout {
     display: flex;
     align-items: center;
-    gap: 15px; /* Adjust the space between the phone number and the logout button */
+    gap: 15px; 
 }
 
 .input-group {
@@ -40,7 +37,7 @@
 .btn-danger {
     background-color: #dc3545;
 }
-
+.main_fi
 .btn-danger:hover {
     background-color: #c82333;
 }
@@ -55,15 +52,14 @@
 
 .btn-secondary a {
     color: white;
-    text-decoration: none; /* Removes underline from links */
-    display: block; /* Makes the link fill the button for better clickability */
+    text-decoration: none; 
+    display: block; 
 }
 
 .profile-form {
     margin-bottom: 10px;
 }
 
-/* Additional styles for messages */
 .profile-message,
 .profile-error {
     padding: 10px;
@@ -81,22 +77,20 @@
     background-color: #dc3545;
 }
 
-/* If you're using Bootstrap's .btn class, make sure to customize it to match your logout button */
 form[action="/logout"] .btn {
-    background-color: #48ceaf; /* Accent color */
-    border-color: #48ceaf; /* Border color if needed */
-    /* Other styles... */
+    background-color: #48ceaf; 
+    border-color: #48ceaf; 
+    
 }
 
-/* Additional styles */
 .phone_top {
-    color: #333; /* Adjust the color to match your design */
+    color: #333; 
     text-decoration: none;
 }
 
-/* Adjust the media query for better responsiveness if needed */
+
 @media (max-width: 768px) {
-    /* Collapse the main-menu earlier if needed, and adjust other elements for mobile */
+    
     .main-menu {
         display: none;
     }
@@ -113,62 +107,58 @@ form[action="/logout"] .btn {
 
 
 #carousel-home .owl-carousel .owl-slide {
-    height: 500px; /* Set a fixed height or use a responsive height */
-    background-size: cover; /* Cover ensures the image covers the slide */
-    background-position: center; /* Center the image within the slide */
-    display: flex; /* Using flex to align any child content */
-    justify-content: center; /* Center horizontal alignment for child content */
-    align-items: center; /* Center vertical alignment for child content */
+    height: 500px; 
+    background-size: cover; 
+    background-position: center; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
 }
 
 
-/* Ensure that the carousel has a height if there's no content inside it */
 #carousel-home .owl-carousel {
-    height: 500px; /* This height should match the height of the .owl-slide */
+    height: 500px; 
 }
 
-/* If you have content inside the slide, this ensures it's centered */
 .owl-slide-animated {
-    z-index: 2; /* Make sure the content is above the background image */
+    z-index: 2; 
 }
 
-/* Dots and navigation customized styling */
 .owl-carousel .owl-dots .owl-dot,
 .owl-carousel .owl-nav .owl-prev,
 .owl-carousel .owl-nav .owl-next {
-    background: #48ceaf; /* Your accent color for active dots/nav */
+    background: #48ceaf; 
 }
 
-/* Make sure the navigation buttons and dots are visible */
 .owl-carousel .owl-dots,
 .owl-carousel .owl-nav {
-    z-index: 5; /* Above the slide images */
+    z-index: 5; 
 }
 
 .main_footer {
-    background-color: black; /* Footer background color */
-    color: white; /* Footer text color */
-    text-align: center; /* Centers the text */
-    padding: 20px 0; /* Adds padding above and below the text */
-    font-size: 0.9rem; /* Smaller font size */
-    font-style: italic; /* Italic text style */
-    position: absolute; /* Takes the footer out of the document flow */
-    bottom: 0; /* Positions the footer at the bottom */
+    background-color: black; 
+    color: white; 
+    text-align: center; 
+    padding: 20px 0; 
+    font-size: 0.9rem; 
+    font-style: italic; 
+    position: absolute; 
+    bottom: 0; 
     left: 0;
-    right: 0; /* Stretches the footer to the left and right edges */
-    width: 100%; /* Ensures the footer is the full width of the viewport */
+    right: 0; 
+    width: 100%; 
 }
 
 .main_footer p {
-    margin: 0; /* Removes default margin */
+    margin: 0; 
 }
 
 .container .row {
     display: flex;
     flex-wrap: wrap;
-    align-items: center; /* Aligns items vertically */
-    justify-content: space-between; /* Adds space between the text and image */
-    margin-bottom: 50px; /* Adds space before the footer */
+    align-items: center; 
+    justify-content: space-between; 
+    margin-bottom: 50px; 
 }
 
 .title {
@@ -177,59 +167,56 @@ form[action="/logout"] .btn {
 }
 
 .col-md-6 {
-    margin-bottom: 30px; /* Adds space between the columns on mobile */
+    margin-bottom: 30px; 
 }
 
 .container .row .col-md-6 {
-    flex: 0 0 50%; /* Each column takes up half the width of the row */
-    max-width: 50%; /* Maximum width of each column is half the parent */
+    flex: 0 0 50%; 
+    max-width: 50%; 
 }
 
 .col-md-6 p {
-    font-size: 1.25rem; /* A comfortable reading size for paragraphs */
-    line-height: 1.6; /* Improves readability */
-    color: #555; /* A slightly lighter color for the text */
+    font-size: 1.25rem; 
+    line-height: 1.6; 
+    color: #555; 
 }
 
-/* Styling for the text column */
 .col-md-6:first-child {
     display: flex;
     flex-direction: column;
-    justify-content: center; /* Vertically center the content */
+    justify-content: center; 
 }
 
 .container .row .col-md-6:first-child {
-    padding-right: 15px; /* Adds padding between the text and image */
+    padding-right: 15px; 
 }
 
 .container .row .col-md-6 img {
-    height: auto; /* Maintains aspect ratio */
-    display: block; /* Removes any inline behavior */
+    height: auto; 
+    display: block; 
 }
 
-/* Responsive adjustments */
 @media (max-width: 768px) {
     .title {
-        font-size: 2rem; /* Slightly smaller title on smaller devices */
+        font-size: 2rem; 
     }
 
     .col-md-6 {
-        flex-basis: 100%; /* Let each column take full width on small devices */
-        margin-bottom: 20px; /* Space between the stacked columns */
+        flex-basis: 100%;
+        margin-bottom: 20px; 
     }
 }
 
 .signature-image {
-    max-width: 200px; /* Adjust this value to fit the size of the signature */
-    display: block; /* Makes it a block-level element */
-    margin: 20px auto; /* Centers the image horizontally and adds some space above */
-    height: auto; /* Maintains the aspect ratio */
+    max-width: 200px; 
+    display: block; 
+    margin: 20px auto; 
+    height: auto; 
 }
 
-/* General body styling */
 body {
     font-family: 'Roboto', sans-serif;
-    color: #333; /* Dark grey color for text */
+    color: #333; 
     height: 100%;
     margin: 0;
     display: flex;
@@ -250,7 +237,7 @@ body {
     background-color: rgb(224, 224, 224);
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
     border-radius: 8px;
-    text-align: center; /* Center everything in the container */
+    text-align: center; 
 }
 
 .login-form .logo {
@@ -288,7 +275,7 @@ body {
 .register-link {
     color: #296e5e;
     text-decoration: none;
-    display: inline-block; /* To allow margin-top */
+    display: inline-block; 
     margin-top: 15px;
 }
 
@@ -304,10 +291,9 @@ body {
     background-color: rgb(224, 224, 224);
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
     border-radius: 8px;
-    text-align: center; /* Center everything in the container */
+    text-align: center; 
 }
  
-/* Link styling */
 a {
     color: #0056b3;
     text-decoration: none;
@@ -341,10 +327,10 @@ h1 {
 }
 
 .form-fields .select-role {
-    display: block; /* To make the dropdown full width */
-    -webkit-appearance: none; /* To remove default styles in WebKit browsers */
-    -moz-appearance: none; /* To remove default styles in Firefox */
-    appearance: none; /* Standard syntax to remove default dropdown styles */
+    display: block; 
+    -webkit-appearance: none; 
+    -moz-appearance: none; 
+    appearance: none; 
 }
 
 .submit-btn {
@@ -406,7 +392,7 @@ h1 {
 .login-link {
     color: #0056b3;
     text-decoration: none;
-    display: inline-block; /* To allow margin-top */
+    display: inline-block; 
     margin-top: 15px;
 }
 
@@ -464,15 +450,14 @@ h1 {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }  
 
-/* Carousel styling */
 #carousel-home .owl-carousel .owl-slide {
     position: relative;
     background-size: cover;
     background-position: center;
-    height: 500px; /* Set a fixed height or use a responsive height */
+    height: 500px; 
 }
 
-/* Dots navigation styling */
+
 #carousel-home .owl-carousel .owl-dots {
     position: absolute;
     bottom: 20px;
@@ -481,7 +466,7 @@ h1 {
 }
 
 #carousel-home .owl-carousel .owl-dot {
-    background: #48ceaf; /* Accent color for active dot */
+    background: #48ceaf; 
     opacity: 0.7;
     transition: opacity 0.3s;
 }
@@ -491,22 +476,21 @@ h1 {
 }
 
 #carousel-home .owl-carousel .owl-dot:not(.active) {
-    background: #fff; /* White for inactive dots */
+    background: #fff; 
 }
 
 .main-menu {
     z-index: 10;
 }
 
-/* Responsive adjustments */
+
 @media (max-width: 768px) {
     .main-menu ul {
-        flex-direction: column; /* Stack the menu items under each other on mobile */
+        flex-direction: column; 
     }
 }
 
 
-/* Chatbot */
 .chatbot-toggler {
     position: fixed;
     bottom: 30px;
@@ -528,16 +512,16 @@ h1 {
 }
 
 .chatbot-container {
-    position: fixed; /* Fixed position to stay in place on scroll */
-    bottom: 20px; /* Distance from the bottom of the viewport */
-    right: 20px; /* Distance from the right of the viewport */
-    z-index: 9999; /* High z-index to ensure it stays on top */
+    position: fixed; 
+    bottom: 20px; 
+    right: 20px; 
+    z-index: 9999; 
 }
 
 .chatbot-image {
-    width: 100px; /* Or whatever size you prefer */
-    height: auto; /* To maintain aspect ratio */
-    display: block; /* To ensure it takes up the full space of its container */
+    width: 100px; 
+    height: auto; 
+    display: block; 
 }
 
 body.show-chatbot .chatbot-toggler {
@@ -638,41 +622,35 @@ header h2 {
 .chatbot-toggler img,
 .chatbot header img.close-btn,
 .chatbox li.chat img.robot-icon {
-    width: 24px; /* Adjust as needed */
-    height: 24px; /* Adjust as needed */
+    width: 24px; 
+    height: 24px; 
     cursor: pointer;
 }
 
 .close-btn {
-    /* Styles for the close button inside the chatbot */
+    
     position: absolute;
     right: 10px;
     top: 10px;
     cursor: pointer;
-    width: 24px; /* Example size, you can adjust as needed */
+    width: 24px; 
     height: auto;
 }
 
 
-
-/* Initially hide the close icon in the toggler */
 .chatbot-toggler img.close-icon {
     display: none;
 }
 
-/* Show the open icon only when the chatbot is not active */
 body.show-chatbot .chatbot-toggler img.open-icon {
     display: none;
 }
 
 .open-icon, .close-icon {
-    /* Styles to ensure the icons look good on the button */
-    width: 24px; /* Example size, you can adjust as needed */
+    width: 24px; 
     height: auto;
 }
 
-
-/* Show the close icon when the chatbot is active */
 body.show-chatbot .chatbot-toggler img.close-icon {
     display: inline;
 }
@@ -816,7 +794,6 @@ body.show-chatbot .chatbot-toggler img.close-icon {
     background-color: #2ecc71;
 }
 
-/* Add this to your CSS file */
 @keyframes stroke {
     to {
       stroke-dashoffset: 0;
@@ -839,7 +816,7 @@ body.show-chatbot .chatbot-toggler img.close-icon {
   .icon--order-success circle {
     stroke-dasharray: 240px;
     stroke-dashoffset: 240px;
-    animation-delay: 0.3s; /* Start the circle animation after the checkmark */
+    animation-delay: 0.3s; 
   }
 
   .icon--order-success path {
@@ -866,7 +843,6 @@ body.show-chatbot .chatbot-toggler img.close-icon {
     }
 }
 
-/* Main container for the error page */
 .error-container {
     max-width: 1200px;
     margin: 0 auto;
@@ -875,37 +851,37 @@ body.show-chatbot .chatbot-toggler img.close-icon {
     margin-top: 10em;
 }
 
-/* Styling for the 404 image */
+
 .error-image {
     max-width: 600px;
     height: auto;
     margin-bottom: 30px;
 }
 
-/* Styling for the main error message */
+
 .error-title {
     font-size: 2em;
     color: #333;
     margin-bottom: 20px;
 }
 
-/* Paragraph with additional error information */
+
 .error-message {
     font-size: 1.2em;
     color: #666;
     margin-bottom: 30px;
 }
-/* Main area styling */
+
 .bg_gray {
     background-color: #f7f7f7;
 }
 
-/* Centering elements in a flex container */
+
 .justify-content-center {
     justify-content: center;
 }
 
-/* Text centering class */
+
 .text-center {
     text-align: center;
 }

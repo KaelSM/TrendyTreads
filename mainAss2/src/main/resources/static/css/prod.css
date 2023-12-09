@@ -39,12 +39,10 @@ a:hover {
     border-color: #0275d8;
 }
 
-/* Align subtotal, tax, and total to the right */
 tfoot td {
     text-align: right;
 }
 
-/* Style for the Continue Shopping and Checkout buttons */
 .continue-btn, .checkout-btn {
     background-color: #4CAF50;
     color: white;
@@ -53,7 +51,7 @@ tfoot td {
     border: none;
     border-radius: 4px;
     cursor: pointer;
-    display: inline-block; /* Allows the buttons to be side by side */
+    display: inline-block;
     margin-top: 10px;
 }
 
@@ -61,11 +59,10 @@ tfoot td {
     background-color: #45a049;
 }
 
-/* Container for the header and logo */
 .header-container {
     display: flex;
     align-items: center;
-    justify-content: space-between; /* Spreads out the logo and the title */
+    justify-content: space-between; 
     margin-bottom: 20px;
 }
 
@@ -74,39 +71,38 @@ tfoot td {
     height: auto;
 }
 
-/* Responsive styles */
 @media (max-width: 768px) {
     .header-container {
         flex-direction: column;
-        align-items: flex-start; /* Aligns items to the left on small screens */
+        align-items: flex-start; 
     }
 
     .product-img {
-        width: 75px; /* Smaller images on mobile */
+        width: 75px; 
     }
 
     .continue-btn, .checkout-btn {
-        display: block; /* Stacks buttons vertically on mobile */
+        display: block; 
         width: 100%;
-        box-sizing: border-box; /* Prevents padding from adding extra width */
+        box-sizing: border-box; 
     }
 }
 
 .main_footer {
-    background-color: black; /* Footer background color */
-    color: white; /* Footer text color */
-    text-align: center; /* Centers the text */
-    padding: 20px 0; /* Adds padding above and below the text */
-    font-size: 0.9rem; /* Smaller font size */
-    font-style: italic; /* Italic text style */
-    position: absolute; /* Takes the footer out of the document flow */
-    bottom: 0; /* Positions the footer at the bottom */
+    background-color: black; 
+    color: white; 
+    text-align: center; 
+    padding: 20px 0; 
+    font-size: 0.9rem; 
+    font-style: italic; 
+    position: absolute; 
+    bottom: 0; 
     left: 0;
-    right: 0; /* Stretches the footer to the left and right edges */
-    width: 100%; /* Ensures the footer is the full width of the viewport */
+    right: 0; 
+    width: 100%; 
 }
 
 .main_footer p {
-    margin: 0; /* Removes default margin */
+    margin: 0; 
     color: white;
 }

@@ -1,4 +1,4 @@
-/* Admin Page Container */
+
 .admin-page-container {
     background-color: #f0f0f0;
     min-height: 100vh;
@@ -6,21 +6,20 @@
     font-family: 'Helvetica', sans-serif;
 }
 
-/* Header */
-/* Ensures the logo and nav are on the same line and spaced nicely */
+
 .main_header .container {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-/* Adds a hover effect for better user interaction */
+
 .main-menu .nav-link:hover {
     background-color: #e8e8e8;
     border-radius: 4px;
 }
 
-/* Improves the spacing and alignment of nav items */
+
 .main-menu .nav {
     display: flex;
     align-items: center;
@@ -31,18 +30,18 @@
     margin: 0 10px;
 }
 
-/* Ensures text in the nav doesn't wrap and stays aligned */
+
 .main-menu .nav-link {
     white-space: nowrap;
     padding: 8px 12px;
 }
 
-/* Adjusts the font size for better readability */
+
 .main-menu .nav-link {
     font-size: 16px;
 }
 
-/* Changes the logout button to look more like a link */
+
 .contact-logout .btn {
     background: none;
     color: #0056b3;
@@ -55,7 +54,7 @@
 }
 
 
-/* Forms */
+
 form {
     background-color: #ffffff;
     padding: 20px;
@@ -89,7 +88,7 @@ form button:hover {
     background-color: #296e5e;
 }
 
-/* Tables */
+
 .admin-table {
     width: 100%;
     border-collapse: collapse;
@@ -111,7 +110,7 @@ form button:hover {
     background-color: #f1f1f1;
 }
 
-/* Footer */
+
 .main_footer {
     text-align: center;
     padding: 20px 0;
@@ -122,7 +121,7 @@ form button:hover {
     width: 100%;
 }
 
-/* Responsive */
+
 @media (max-width: 768px) {
     .main_header, .main_footer, .admin-page-container {
         padding-left: 10px;
@@ -151,20 +150,20 @@ form button:hover {
 }
 
 .main_footer {
-    background-color: black; /* Footer background color */
-    color: white; /* Footer text color */
-    text-align: center; /* Centers the text */
-    padding: 20px 0; /* Adds padding above and below the text */
-    font-size: 0.9rem; /* Smaller font size */
-    font-style: italic; /* Italic text style */
-    position: relative; /* Takes the footer out of the document flow */
-    bottom: 0; /* Positions the footer at the bottom */
+    background-color: black; 
+    color: white;
+    text-align: center; 
+    padding: 20px 0; 
+    font-size: 0.9rem; 
+    font-style: italic; 
+    position: relative; 
+    bottom: 0; 
     left: 0;
-    right: 0; /* Stretches the footer to the left and right edges */
-    width: 100%; /* Ensures the footer is the full width of the viewport */
+    right: 0; 
+    width: 100%; 
 }
 
 .main_footer p {
-    margin: 0; /* Removes default margin */
+    margin: 0; 
     color: white;
 }

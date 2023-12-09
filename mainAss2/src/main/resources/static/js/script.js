@@ -31,7 +31,7 @@ $(document).ready(function() {
     });
   
     $owlCarousel.on("resize.owl.carousel", function() {
-      // Adjustments can be made here if necessary after a resize
+      
     });
 
     

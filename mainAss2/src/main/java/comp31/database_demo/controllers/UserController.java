@@ -18,7 +18,7 @@ import jakarta.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
-public class UserController{
+public class UserController {
     @Autowired
     private UserService userService;
     @Autowired
@@ -27,12 +27,26 @@ public class UserController{
     private BrandService brandService;
     @Autowired
     private CheckoutService checkoutService;
+
+    /**
+     * Endpoint for the register form.
+     * 
+     * @param model The model object for the view.
+     * @return The name of the register view.
+     */
     @GetMapping("/register")
     public String registerForm(Model model) {
         model.addAttribute("user", new User());
         return "register";
     }  
 
+    /**
+     * Endpoint for displaying the user profile.
+     * 
+     * @param model The model object for the view.
+     * @param session The HttpSession object for session management.
+     * @return The name of the profile view if the user is logged in, otherwise redirects to the login page.
+     */
     @GetMapping("/profile")
     public String showProfile(Model model, HttpSession session) {
         String username = (String) session.getAttribute("username");
@@ -46,6 +60,13 @@ public class UserController{
         return "redirect:/login";
     }
 
+    /**
+     * Endpoint for displaying the management page.
+     * 
+     * @param model The model object for the view.
+     * @param session The HttpSession object for session management.
+     * @return The name of the management view if the user is an admin, otherwise redirects to the login page.
+     */
     @GetMapping("/management")
     public String showManagementPage(Model model, HttpSession session) {
         String username = (String) session.getAttribute("username");
@@ -65,20 +86,40 @@ public class UserController{
         }
     }
 
+    /**
+     * Endpoint for registering a new user.
+     * 
+     * @param user The User object containing the user details.
+     * @return Redirects to the login page after successful registration.
+     */
     @PostMapping("/register")
     public String registerUser(@ModelAttribute User user) {
         userService.saveUser(user);
         return "redirect:/login";
     }
 
+    /**
+     * Endpoint for deleting a user.
+     * 
+     * @param userId The ID of the user to delete.
+     * @return Redirects to the home page after successful deletion.
+     */
     @PostMapping("/delete")
     public String deleteUser(@RequestParam Long userId) {
         userService.deleteUser(userId);
         return "redirect:/home";
     }
 
-   
-    
+    /**
+     * Endpoint for performing user login.
+     * 
+     * @param username The username of the user.
+     * @param password The password of the user.
+     * @param session The HttpSession object for session management.
+     * @param redirectAttributes The RedirectAttributes object for flash messages.
+     * @return Redirects to the management page if the user is an admin, otherwise redirects to the home page.
+     *         If login fails, redirects to the login page with an error message.
+     */
     @PostMapping("/perform_login")
     public String performLogin(@RequestParam String username, 
                             @RequestParam String password, 
@@ -98,6 +139,15 @@ public class UserController{
         }
     }
     
+    /**
+     * Endpoint for updating the user profile.
+     * 
+     * @param user The User object containing the updated user details.
+     * @param session The HttpSession object for session management.
+     * @param redirectAttributes The RedirectAttributes object for flash messages.
+     * @return Redirects to the profile page after successful profile update.
+     *         If there is an error, redirects to the profile page with an error message.
+     */
     @PostMapping("/update_profile")
     public String updateProfile(@ModelAttribute User user, HttpSession session, RedirectAttributes redirectAttributes) {
         try {
@@ -111,6 +161,14 @@ public class UserController{
         }
     }
     
+    /**
+     * Endpoint for deleting a user with the specified ID.
+     * 
+     * @param id The ID of the user to delete.
+     * @param redirectAttributes The RedirectAttributes object for flash messages.
+     * @return Redirects to the login page after successful deletion.
+     *         If there is an error, redirects to the login page with an error message.
+     */
     @PostMapping("/delete_user")
     public String deleteUser(@RequestParam Long id, RedirectAttributes redirectAttributes) {
         try {
@@ -122,5 +180,4 @@ public class UserController{
         }
         return "redirect:/login";
     }
-    
 }

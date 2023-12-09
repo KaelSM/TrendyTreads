@@ -10,6 +10,9 @@ import lombok.Data;
 
 
 
+/**
+ * Represents a user in the system.
+ */
 @Entity
 @Data
 @Table(name = "users")

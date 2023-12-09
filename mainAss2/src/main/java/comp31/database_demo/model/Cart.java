@@ -14,6 +14,9 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.MapKeyJoinColumn;
 
+/**
+ * Represents a shopping cart for a user.
+ */
 @Entity
 public class Cart {
 
@@ -33,35 +36,74 @@ public class Cart {
 
     private double totalAmount;
 
-
+    /**
+     * Gets the ID of the cart.
+     *
+     * @return The ID of the cart.
+     */
     public Long getId() {
         return id;
     }
 
+    /**
+     * Sets the ID of the cart.
+     *
+     * @param id The ID of the cart.
+     */
     public void setId(Long id) {
         this.id = id;
     }
 
+    /**
+     * Gets the user associated with the cart.
+     *
+     * @return The user associated with the cart.
+     */
     public User getUser() {
         return user;
     }
 
+    /**
+     * Sets the user associated with the cart.
+     *
+     * @param user The user associated with the cart.
+     */
     public void setUser(User user) {
         this.user = user;
     }
 
+    /**
+     * Gets the products in the cart along with their quantities.
+     *
+     * @return The products in the cart along with their quantities.
+     */
     public Map<Product, Integer> getProducts() {
         return products;
     }
 
+    /**
+     * Sets the products in the cart along with their quantities.
+     *
+     * @param products The products in the cart along with their quantities.
+     */
     public void setProducts(Map<Product, Integer> products) {
         this.products = products;
     } 
 
+    /**
+     * Gets the total amount of the cart.
+     *
+     * @return The total amount of the cart.
+     */
     public double getTotalAmount() {
         return totalAmount;
     }
 
+    /**
+     * Sets the total amount of the cart.
+     *
+     * @param totalAmount The total amount of the cart.
+     */
     public void setTotalAmount(double totalAmount) {
         this.totalAmount = totalAmount;
     }

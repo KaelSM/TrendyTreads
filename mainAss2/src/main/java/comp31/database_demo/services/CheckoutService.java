@@ -26,68 +26,109 @@ public class CheckoutService {
     @Autowired
     private ProductRepo productRepo;
 
+    /**
+     * Process the checkout for a given cart.
+     * 
+     * @param cartId        the ID of the cart to process the checkout for
+     * @param name          the name of the customer
+     * @param address       the address of the customer
+     * @param email         the email of the customer
+     * @param paymentMethod the payment method used for the checkout
+     */
     @Transactional
     public void processCheckout(Long cartId, String name, String address, String email, String paymentMethod) {
-        Cart cart = cartRepo.findById(cartId).orElseThrow(() -> new IllegalArgumentException("Cart not found with ID: " + cartId));
-        
+        Cart cart = cartRepo.findById(cartId)
+                .orElseThrow(() -> new IllegalArgumentException("Cart not found with ID: " + cartId));
 
         Checkout checkout = new Checkout();
         checkout.setCart(cart);
         checkout.setName(name);
         checkout.setAddress(address);
         checkout.setEmail(email);
-        checkout.setPaymentMethod(paymentMethod);       
+        checkout.setPaymentMethod(paymentMethod);
         checkoutRepo.save(checkout);
     }
-    
+
+    /**
+     * Retrieves all checkouts.
+     * 
+     * @return A list of all checkouts.
+     */
 
     public List<Checkout> listAll() {
         return checkoutRepo.findAll();
     }
 
+    /**
+     * Retrieves a checkout by its ID.
+     * 
+     * @param id The ID of the checkout to retrieve.
+     * @return The checkout with the specified ID.
+     */
+
     public Checkout saveCheckout(Checkout checkout) {
         return checkoutRepo.save(checkout);
     }
+
+    /**
+     * Retrieves a checkout by its ID.
+     * 
+     * @param id The ID of the checkout to retrieve.
+     * @return The checkout with the specified ID.
+     */
 
     public Checkout get(Long id) {
         return checkoutRepo.findById(id).get();
     }
 
+    /**
+     * Deletes a checkout by its ID.
+     * 
+     * @param id The ID of the checkout to delete.
+     */
+
     public void delete(Long id) {
         checkoutRepo.deleteById(id);
     }
 
+    /**
+     * Finalizes the checkout for a given cart.
+     * 
+     * @param cart the cart to finalize the checkout for
+     * @throws IllegalArgumentException if the cart is empty or if the quantity of
+     *                                  any product is invalid or if the stock of any
+     *                                  product is insufficient
+     */
+
     public void finalizeCheckout(Cart cart) {
-        // Check if the cart is empty
         if (cart.getProducts().isEmpty()) {
             throw new IllegalArgumentException("Cart is empty");
         }
 
-        // Iterate over the products in the cart
         for (Map.Entry<Product, Integer> entry : cart.getProducts().entrySet()) {
             Product product = entry.getKey();
             Integer quantity = entry.getValue();
-
-            // Check if the requested quantity is valid
             if (quantity <= 0) {
                 throw new IllegalArgumentException("Invalid quantity for product: " + product.getName());
             }
-            
-            // Check if there is enough stock for the product
+
             if (product.getStock() < quantity) {
                 throw new IllegalArgumentException("Insufficient stock for product: " + product.getName());
             }
 
-            // Deduct the quantity from the product's stock and save the updated product
             product.setStock(product.getStock() - quantity);
             productRepo.save(product);
         }
-
-        // Additional checkout logic such as saving the checkout, clearing the cart, etc.
     }
+
+    /**
+     * Retrieves all checkouts.
+     * 
+     * @return A list of all checkouts.
+     */
 
     public List<Checkout> getAllCheckouts() {
         return checkoutRepo.findAll();
     }
-    
+
 }

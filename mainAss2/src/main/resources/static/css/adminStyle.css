@@ -1,0 +1,151 @@
+/* Admin Page Container */
+.admin-page-container {
+    background-color: #f0f0f0;
+    min-height: 100vh;
+    padding: 20px;
+    font-family: 'Helvetica', sans-serif;
+}
+
+/* Header */
+/* Ensures the logo and nav are on the same line and spaced nicely */
+.main_header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Adds a hover effect for better user interaction */
+.main-menu .nav-link:hover {
+    background-color: #e8e8e8;
+    border-radius: 4px;
+}
+
+/* Improves the spacing and alignment of nav items */
+.main-menu .nav {
+    display: flex;
+    align-items: center;
+    padding: 0;
+}
+
+.main-menu .nav-item {
+    margin: 0 10px;
+}
+
+/* Ensures text in the nav doesn't wrap and stays aligned */
+.main-menu .nav-link {
+    white-space: nowrap;
+    padding: 8px 12px;
+}
+
+/* Adjusts the font size for better readability */
+.main-menu .nav-link {
+    font-size: 16px;
+}
+
+/* Changes the logout button to look more like a link */
+.contact-logout .btn {
+    background: none;
+    color: #0056b3;
+    padding: 8px 12px;
+    border: none;
+}
+
+.contact-logout .btn:hover {
+    text-decoration: underline;
+}
+
+
+/* Forms */
+form {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    margin: 0 auto;
+}
+
+form input[type='text'],
+form input[type='number'],
+form select {
+    max-width: 200px;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #cccccc;
+    border-radius: 4px;
+}
+
+form button {
+    background-color: #28a745;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width: auto;
+
+}
+
+form button:hover {
+    background-color: #296e5e;
+}
+
+/* Tables */
+.admin-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #ffffff;
+    margin-top: 20px;
+    }
+
+.admin-table th,
+.admin-table td {
+    padding: 15px;
+    border-bottom: 1px solid #dddddd;
+}
+
+.admin-table th {
+    background-color: #f9f9f9;
+}
+
+.admin-table tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* Footer */
+.main_footer {
+    text-align: center;
+    padding: 20px 0;
+    background-color: #333333;
+    color: white;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .main_header, .main_footer, .admin-page-container {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    form {
+        max-width: 100%;
+    }
+
+    .main-menu .nav {
+        text-align: center;
+    }
+
+    form input[type='text'],
+    form input[type='number'],
+    form select {
+        width: calc(100% - 20px); 
+    }
+
+    .main-menu .nav-item {
+        display: block;
+        margin-right: 0;
+        margin-top: 5px;
+    }
+}

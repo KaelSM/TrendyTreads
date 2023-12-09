@@ -91,3 +91,22 @@ tfoot td {
         box-sizing: border-box; /* Prevents padding from adding extra width */
     }
 }
+
+.main_footer {
+    background-color: black; /* Footer background color */
+    color: white; /* Footer text color */
+    text-align: center; /* Centers the text */
+    padding: 20px 0; /* Adds padding above and below the text */
+    font-size: 0.9rem; /* Smaller font size */
+    font-style: italic; /* Italic text style */
+    position: absolute; /* Takes the footer out of the document flow */
+    bottom: 0; /* Positions the footer at the bottom */
+    left: 0;
+    right: 0; /* Stretches the footer to the left and right edges */
+    width: 100%; /* Ensures the footer is the full width of the viewport */
+}
+
+.main_footer p {
+    margin: 0; /* Removes default margin */
+    color: white;
+}

@@ -1,21 +1,130 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h1>Assignment 2 Milestine 1</h1>
-    <button><a href="/product">Browsing Product</a></button>
-    <button><a href="/login">Login</a></button>
-    <button><a href="/home">home</a></button>
-    <button><a href="/profile">profile</a></button>
-    <button><a href="/register">Register</a></button>
-    <button><a href="/cart">Cart</a></button>
-    <button><a href="/order">Order</a></button>
-    <button><a href="/admin">Admin</a></button>
-    <button><a href="/logout">Logout</a></button>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="shortcut icon" href="../static/img/favicon.png" type="image/x-icon">
+        <title>Home/index</title>
+        <link rel="stylesheet" href="../static/css/home.css">
+        <link rel="stylesheet" href="../static/css/bootstrap.css">
+        <link rel="stylesheet" href="../static/css/jquery.mmenu.all.css">
+        <link rel="stylesheet" href="../static/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
+       
+        <!-- Owl Carousel CSS -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
+    </head>
+    <body class="show-chatbot">
+        <header class="main_header">
+            <div class="container d-flex align-items-center justify-content-between">
+                <!-- Logo on the left -->
+                <div id="logo">
+                    <a href="/"><img src="../static/img/logo.png" alt="Company Logo" width="150" height="120"></a>
+                </div>
+                
+                <!-- Centered navigation -->
+                <nav class="main-menu d-none d-lg-block">
+                    <ul class="nav">
+                        <li class="nav-item"><a href="/product" class="nav-link">Browse Products</a></li>
+                        <li class="nav-item"><a href="/login" class="nav-link">Login</a></li>
+                        <li class="nav-item"><a href="/home" class="nav-link">Home</a></li>
+                        <li class="nav-item"><a href="/profile" class="nav-link">Profile</a></li>
+                        <li class="nav-item"><a href="/register" class="nav-link">Register</a></li>
+                        <li class="nav-item"><a href="/cart" class="nav-link">Cart</a></li>
+                        <li class="nav-item"><a href="/checkout" class="nav-link">Order</a></li>
+                        <li class="nav-item"><a href="/admin" class="nav-link">Admin</a></li>
+
+                    </ul>
+                </nav>
+                
+                <!-- Contact and logout on the right -->
+                <div class="contact-logout">
+                    <a class="phone_top" href="tel:+1234567890">+1 123 456 7890</a>
+                    <form action="/logout" method="post" class="d-inline">
+                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                        <button type="submit" class="btn">Logout</button>
+                    </form>
+                </div>
+            </div>
+        </header>
+
+        <!-- Owl Carousel -->
+        <div id="carousel-home">
+            <div class="owl-carousel owl-theme">
+                <!-- Slide 1 -->
+                <div class="owl-slide cover" style="background-image: url(../static/img/dc1.jpg);">
+                    <!-- Optionally, you can put content here -->
+                </div>
+                <!-- Slide 2 -->
+                <div class="owl-slide cover" style="background-image: url(../static/img/DrMartens_banner.jpg);">
+                    <!-- Optionally, you can put content here -->
+                </div>
+                <!-- Slide 3 -->
+                <div class="owl-slide cover" style="background-image: url(../static/img/timberland_joder_4x.jpg);">
+                    <!-- Optionally, you can put content here -->
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                <!-- Left column -->
+                <div class="col-md-6">
+                    <h2 class="title">Welcome to Trendy Treads</h2>
+                    <p> Welcome to Trendy Treads – where every step you take is a statement of style and comfort! Here, 
+                        we believe that the right pair of shoes can light up your day, carry you through life's adventures,
+                         and express your unique personality. As you stand next to our collection, imagine the aisles as runways, 
+                         showcasing footwear that's both fashionable and functional, crafted just for you. So step on in and find 
+                         your perfect fit – your journey to incredible style starts here!
+                    </p>
+                    <img class="signature-image" src="../static/img/sign.png" alt="sign" >
+                </div>
+                <!-- Right column -->
+                <div class ="col-md-6">
+                    <img src="../static/img/nike5.png" alt="nike" >
+                </div>
+            </div>
+
+            <!-- dummy chatbot-->
+            <button class="chatbot-toggler">
+                <img src="../static/img/open.png" class="open-icon" alt="Open Chat">
+                <img src="../static/img/close.png" class="close-icon" alt="Close Chat" style="display: none;">
+            </button>
+
+        <!-- Chatbot container -->
+        <div class="chatbot">
+            <header>
+                <h2>Chatbot</h2>
+                <img src="../static/img/close.png"class="close-btn" alt="Close">
+            </header>
+            <ul class="chatbox">
+                <li class="chat incoming">
+                    <img src="../static/img/ai.png" class="robot-icon" alt="Smart Toy">
+                    <p>Hey there! 👋 Shopping for shoes can sometimes feel like you're running a marathon, right? But guess what? I've got your back! 🎉 Imagine me as your personal shopping buddy, here to make finding that perfect pair of kicks as easy as pie. 🥧 <br>
+Need something comfy for daily jogs? Or maybe some snazzy heels for a night out? Just hit me up! 🏃‍♀️💃 I'll guide you through our virtual aisles, find the best deals, and hey, we might even share a laugh or two along the way. 😄<br> 
+And don't worry about getting lost in a sea of choices. I'll help you filter them down like a pro. Before you know it, you'll be clicking 'buy' on your dream shoes. So, ready to chat and shop? Let's lace up and get started! 🛍️👟
+                    </p>
+                </li>
+            </li>
+            </ul>
+            <div class="chat-input">
+            <textarea placeholder="Enter a message..." spellcheck="false" required></textarea>
+            <span id="send-btn" class="material-symbols-rounded">send</span>
+            </div>
+        </div>
+        <!-- Scripts -->
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <!-- Owl Carousel JS -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+        <!-- Your custom script -->
+        <script src="../static/js/script.js"></script>
+        <!-- Chatbot -->
+        <script src="../static/js/Chatscript.js"></script>
 </body>
+
+<footer class="main_footer">
+    <p>Kael S. Moreira G., Seda Dadak, Aibiike Omurzakova, Phuong Uyen Dang © 2023 - All Rights Reserved</p>
+</footer>
 </html>

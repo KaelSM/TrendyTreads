@@ -1,0 +1,93 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f7f7f7;
+    margin: 0;
+    padding: 20px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+th, td {
+    text-align: left;
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background-color: #eee;
+}
+
+.product-img {
+    width: 100px;
+    height: auto;
+}
+
+a {
+    color: #0275d8;
+    text-decoration: none;
+    padding: 5px 10px;
+    border: 1px solid transparent;
+    transition: all 0.3s ease;
+}
+
+a:hover {
+    text-decoration: underline;
+    border-color: #0275d8;
+}
+
+/* Align subtotal, tax, and total to the right */
+tfoot td {
+    text-align: right;
+}
+
+/* Style for the Continue Shopping and Checkout buttons */
+.continue-btn, .checkout-btn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    display: inline-block; /* Allows the buttons to be side by side */
+    margin-top: 10px;
+}
+
+.continue-btn:hover, .checkout-btn:hover {
+    background-color: #45a049;
+}
+
+/* Container for the header and logo */
+.header-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Spreads out the logo and the title */
+    margin-bottom: 20px;
+}
+
+.logo {
+    max-width: 150px;
+    height: auto;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    .header-container {
+        flex-direction: column;
+        align-items: flex-start; /* Aligns items to the left on small screens */
+    }
+
+    .product-img {
+        width: 75px; /* Smaller images on mobile */
+    }
+
+    .continue-btn, .checkout-btn {
+        display: block; /* Stacks buttons vertically on mobile */
+        width: 100%;
+        box-sizing: border-box; /* Prevents padding from adding extra width */
+    }
+}

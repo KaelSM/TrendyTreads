@@ -1,9 +1,21 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Products</title>
-</head>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="shortcut icon" href="../static/img/favicon.png" type="image/x-icon">
+        <title>Cart</title>
+        <link rel="stylesheet" href="../static/css/prod.css">
+        <link rel="stylesheet" href="../static/css/bootstrap.css">
+        <link rel="stylesheet" href="../static/css/jquery.mmenu.all.css">
+        <link rel="stylesheet" href="../static/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+       
+        <!-- Owl Carousel CSS -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
+    </head>
 <body>
     <h1>Product List</h1>
     <table>
@@ -11,11 +23,12 @@
             <tr>
                 <th>Product Name</th>
                 <th>Price</th>
+                <th></th>
                 <th>Action</th>
             </tr>
         </thead>
         <tbody>
-            <tr th:each="product : ${product}">
+            <tr th:each="product : ${products}">
                 <td th:text="${product.name}">Product Name</td>
                 <td th:text="${'$' + product.price}">Product Price</td>
                 <td>

@@ -11,7 +11,7 @@ const inputInitHeight = chatInput.scrollHeight;
 const createChatLi = (message, className) => {
     const chatLi = document.createElement("li");
     chatLi.classList.add("chat", `${className}`);
-    let chatContent = className === "outgoing" ? `<p></p>` : `<img src="../static/img/ai.png" class="robot-icon" alt="Smart Toy"><p></p>`;
+    let chatContent = className === "outgoing" ? `<p></p>` : `<img src=" /img/ai.png" class="robot-icon" alt="Smart Toy"><p></p>`;
     chatLi.innerHTML = chatContent;
     chatLi.querySelector("p").textContent = message;
     return chatLi;

@@ -1,4 +1,6 @@
-
+body {
+    background-color: aqua;
+}
 .main-menu .nav {
     display: flex;
     padding-left: 0;

@@ -17,7 +17,16 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
     </head>
     <body>
-    
+    <div class="left-container">
+        <div class='post-it' contenteditable>
+            <h1>Log In User</h1>
+          <ul>
+            <li>Username: user</li>
+            <li>Password: userpass</li>
+          </ul>
+              
+        </div>
+    </div>
     <div class="login-container">
         <div th:if="${param.loginError}" class="login-error" th:text="${loginError}"></div>
         
@@ -32,6 +41,16 @@
             </form>
             
             <a href="/register" class="register-link">Register</a>
+        </div>
+    </div>
+    <div class="right-container">
+        <div class='post-it' contenteditable>
+            <h1>Log In Admin</h1>
+          <ul>
+            <li>Username: admin</li>
+            <li>Password: adminpass</li>
+          </ul>
+              
         </div>
     </div>
     
